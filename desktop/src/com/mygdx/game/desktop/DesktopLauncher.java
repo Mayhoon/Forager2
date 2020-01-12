@@ -9,9 +9,9 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		
 		config.title = "LoveInPackages";
-		config.width = 1920;
-		config.height = 1080;
-		config.fullscreen = true;
+		config.width = 500;
+		config.height = 500;
+		config.fullscreen = false;
 		config.forceExit = true;
 		new LwjglApplication(new ScreenManager(), config);
 	}

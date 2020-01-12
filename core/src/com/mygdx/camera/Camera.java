@@ -10,11 +10,11 @@ public class Camera extends OrthographicCamera implements InputProcessor {
     private float cameraSpeed;
     private float deltaTime;
 
+
     public Camera() {
         super.setToOrtho(false, Gdx.graphics.getWidth()*2, Gdx.graphics.getHeight()*2);
         super.update();
         cameraSpeed = 5f;
-
     }
 
     public void update() {
@@ -34,7 +34,7 @@ public class Camera extends OrthographicCamera implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        if(keycode == Input.Keys.W){
+        if(keycode == Input.Keys.W ){
             moveUp = true;
         }
         if(keycode == Input.Keys.A){

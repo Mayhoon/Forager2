@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.camera.Camera;
 import com.mygdx.config.CFG;
 import com.mygdx.hud.Hud;
+import com.mygdx.input.ControllerInput;
 
 public class GameScreen implements Screen {
     private ScreenManager game;
@@ -16,12 +17,10 @@ public class GameScreen implements Screen {
     private Hud hud;
     private Camera camera;
     private SpriteBatch batch;
-    private int tileSize;
 
     public GameScreen(ScreenManager game) {
         this.batch = game.getBatch();
         this.game = game;
-        tileSize = CFG.TILESIZE;
 
         camera = new Camera();
         camera.zoom -= 0.9f;
@@ -31,6 +30,8 @@ public class GameScreen implements Screen {
 
         hud = new Hud(this.batch);
         texture = new Texture("maps/Tileset.png");
+
+        new ControllerInput(camera);
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(camera);
