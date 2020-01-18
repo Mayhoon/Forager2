@@ -37,12 +37,32 @@ public class ControllerInput {
                 return false;
             }
 
+            float ignoreInputValuer = 0.24f;
+
             @Override
             public boolean axisMoved(Controller controller, int axisCode, float value) {
-                if (axisCode == 1 && value > 0) {
-                    camera.translate(value, 0);
+
+                if(value < 0 &&  value > -ignoreInputValuer || value > 0 && value < ignoreInputValuer) {
+                    System.out.println("Inout ignoriert");
+                    System.out.println("Axis moved: " + axisCode + " by: " + value);
+                    camera.stopMotion(axisCode, true);
+                }else{
+                    if (axisCode == 1 && value > 0 && value > ignoreInputValuer) {
+                        camera.moveRight();
+                    }
+                    if (axisCode == 1 && value < 0 && value < -ignoreInputValuer) {
+                        camera.moveLeft();
+                    }
+                    if (axisCode == 0 && value > 0 && value > ignoreInputValuer) {
+                        camera.moveDown();
+                    }
+                    if (axisCode == 0 && value < 0 && value < -ignoreInputValuer) {
+                        camera.moveUp();
+                    }
+
+
                 }
-                System.out.println("Axis moved: " + axisCode + " by: " + value);
+
                 return false;
             }
 
