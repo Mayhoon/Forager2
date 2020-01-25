@@ -41,39 +41,13 @@ public class ControllerInput {
                 return false;
             }
 
-            float ignoreInputValuer = 0.24f;
-
             @Override
             public boolean axisMoved(Controller controller, int axisCode, float value) {
+                float x = controller.getAxis(1);
+                float y = controller.getAxis(0);
 
-                if (value < 0 && value > -ignoreInputValuer) {
-                    System.out.println("LINKS");
-                    System.out.println("Axis moved: " + axisCode + " by: " + value);
-                    camera.stopMotion(axisCode, true);
-
-                } else if (value > 0 && value < ignoreInputValuer) {
-                    System.out.println("RECHTS");
-                    camera.stopMotion(axisCode, false);
-                } else {
-                    moveCamera(axisCode, value);
-                }
-
+                camera.moveDirect(x, y*(-1));
                 return false;
-            }
-
-            private void moveCamera(int axisCode, float value) {
-                if (axisCode == 1 && value > 0 && value > ignoreInputValuer) {
-                    camera.moveRight();
-                }
-                if (axisCode == 1 && value < 0 && value < -ignoreInputValuer) {
-                    camera.moveLeft();
-                }
-                if (axisCode == 0 && value > 0 && value > ignoreInputValuer) {
-                    camera.moveDown();
-                }
-                if (axisCode == 0 && value < 0 && value < -ignoreInputValuer) {
-                    camera.moveUp();
-                }
             }
 
             @Override

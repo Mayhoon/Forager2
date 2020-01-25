@@ -28,7 +28,18 @@ public class PlayerInputProcessor implements InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-        camera.stopAllMotion();
+        if (keycode == Input.Keys.W) {
+            camera.stopMotion("up");
+        }
+        if (keycode == Input.Keys.A) {
+            camera.stopMotion("left");
+        }
+        if (keycode == Input.Keys.D) {
+            camera.stopMotion("right");
+        }
+        if (keycode == Input.Keys.S) {
+            camera.stopMotion("down");
+        }
         return false;
     }
 

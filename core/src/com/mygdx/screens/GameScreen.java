@@ -39,7 +39,6 @@ public class GameScreen implements Screen {
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(player.getProcessor());
-        // inputMultiplexer.addProcessor(controllerInput.getInputProcessor());
         inputMultiplexer.addProcessor(hud);
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
