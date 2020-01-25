@@ -1,134 +1,80 @@
 package com.mygdx.camera;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
-public class Camera extends OrthographicCamera implements InputProcessor {
-    public boolean moveUp, moveDown, moveLeft, moveRight;
-    private float cameraSpeed;
-    private float deltaTime;
-
+public class Camera extends OrthographicCamera {
+    private float cameraSpeed = 60f;
+    boolean left, right, down, up;
 
     public Camera() {
         super.setToOrtho(false, Gdx.graphics.getWidth() * 2, Gdx.graphics.getHeight() * 2);
         super.update();
-        cameraSpeed = 60f;
-    }
-
-    public void moveUp() {
-        //super.translate(0f, Gdx.graphics.getDeltaTime() * cameraSpeed);
-        moveUp = true;
-    }
-
-    public void moveDown() {
-       // super.translate(0f, Gdx.graphics.getDeltaTime() * (-cameraSpeed));
-        moveDown = true;
-    }
-
-    public void moveLeft() {
-        //super.translate(Gdx.graphics.getDeltaTime() * (-cameraSpeed), 0f);
-        moveLeft = true;
-    }
-
-    public void moveRight() {
-        // super.translate(Gdx.graphics.getDeltaTime() * cameraSpeed, 0f);
-        moveRight = true;
-    }
-
-    public void stopMotion(int axisCode, boolean left) {
-        if (axisCode == 1 && left) {
-            moveLeft = false;
-
-        }if(axisCode == 1 && !left){
-            moveRight = false;
-        }
-        if(axisCode == 0){
-            moveDown = false;
-            moveUp = false;
-        }
     }
 
     public void update() {
-        deltaTime = Gdx.graphics.getDeltaTime();
+        if (left) {
+            super.translate(-(Gdx.graphics.getDeltaTime() * cameraSpeed), 0f);
+        }
 
-        if (moveUp) {
-            super.translate(0f, (deltaTime * cameraSpeed) );
+        if (right) {
+            super.translate(Gdx.graphics.getDeltaTime() * cameraSpeed, 0f);
         }
-        if (moveDown) {
-            super.translate(0f, - (deltaTime * cameraSpeed) );
+
+        if (up) {
+            super.translate(0f, Gdx.graphics.getDeltaTime() * cameraSpeed);
         }
-        if (moveLeft) {
-            super.translate(- (deltaTime * cameraSpeed), 0f );
-        }
-        if (moveRight) {
-            super.translate( (deltaTime * cameraSpeed), 0f );
+
+        if (down) {
+            super.translate(0f, -(Gdx.graphics.getDeltaTime() * cameraSpeed));
         }
         super.update();
     }
 
-    @Override
-    public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.W) {
-            moveUp = true;
+    public void stopMotion(int axisCode, boolean left) {
+        if (axisCode == 1 && left) {
+            left = false;
         }
-        if (keycode == Input.Keys.A) {
-            moveLeft = true;
+        if(axisCode == 1 && !left){
+            right = false;
         }
-        if (keycode == Input.Keys.D) {
-            moveRight = true;
+        if(axisCode == 0 && !left){
+            down = false;
         }
-        if (keycode == Input.Keys.S) {
-            moveDown = true;
+        if(axisCode == 0 && left) {
+            up = false;
         }
-        return false;
     }
 
-    @Override
-    public boolean keyUp(int keycode) {
-        if (keycode == Input.Keys.W) {
-            moveUp = false;
-        }
-        if (keycode == Input.Keys.A) {
-            moveLeft = false;
-        }
-        if (keycode == Input.Keys.D) {
-            moveRight = false;
-        }
-        if (keycode == Input.Keys.S) {
-            moveDown = false;
-        }
-        return false;
+    public void moveUp() {
+        System.out.println("MOVED UP");
+        up = true;
+        update();
     }
 
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
+    public void moveDown() {
+        System.out.println("MOVED Down");
+        down = true;
+        update();
     }
 
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
+    public void moveLeft() {
+        System.out.println("MOVED UP");
+        left = true;
+        update();
     }
 
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
+    public void moveRight() {
+        System.out.println("MOVED UP");
+        right = true;
+        update();
     }
 
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
+    public void stopAllMotion(){
+        left = false;
+        right = false;
+        up = false;
+        down = false;
     }
 
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        return false;
-    }
 }

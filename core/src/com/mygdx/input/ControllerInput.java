@@ -6,15 +6,19 @@ import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.camera.Camera;
+import com.mygdx.player.Player;
 
 
 public class ControllerInput {
-    private final Camera camera;
+    Player player;
+    final Camera camera;
 
     public ControllerInput(final Camera camera) {
+        player = new Player(camera);
         this.camera = camera;
 
         Controllers.addListener(new ControllerListener() {
+
             @Override
             public void connected(Controller controller) {
                 System.out.println("Controller connected");
@@ -42,28 +46,34 @@ public class ControllerInput {
             @Override
             public boolean axisMoved(Controller controller, int axisCode, float value) {
 
-                if(value < 0 &&  value > -ignoreInputValuer || value > 0 && value < ignoreInputValuer) {
-                    System.out.println("Inout ignoriert");
+                if (value < 0 && value > -ignoreInputValuer) {
+                    System.out.println("LINKS");
                     System.out.println("Axis moved: " + axisCode + " by: " + value);
                     camera.stopMotion(axisCode, true);
-                }else{
-                    if (axisCode == 1 && value > 0 && value > ignoreInputValuer) {
-                        camera.moveRight();
-                    }
-                    if (axisCode == 1 && value < 0 && value < -ignoreInputValuer) {
-                        camera.moveLeft();
-                    }
-                    if (axisCode == 0 && value > 0 && value > ignoreInputValuer) {
-                        camera.moveDown();
-                    }
-                    if (axisCode == 0 && value < 0 && value < -ignoreInputValuer) {
-                        camera.moveUp();
-                    }
 
-
+                } else if (value > 0 && value < ignoreInputValuer) {
+                    System.out.println("RECHTS");
+                    camera.stopMotion(axisCode, false);
+                } else {
+                    moveCamera(axisCode, value);
                 }
 
                 return false;
+            }
+
+            private void moveCamera(int axisCode, float value) {
+                if (axisCode == 1 && value > 0 && value > ignoreInputValuer) {
+                    camera.moveRight();
+                }
+                if (axisCode == 1 && value < 0 && value < -ignoreInputValuer) {
+                    camera.moveLeft();
+                }
+                if (axisCode == 0 && value > 0 && value > ignoreInputValuer) {
+                    camera.moveDown();
+                }
+                if (axisCode == 0 && value < 0 && value < -ignoreInputValuer) {
+                    camera.moveUp();
+                }
             }
 
             @Override

@@ -12,6 +12,7 @@ public final class CFG {
     public final static String ITEM_COUNT_FONT = "fonts/GravityBold8.ttf";
 
     //Base paths to the images, skins and maps
+    public final static String CHARACTERS_PATH = "characters/";
     public final static String ANIMATIONS_PATH = "animations/";
     public final static String BUTTONS_PATH = "buttons/";
     public final static String FONTS_SKINS_PATH = "fonts & skins/";
@@ -22,4 +23,7 @@ public final class CFG {
     //Inventory
     public final static String MISSING_ITEM = INVENTORY_PATH + "missing" + PNG;
     public final static String Inventory_INGAME_SCROLLBAR = INVENTORY_PATH + "inv" + PNG;
+
+    //Player related
+    public final static String PLAYER_PATH = CHARACTERS_PATH + "/player/player.png";
 }

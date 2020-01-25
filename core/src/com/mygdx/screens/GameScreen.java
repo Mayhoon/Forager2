@@ -7,9 +7,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.camera.Camera;
-import com.mygdx.config.CFG;
+import com.mygdx.camera.PlayerInputProcessor;
 import com.mygdx.hud.Hud;
 import com.mygdx.input.ControllerInput;
+import com.mygdx.player.Player;
 
 public class GameScreen implements Screen {
     private ScreenManager game;
@@ -17,6 +18,8 @@ public class GameScreen implements Screen {
     private Hud hud;
     private Camera camera;
     private SpriteBatch batch;
+    private Player player;
+    private ControllerInput controllerInput;
 
     public GameScreen(ScreenManager game) {
         this.batch = game.getBatch();
@@ -28,13 +31,15 @@ public class GameScreen implements Screen {
         camera.position.y = 0;
         camera.update();
 
+        controllerInput = new ControllerInput(camera);
+        player = new Player(camera);
+
         hud = new Hud(this.batch);
         texture = new Texture("maps/Tileset.png");
 
-        new ControllerInput(camera);
-
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(camera);
+        inputMultiplexer.addProcessor(player.getProcessor());
+        // inputMultiplexer.addProcessor(controllerInput.getInputProcessor());
         inputMultiplexer.addProcessor(hud);
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
@@ -57,6 +62,7 @@ public class GameScreen implements Screen {
             }
         }
 
+        player.update(batch);
         batch.draw(texture, 0, 0);
 
         game.getBatch().end();

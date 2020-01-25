@@ -1,0 +1,1802 @@
+
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<style>
+
+		body {
+			background-color: #10171e;
+			width: 99%;
+			font: 15px 'Open Sans', sans-serif;
+			tab-size: 4;
+		}
+		
+		b {
+			font-weight: 700;
+			color: #e8c22c;
+		}
+		
+		.c {
+			font-weight: 700;
+			color: #bc4949;
+		}
+		
+		.d, .function {
+			font-weight: 700;
+			color: #5092d3;
+		}
+		
+		.luafunction {
+			font-weight: 700;
+			color: #845cb2;
+		}
+		
+		.property {
+			font-weight: 700;
+			color: #63cc49;
+		}
+		
+		.number {
+			color: #ff7c7e;
+			font-weight: 700;
+		}
+		
+		i {
+			color: #ff7c7e;
+		}
+				
+		.variable {
+			color: #e8c22c;
+			font-weight: 700;
+		}
+		
+		.description {
+			width: 800px;
+			text-align: justify;
+			color: white;
+		}
+		
+		.description2 {
+			width: 800px;
+			text-align: center;
+		}
+		
+		h1 {
+			color: #5092d3;
+			margin-bottom: 0 px;
+		}
+		
+		.footer {
+			font-size: 13px;
+		}
+		
+		pre, code{
+			margin: 0px;
+			padding: 0px;
+		}
+				
+		.collapse_all, .collapse_functions, .collapse_everything {
+			-moz-box-shadow:inset 0px 1px 0px 0px #7a8eb9;
+			-webkit-box-shadow:inset 0px 1px 0px 0px #7a8eb9;
+			box-shadow:inset 0px 1px 0px 0px #7a8eb9;
+			background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #637aad), color-stop(1, #5972a7));
+			background:-moz-linear-gradient(top, #637aad 5%, #5972a7 100%);
+			background:-webkit-linear-gradient(top, #637aad 5%, #5972a7 100%);
+			background:-o-linear-gradient(top, #637aad 5%, #5972a7 100%);
+			background:-ms-linear-gradient(top, #637aad 5%, #5972a7 100%);
+			background:linear-gradient(to bottom, #637aad 5%, #5972a7 100%);
+			filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#637aad', endColorstr='#5972a7',GradientType=0);
+			background-color:#637aad;
+			border:1px solid #314179;
+			display:inline-block;
+			cursor:pointer;
+			color:#ffffff;
+			font-family:Arial;
+			font-size:13px;
+			font-weight:bold;
+			padding:6px 12px;
+			text-decoration:none;
+			outline: 0px;
+		}
+		.collapse_all:hover, .collapse_functions:hover, .collapse_everything:hover {
+			background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5972a7), color-stop(1, #637aad));
+			background:-moz-linear-gradient(top, #5972a7 5%, #637aad 100%);
+			background:-webkit-linear-gradient(top, #5972a7 5%, #637aad 100%);
+			background:-o-linear-gradient(top, #5972a7 5%, #637aad 100%);
+			background:-ms-linear-gradient(top, #5972a7 5%, #637aad 100%);
+			background:linear-gradient(to bottom, #5972a7 5%, #637aad 100%);
+			filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5972a7', endColorstr='#637aad',GradientType=0);
+			background-color:#5972a7;
+		}
+		.collapse_all:active, .collapse_functions:active, .collapse_everything:active {
+			position:relative;
+			top:1px;
+		}
+
+		
+		.collapsible, .collapsible2  {
+			background-color: #10171e;;
+			color: #5092d3;
+			border: none;
+			cursor: pointer;
+			width: 800px;
+			text-align: justify ;
+			vertical-align: middle;
+			align: left;
+			outline: none;
+			font-weight: 700;
+			font-size: 100%;
+			transition: background-color 0.10s, color 0.10s;
+		}
+		
+		.collapsible:hover, .collapsible2:hover {
+			background-color: #374966;
+		    color: #87dfff;
+			transition: background-color 0.10s, color 0.10s;
+		}
+		
+		.collapsible2 {
+			width: 760px;
+			margin-left: 40px;
+			color: #4cc9f7;
+		}
+		
+		.collapsible:before, .collapsible2:before {
+			content:url('data:image/png;base64,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');
+		}
+
+		.content, .content2 {
+			align: left;
+			display: none;
+			background-color: #10171e;;
+			color: white;
+			border: none;
+			width: 800px;
+			margin-top: 5px;
+			margin-bottom: 5px;
+			text-align: justify ;
+			vertical-align: middle;
+			align: left;
+			outline: none;
+		}
+		
+		.content2 {
+			width: 750px;
+			margin-left: 50px;
+		}
+		
+		.main-container {
+			border-style: none;
+			width: 800px;
+		}
+		
+		hr {
+			border-style: none;
+		}
+				
+		a:link {
+		  color: #4a80d6;
+		  text-decoration: none;
+		  font-weight: 700;
+		  transition: color 0.25s;
+		}
+
+		a:visited {
+		  color: #4a80d6;
+		  transition: color 0.25s;
+		  text-decoration: none;
+		  font-weight: 700;
+		}
+		
+		a:hover {
+		  color: #87dfff;
+		  transition: color 0.25s;
+		}
+
+	</style>
+	<meta charset="UTF-8">
+</head>
+
+<body>
+
+	<center>
+		
+		<h1> Juice FX : Live Scripting </h1>
+		
+		<div class="description">
+			This is the documentation for Juice FX's live scripting. The scripting is based in <a href="https://www.lua.org/">LUA</a>, so you can use all the core of the language along with these extra functions and properties.
+			<br>
+			<br>
+			In case you need more help, please feel free to contact me on Twitter on <a href="https://twitter.com/CodeManuPro">@CodeManuPro</a>
+			<br>
+			<br>
+			<div class="description2">
+			<button class="collapse_all">Categories</button>  <button class="collapse_functions">Sub Categories</button>  <button class="collapse_everything">Everything</button>
+			</div>
+		</div>
+		
+		<br>
+
+		<div class="main-container">
+		
+			<button class="collapsible"> Events</button>
+			<div class="content">
+			
+				<button class="collapsible2"> simulate()</button>
+				<div class="content2">
+				  Everything that's written on <a class="function">simulate()</a> function will be executed when a <b>Simulate</b> happens.
+				  <br>
+				  This can be used to to custom <b>Burst</b> animations or to setup variables to be then changed on <b>update()</b>.
+				  <br>
+				</div>
+				
+				<button class="collapsible2"> update()</button>
+				<div class="content2">
+				  The code written on the <a class="function">update()</a> function will be executed <b>every frame</b>.
+				  <br>
+				</div>
+				
+				<button class="collapsible2"> render_start()</button>
+				<div class="content2">
+				  The code written on the <a class="function">render_start()</a> function will be executed the <b>first frame</b> of the rendering process.
+				  <br>
+				</div>
+				
+				<button class="collapsible2"> render()</button>
+				<div class="content2">
+				  The code written on the <a class="function">render()</a> function will be executed <b>every frame</b> of the rendering process.
+				  <br>
+				</div>
+				
+				<button class="collapsible2"> render_end()</button>
+				<div class="content2">
+				  The code written on the <a class="function">render_end()</a> function will be executed the <b>last frame</b> of the rendering process.
+				  <br>
+				</div>
+				
+				<button class="collapsible2"> draw_pre()</button>
+				<div class="content2">
+				  This event is used for the drawing process. Trying to draw things outside the <b>draw_*</b> functions will not work.
+				  <br>
+				  The code written on the <a class="function">draw_pre()</a> function will be executed <b>before</b> the layers get drawn.
+				  <br>
+				</div>
+				
+				<button class="collapsible2"> draw_post()</button>
+				<div class="content2">
+				  This event is used for the drawing process. Trying to draw things outside the <b>draw_*</b> functions will not work.
+				  <br>
+				  The code written on the <a class="function">draw_pre()</a> function will be executed <b>after</b> the layers get drawn.
+				  <br>
+				</div>
+				
+			</div>
+			<br>
+
+			<button class="collapsible"> Layer Properties</button>
+			<div class="content">
+				
+				<button class="collapsible2"> layer0, layer1... layer7</button>
+				<div class="content2">
+				  You can access all the 8 layers with <b>layer[number]</b>.
+				  <br>
+				  <i>Example: layer0.X = 100;</i>
+				</div>
+				
+				<button class="collapsible2"> sprite_index</button>
+				<div class="content2">
+				  Returns the current layer's sprite.
+				  <br>
+				  <i>Example: draw_sprite(layer0.sprite_index,0,64,64);</i>
+				</div>
+				
+				<button class="collapsible2"> X</button>
+				<div class="content2">
+				  Change the <b>X</b> position of the layer.
+				  <br>
+				  <i>Example: layer0.X = 100;</i>
+				</div>
+				
+				<button class="collapsible2"> Y</button>
+				<div class="content2">
+				  Change the <b>Y</b> position of the layer.
+				  <br>
+				  <i>Example: layer0.Y = 100;</i>
+				</div>
+				
+				<button class="collapsible2"> xScale</button>
+				<div class="content2">
+				  You can change the layer's width with <b>xScale</b>.
+				  <br>
+				  <i>Example: layer0.xScale = random(10);</i>
+				</div>
+				
+				<button class="collapsible2"> yScale</button>
+				<div class="content2">
+				  You can change the layer's height with <b>yScale</b>.
+				  <br>
+				  <i>Example: layer0.yScale = random(10);</i>
+				</div>
+				
+				<button class="collapsible2"> xSkew</button>
+				<div class="content2">
+				  You can skew horizontally the layer with <b>xSkew</b>.
+				  <br>
+				  <i>Example: layer0.xSkew = wave(-.5,.5,1,0);</i>
+				</div>
+				
+				<button class="collapsible2"> ySkew</button>
+				<div class="content2">
+				  You can skew vertically the layer with <b>ySkew</b>.
+				  <br>
+				  <i>Example: layer0.ySkew = wave(-.5,.5,1,0);</i>
+				</div>
+				
+				<button class="collapsible2"> realX</button>
+				<div class="content2">
+				  Returns the <b>real X</b> value of the layer position. <br>This value is the <b>X</b> position <b>as it's seen on the screen</b>.
+				  <br>
+				  <i>Example: draw_sprite(layer0.sprite_index,layer0.realX,layer0.realY);</i>
+				</div>
+				
+				<button class="collapsible2"> realY</button>
+				<div class="content2">
+				  Returns the <b>real Y</b> value of the layer position. <br>This value is the <b>Y</b> position <b>as it's seen on the screen</b>.
+				  <br>
+				  <i>Example: draw_sprite(layer0.sprite_index,layer0.realX,layer0.realY);</i>
+				</div>
+				
+				<button class="collapsible2"> realXScale</button>
+				<div class="content2">
+				  Returns the <b>real xScale</b> value of the layer position. <br>This value is the <b>xScale as it's seen on the screen</b>, changing in Pixel Art and HD mode.
+				  <br>
+				  <i>Example: draw_sprite_ext(layer0.sprite_index,layer0.realX,layer0.realY,layer0.realXScale,layer0.realYScale,0,-1,1);</i>
+				</div>
+				
+				<button class="collapsible2"> realYScale</button>
+				<div class="content2">
+				  Returns the <b>real yScale</b> value of the layer position. <br>This value is the <b>yScale as it's seen on the screen</b>, changing in Pixel Art and HD mode.
+				  <br>
+				  <i>Example: draw_sprite_ext(layer0.sprite_index,layer0.realX,layer0.realY,layer0.realXScale,layer0.realYScale,0,-1,1);</i>
+				</div>
+				
+				<button class="collapsible2"> imageAngle</button>
+				<div class="content2">
+				  You can rotate the layer with <b>imageAngle</b>.
+				  <br>
+				  <i>Example: layer0.imageAngle = wave(0,360,2,0);</i>
+				</div>
+				
+				<button class="collapsible2"> flashTimer</button>
+				<div class="content2">
+				  The number of frames for the layer to be flashing. Setting this to a constant number will keep the flash effect still.
+				  <br>
+				  <i>Example: layer0.flashTimer = 10;</i>
+				</div>
+				
+				<button class="collapsible2"> flashColor</button>
+				<div class="content2">
+				  Changes the color of the flash effect.
+				  <br>
+				  <i>Example: layer0.flashColor = c_red;</i>
+				</div>
+				
+				<button class="collapsible2"> flashIntensity</button>
+				<div class="content2">
+				  Changes the intensity of the flash effect.
+				  <br>
+				  <i>Example: layer0.flashIntensity = 10;</i>
+				</div>
+				
+				<button class="collapsible2"> flashMode</button>
+				<div class="content2">
+				  Changes the mode of the flash effect. 0 = Normal, 1 = Additive.
+				  <br>
+				  <i>Example: layer0.flashMode = 1;</i>
+				</div>
+				
+				<button class="collapsible2"> shakeTimer</button>
+				<div class="content2">
+				  The number of frames for the layer to be shaking. Setting this to a constant number will keep the shaking effect.
+				  <br>
+				  <i>Example: layer0.shakeTimer = 10;</i>
+				</div>
+				
+				<button class="collapsible2"> shakeSmooth</button>
+				<div class="content2">
+				  Changes the smoothness of the shake effect. Lower values give smoother effects.
+				  <br>
+				  <i>Example: layer0.shakeSmooth = .2;</i>
+				</div>
+				
+				<button class="collapsible2"> shakeIntensity</button>
+				<div class="content2">
+				  Changes the intensity of the shake effect.
+				  <br>
+				  <i>Example: layer0.shakeIntensity = 10;</i>
+				</div>
+				
+				<button class="collapsible2"> shakeRotational</button>
+				<div class="content2">
+				  Changes the rotational amount of the shake effect.
+				  <br>
+				  <i>Example: layer0.shakeRotational = 1;</i>
+				</div>
+				
+			</div>
+			<br>
+			
+			<button class="collapsible"> Functions: Maths</button>
+			<div class="content">
+	
+				<button class="collapsible2"> ease(function,x)</button>
+				<div class="content2">
+				  Returns the <b>x</b> value with a easing function applied. <b>x</b> should be a number from 0 to 1.
+				  <br>
+				  All the functions from <a href="https://easings.net">easings.net</a> work.
+				  <br>
+				  <i>Example: layer0.xScale = ease("easeOutCubic",t);</i>
+				</div>
+				
+				<button class="collapsible2"> approach(current,target,amount)</button>
+				<div class="content2">
+				  Move a value towards a target value by a given amount.
+				  <br>
+				  <i>Example: x = approach(x,10,1);</i>
+				</div>
+
+				<button class="collapsible2"> random(n)</button>
+				<div class="content2">
+				  Returns a random real number between 0 and n.
+				  <br>
+				  <i>Example: x = random(10);</i>
+				</div>
+					
+				<button class="collapsible2"> random_range(x,y)</button>
+				<div class="content2">
+				  Returns a random real number between x and y.
+				  <br>
+				  <i>Example: z = random_range(5,10);</i>
+				</div>
+
+				<button class="collapsible2"> irandom(n)</button>
+				<div class="content2">
+				  Returns a random integer between 0 and n. This includes n if n itself is an integer value.
+				  <br>
+				  <i>Example: x = irandom(10);</i>
+				</div>
+					
+				<button class="collapsible2"> irandom_range(x,y)</button>
+				<div class="content2">
+				  Returns a random integer between x and y.
+				  <br>
+				  <i>Example: z = irandom_range(0,3);</i>
+				</div>
+
+				<button class="collapsible2"> abs(x)</button>
+				<div class="content2">
+				  Returns the absolute value of a value.
+				  <br>
+				  <i>Example: x = abs(-10);</i>
+				</div>
+					
+				<button class="collapsible2"> round(x)</button>
+				<div class="content2">
+				  Returns the given number rounded to the nearest integer.
+				  <br>
+				  <i>Example: x = round(3.5);</i>
+				</div>
+
+				<button class="collapsible2"> floor(x)</button>
+				<div class="content2">
+				  Returns the given number rounded down to the nearest integer.
+				  <br>
+				  <i>Example: x = floor(3.5);</i>
+				</div>
+					
+				<button class="collapsible2"> ceil(x)</button>
+				<div class="content2">
+				  Returns the given number rounded up to the nearest integer.
+				  <br>
+				  <i>Example: x = ceil(3.5);</i>
+				</div>
+
+				<button class="collapsible2"> sign(x)</button>
+				<div class="content2">
+				  Returns the sign of x.
+				  <br>
+				  <i>Example: x = sign(-30);</i>
+				</div>
+					
+				<button class="collapsible2"> frac(x)</button>
+				<div class="content2">
+				  Returns the decimal part of the given number.
+				  <br>
+				  <i>Example: x = frac(3.5);</i>
+				</div>
+
+				<button class="collapsible2"> sqrt(x)</button>
+				<div class="content2">
+				  Returns the square root of x. x cannot be a negative value.
+				  <br>
+				  <i>Example: x = sqrt(128);</i>
+				</div>
+					
+				<button class="collapsible2"> sqr(x)</button>
+				<div class="content2">
+				  Returns x*x.
+				  <br>
+				  <i>Example: x = sqr(4);</i>
+				</div>
+
+				<button class="collapsible2"> exp(x)</button>
+				<div class="content2">
+				  The exponential function.
+				  <br>
+				  <i>Example: x = exp(2);</i>
+				</div>
+					
+				<button class="collapsible2"> ln(x)</button>
+				<div class="content2">
+				  Returns the natural logarithm of the input value.
+				  <br>
+				  <i>Example: x = ln(8);</i>
+				</div>
+
+				<button class="collapsible2"> log2(x)</button>
+				<div class="content2">
+				  Returns the log base 2 of x, the number 2 must be powered by to equal x.
+				  <br>
+				  <i>Example: x = log2(128);</i>
+				</div>
+					
+				<button class="collapsible2"> log10(x)</button>
+				<div class="content2">
+				  Returns the log base 10 of x.
+				  <br>
+				  <i>Example: x = log10(100);</i>
+				</div>
+
+				<button class="collapsible2"> sin(x)</button>
+				<div class="content2">
+				  Returns the sine of x (x in radians).
+				  <br>
+				  <i>Example: x = sin(1);</i>
+				</div>
+					
+				<button class="collapsible2"> cos(x)</button>
+				<div class="content2">
+				  Returns the cosine of x (x in radians).
+				  <br>
+				  <i>Example: x = cos(1);</i>
+				</div>
+
+				<button class="collapsible2"> tan(x)</button>
+				<div class="content2">
+				  Returns the tangent of x (x in radians).
+				  <br>
+				  <i>Example: x = tan(1);</i>
+				</div>
+					
+				<button class="collapsible2"> arcsin(x)</button>
+				<div class="content2">
+				  Returns the inverse sine of x.
+				  <br>
+				  <i>Example: x = arcsin(20);</i>
+				</div>
+
+				<button class="collapsible2"> arccos(x)</button>
+				<div class="content2">
+				  Returns the inverse cosine of x.
+				  <br>
+				  <i>Example: x = arccos(20);</i>
+				</div>
+					
+				<button class="collapsible2"> arctan(x)</button>
+				<div class="content2">
+				  Returns the inverse tangent of x.
+				  <br>
+				  <i>Example: x = arctan(20);</i>
+				</div>
+
+				<button class="collapsible2"> arctan2(y,x)</button>
+				<div class="content2">
+				  Calculates arctan(y/x) and returns an angle in the correct quadrant.
+				  <br>
+				  <i>Example: x = arctan2(1,1);</i>
+				</div>
+					
+				<button class="collapsible2"> dsin(x)</button>
+				<div class="content2">
+				  Returns the sine of x, where x is in degrees.
+				  <br>
+				  <i>Example: x = dsin(90);</i>
+				</div>
+
+				<button class="collapsible2"> dcos(x)</button>
+				<div class="content2">
+				  Returns the cosine of x, where x is in degrees.
+				  <br>
+				  <i>Example: x = dcos(90);</i>
+				</div>
+					
+				<button class="collapsible2"> dtan(x)</button>
+				<div class="content2">
+				  Returns the tangent of x, where x is in degrees.
+				  <br>
+				  <i>Example: x = dtan(90);</i>
+				</div>
+
+				<button class="collapsible2"> darcsin(x)</button>
+				<div class="content2">
+				  Returns the inverse sine of x, where x is in degrees.
+				  <br>
+				  <i>Example: x = darcsin(-1);</i>
+				</div>
+					
+				<button class="collapsible2"> darccos(x)</button>
+				<div class="content2">
+				  Returns the inverse cosine of x, where x is in degrees.
+				  <br>
+				  <i>Example: x = darccos(-1);</i>
+				</div>
+
+				<button class="collapsible2"> darctan(x)</button>
+				<div class="content2">
+				  Returns the inverse tangent of x, where x is in degrees.
+				  <br>
+				  <i>Example: x = darctan(-1);</i>
+				</div>
+					
+				<button class="collapsible2"> darctan2(y,x)</button>
+				<div class="content2">
+				  Calculates arctan(y/x) and returns an angle in the correct quadrant.
+				  <br>
+				  <i>Example: x = darctan2(1,1);</i>
+				</div>
+
+				<button class="collapsible2"> degtorad(x)</button>
+				<div class="content2">
+				  Returns x transformed to radians.
+				  <br>
+				  <i>Example: x = degtorad(90);</i>
+				</div>
+					
+				<button class="collapsible2"> radtodeg(x)</button>
+				<div class="content2">
+				  Returns x transformed to degrees.
+				  <br>
+				  <i>Example: x = radtodeg(1);</i>
+				</div>
+
+				<button class="collapsible2"> power(x,n)</button>
+				<div class="content2">
+				  Returns the given number to the given power; the number x multiplied by itself n number of times.
+				  <br>
+				  <i>Example: x = power(2,4);</i>
+				</div>
+					
+				<button class="collapsible2"> logn(n,x)</button>
+				<div class="content2">
+				  Returns the log base n of x.
+				  <br>
+				  <i>Example: x = logn(5,10);</i>
+				</div>
+
+				<button class="collapsible2"> clamp(x,min,max)</button>
+				<div class="content2">
+				  Returns a value clamped between the specified minimum and maximum.
+				  <br>
+				  <i>Example: x = clamp(-5,0,10);</i>
+				</div>
+					
+				<button class="collapsible2"> lerp(current,target,amount)</button>
+				<div class="content2">
+				  Returns the linear interpolation of two input values by the given amount.
+				  <br>
+				  <i>Example: x = lerp(x,mouse_x(),.5);</i>
+				</div>
+
+				<button class="collapsible2"> angle_difference(angle1,angle2)</button>
+				<div class="content2">
+				  Returns the difference between two angles.
+				  <br>
+				  <i>Example: x = angle_difference(90,180);</i>
+				</div>
+					
+				<button class="collapsible2"> point_distance(x1,y1,x2,y2)</button>
+				<div class="content2">
+				  Returns the length of a vector comprised of the specified components.
+				  <br>
+				  <i>Example: x = point_distance(20,20,50,20);</i>
+				</div>
+
+				<button class="collapsible2"> point_direction(x1,y1,x2,y2)</button>
+				<div class="content2">
+				  Returns the direction, in degrees, of a vector comprised.
+				  <br>
+				  <i>Example: a = point_direction(x,y,mouse_x(),mouse_y());</i>
+				</div>
+					
+				<button class="collapsible2"> lengthdir_x(length,direction)</button>
+				<div class="content2">
+				  Returns the horizontal x-component of the vector determined by the indicated length and direction.
+				  <br>
+				  <i>Example: x = lengthdir_x(10,45);</i>
+				</div>
+
+				<button class="collapsible2"> lengthdir_y(length,direction)</button>
+				<div class="content2">
+				  Returns the horizontal y-component of the vector determined by the indicated length and direction.
+				  <br>
+				  <i>Example: y = lengthdir_y(10,45);</i>
+				</div>
+			
+			</div>
+			<br>
+			
+			<button class="collapsible"> Functions: Color</button>
+			<div class="content">
+					
+				<button class="collapsible2"> make_color_rgb(red,green,blue)</button>
+				<div class="content2">
+				  Returns the color created with the given <b>red</b>, <b>green</b> and <b>blue</b> values.
+				  <br>
+				  <i>Example: layer0.flashColor = make_color_rgb(100,200,255);</i>
+				</div>
+				
+				<button class="collapsible2"> make_color_hsv(hue,saturation,value)</button>
+				<div class="content2">
+				  Returns a colour based on <b>hue</b>, <b>saturation</b> and <b>value</b>.
+				  <br>
+				  <i>Example: local col = make_color_hsv(100, 145, 255);</i>
+				</div>
+		
+				<button class="collapsible2"> color_get_red(color)</button>
+				<div class="content2">
+				  Returns the <b>red</b> component of the given color.
+				  <br>
+				  <i>Example: local red = color_get_red(color);</i>
+				</div>
+		
+				<button class="collapsible2"> color_get_green(color)</button>
+				<div class="content2">
+				  Returns the <b>green</b> component of the given color.
+				  <br>
+				  <i>Example: local green = color_get_green(color);</i>
+				</div>
+		
+				<button class="collapsible2"> color_get_blue(color)</button>
+				<div class="content2">
+				  Returns the <b>blue</b> component of the given color.
+				  <br>
+				  <i>Example: local blue = color_get_blue(color);</i>
+				</div>
+		
+				<button class="collapsible2"> color_get_hue(color)</button>
+				<div class="content2">
+				  Returns the <b>hue</b> component of the given color.
+				  <br>
+				  <i>Example: local hue = color_get_hue(color);</i>
+				</div>
+		
+				<button class="collapsible2"> color_get_saturation(color)</button>
+				<div class="content2">
+				  Returns the <b>saturation</b> component of the given color.
+				  <br>
+				  <i>Example: local saturation = color_get_saturation(color);</i>
+				</div>
+		
+				<button class="collapsible2"> color_get_value(color)</button>
+				<div class="content2">
+				  Returns the <b>value</b> component of the given color.
+				  <br>
+				  <i>Example: local value = color_get_value(color);</i>
+				</div>
+					
+				<button class="collapsible2"> merge_color(color_a,color_b,amount)</button>
+				<div class="content2">
+				  Returns a merge from <b>color_a</b> to <b>color_b</b> by the given <b>amount from 0 to 1</b>.
+				  <br>
+				  <i>Example: layer0.flashColor = merge_color(c_blue,c_red,.5);</i>
+				</div>
+			
+			</div>
+			<br>
+						
+			<button class="collapsible"> Functions: Strings</button>
+			<div class="content">
+
+					<button class="collapsible2"> string_length(string)</button>
+					<div class="content2">
+					  Returns the number of characters of the given string.
+					  <br>
+					  <i>Example: local count = string_length("Hello World");</i>
+					</div>
+
+					<button class="collapsible2"> string_byte_length(string)</button>
+					<div class="content2">
+					  Returns the number of bytes in a string.
+					  <br>
+					  <i>Example: local count = string_byte_length("Hello World");</i>
+					</div>
+
+					<button class="collapsible2"> string_pos(sub_string,string)</button>
+					<div class="content2">
+					  Returns the character position of an instance of a sub-string within a string, or 0 if it's not found at all..
+					  <br>
+					  <i>Example: local pos = string_pos("World","Hello World");</i>
+					</div>
+
+					<button class="collapsible2"> string_copy(string,index,count)</button>
+					<div class="content2">
+					  Returns a copy of the string given a starting <b>index</b> and a <b>count</b> amount of characters.
+					  <br>
+					  <i>Example: local world = string_copy("Hello World",6,5);</i>
+					</div>
+
+					<button class="collapsible2"> string_char_at(string,index)</button>
+					<div class="content2">
+					  Returns the character of a given string in the given position.
+					  <br>
+					  <i>Example: local W = string_char_at("Hello World",7);</i>
+					</div>
+
+					<button class="collapsible2"> string_delete(string,index,count)</button>
+					<div class="content2">
+					  Returns a copy of the given string with part of the string being deleted.
+					  <br>
+					  <i>Example: local Hello = string_delete("Hello World",5,6);</i>
+					</div>
+
+					<button class="collapsible2"> string_insert(sub_string,string,index)</button>
+					<div class="content2">
+					  Returns a copy of a given string with a substring inserted into a chosen position.
+					  <br>
+					  <i>Example: local HelloWorld = string_insert(" World","Hello",5);</i>
+					</div>
+
+					<button class="collapsible2"> string_lower(string)</button>
+					<div class="content2">
+					  Returns a copy of a given string in all lowercase letters.
+					  <br>
+					  <i>Example: local hello_world = string_lower("HELLO WORLD");</i>
+					</div>
+
+					<button class="collapsible2"> string_upper(string)</button>
+					<div class="content2">
+					  Returns a copy of a given string in all uppercase letters.
+					  <br>
+					  <i>Example: local HELLOW_WORLD = string_upper("hello world");</i>
+					</div>
+
+					<button class="collapsible2"> string_repeat(string,count)</button>
+					<div class="content2">
+					  Returns a copy of a given string repeated a given number of times.
+					  <br>
+					  <i>Example: local batman = string_repeat("Na",10).." batman!";</i>
+					</div>
+
+					<button class="collapsible2"> string_letters(string)</button>
+					<div class="content2">
+					  Returns a copy of a given string with everything but its letters removed.
+					  <br>
+					  <i>Example: local hello = string_letters("h1e2l3l4o5");</i>
+					</div>
+
+					<button class="collapsible2"> string_digits(string)</button>
+					<div class="content2">
+					  Returns a copy of a given string with everything but its numbers removed.
+					  <br>
+					  <i>Example: local _123 = string_digits("a1b2c3");</i>
+					</div>
+
+					<button class="collapsible2"> string_lettersdigits(string)</button>
+					<div class="content2">
+					  Returns a copy of a given string with everything but its letters and digits removed.
+					  <br>
+					  <i>Example: local escaped = string_lettersdigits(password);</i>
+					</div>
+
+					<button class="collapsible2"> string_replace(string,sub_string,new_string)</button>
+					<div class="content2">
+					  Returns a copy of a string with the first instance of a given substring replaced with a new substring.
+					  <br>
+					  <i>Example: local hello_world = string_replace("Hello You","You","World");</i>
+					</div>
+
+					<button class="collapsible2"> string_replace_all(string,sub_string,new_string)</button>
+					<div class="content2">
+					  Returns a copy of a string with all instances of a given substring replaced with a new substring.
+					  <br>
+					  <i>Example: local hellow_world = string_replace_all("H$e$l$l$o W$o$r$l$d","$","");</i>
+					</div>
+
+					<button class="collapsible2"> string_count(sub_string,string)</button>
+					<div class="content2">
+					  Returns the number of instances of a substring found within a given string.
+					  <br>
+					  <i>Example: local hello_es = string_count("hello","hello hello world");</i>
+					</div>
+
+					<button class="collapsible2"> string_width(string)</button>
+					<div class="content2">
+					  Returns the width of the string in pixels.
+					  <br>
+					  <i>Example: local width = string_width("Hello World");</i>
+					</div>
+
+					<button class="collapsible2"> string_height(string)</button>
+					<div class="content2">
+					  Returns the height of the string in pixels.
+					  <br>
+					  <i>Example: local height = string_height("Hellow World");</i>
+					</div>
+
+					<button class="collapsible2"> string_width_ext(string,separation,width)</button>
+					<div class="content2">
+					  Returns the maximum width in pixels of a string based on the given separation and line-break width.
+					  <br>
+					  <i>Example: local width = string_width_ext("Hellow World",-1,100);</i>
+					</div>
+
+					<button class="collapsible2"> string_height_ext(string,separation,width)</button>
+					<div class="content2">
+					  Returns the maximum height in pixels of a string based on the given separation and line-break width.
+					  <br>
+					  <i>Example: local height = string_width_ext("Hellow World",-1,100);;</i>
+					</div>
+
+			</div>
+			<br>
+			
+			<button class="collapsible"> Functions: Files</button>
+			<div class="content">
+			
+				<button class="collapsible2"> file_open_write(filter,filename)</button>
+				<div class="content2">
+				  Returns the index of an opened file that allows writing into it.
+				  <br>
+				  <i>Example: local file = file_open_write("txt|.txt","example");</i>
+				</div>
+	
+				<button class="collapsible2"> file_open_read(filter,filename)</button>
+				<div class="content2">
+				  Returns the index of an opened file that allows being read.
+				  <br>
+				  <i>Example: local file = file_open_read("txt|.txt","example");</i>
+				</div>
+	
+				<button class="collapsible2"> file_close(file_id)</button>
+				<div class="content2">
+				  Closes an opened file.
+				  <br>
+				  <i>Example: file_close(file);</i>
+				</div>
+	
+				<button class="collapsible2"> file_write_string(file,string)</button>
+				<div class="content2">
+				  Writes an string to a previously opened file.
+				  <br>
+				  <i>Example: file_write_string(file,"Hellow World");</i>
+				</div>
+	
+				<button class="collapsible2"> file_write_real(file,number)</button>
+				<div class="content2">
+				  Writes a number to a previously opened file.
+				  <br>
+				  <i>Example: file_write_real(file,15);</i>
+				</div>
+	
+				<button class="collapsible2"> file_writeln(file)</button>
+				<div class="content2">
+				  Writes a linebreak to a previously opened file.
+				  <br>
+				  <i>Example: file_writeln(file);</i>
+				</div>
+	
+				<button class="collapsible2"> file_read_string(file)</button>
+				<div class="content2">
+				  Reads the current line of a previously opened file as a string.
+				  <br>
+				  <i>Example: local string = file_read_string(file);</i>
+				</div>
+	
+				<button class="collapsible2"> file_read_real(file)</button>
+				<div class="content2">
+				  Reads the current line of a previously opened file as a number.
+				  <br>
+				  <i>Example: local real = file_read_real(file);</i>
+				</div>
+	
+				<button class="collapsible2"> file_readln(file)</button>
+				<div class="content2">
+				  Jumps to the next line on a previously opened, read-only, file.
+				  <br>
+				  <i>Example: file_readln(file);</i>
+				</div>
+			
+			</div>
+			<br>	
+			
+			<button class="collapsible"> Functions: Render</button>
+			<div class="content">
+	
+				<button class="collapsible2"> frames_to_render()</button>
+				<div class="content2">
+				  Returns the number of frames that are on queue to be rendered.
+				  <br>
+				  Returns -1 if no frames are waiting to be rendered.
+				  <br>
+				  <i>Example: draw_text(20,20,tostring(frames_to_render()));</i>
+				</div>
+			
+			</div>
+			<br>	
+			
+			<button class="collapsible"> Functions: Layers</button>
+			<div class="content">
+	
+				<button class="collapsible2"> layer_set_offset(layer_id,x,y)</button>
+				<div class="content2">
+				  Changes the layer's <b>origin point</b> by the given position.
+				  <br>
+				  <i>Example: layer_set_offset(layer0,64,64);</i>
+				</div>
+	
+				<button class="collapsible2"> layer_get_width(layer_id)</button>
+				<div class="content2">
+				  Returns the given layer's <b>width</b>.
+				  <br>
+				  <i>Example: layer_get_width(layer0);</i>
+				</div>
+	
+				<button class="collapsible2"> layer_get_height(layer_id)</button>
+				<div class="content2">
+				  Returns the given layer's <b>height</b>.
+				  <br>
+				  <i>Example: layer_get_height(layer0);</i>
+				</div>
+			
+			</div>
+			<br>
+						
+			<button class="collapsible"> Functions: Draw</button>
+			<div class="content">
+	
+				<button class="collapsible2"> draw_get_color()</button>
+				<div class="content2">
+				  Gets the current draw colour.
+				  <br>
+				  <i>Example: local color = draw_get_color();</i>
+				</div>
+
+				<button class="collapsible2"> draw_set_color(color)</button>
+				<div class="content2">
+				  Sets the base colour for the draw functions.
+				  <br>
+				  <i>Example: draw_set_color(c_white);</i>
+				</div>
+
+				<button class="collapsible2"> draw_get_alpha()</button>
+				<div class="content2">
+				  This function returns the current value of the draw alpha from 0 to 1.
+				  <br>
+				  <i>Example: local alpha = draw_get_alpha();</i>
+				</div>
+
+				<button class="collapsible2"> draw_set_alpha(alpha)</button>
+				<div class="content2">
+				  Sets the alpha for the draw functions.
+				  <br>
+				  <i>Example: draw_set_alpha(1);</i>
+				</div>
+
+				<button class="collapsible2"> draw_clear(color)</button>
+				<div class="content2">
+				  Clears the entire screen with color.
+				  <br>
+				  <i>Example: draw_clear(c_red);</i>
+				</div>
+
+				<button class="collapsible2"> draw_clear_alpha(color,alpha)</button>
+				<div class="content2">
+				  Clears the entire screen with color by the given alpha.
+				  <br>
+				  <i>Example: draw_clear_alpha(c_lime,.5);</i>
+				</div>
+
+				<button class="collapsible2"> draw_point(x,y)</button>
+				<div class="content2">
+				  Draws a point to the screen.
+				  <br>
+				  <i>Example: draw_point(64,64);</i>
+				</div>
+
+				<button class="collapsible2"> draw_line(x1,y1,x2,y2)</button>
+				<div class="content2">
+				  Draws a line one pixel wide.
+				  <br>
+				  <i>Example: draw_line(0,0,10,0);</i>
+				</div>
+
+				<button class="collapsible2"> draw_line_width(x1,y1,x2,y2,width)</button>
+				<div class="content2">
+				  Draws a line with the given width.
+				  <br>
+				  <i>Example: draw_line_width(5,5,10,10,2);</i>
+				</div>
+
+				<button class="collapsible2"> draw_rectangle(x1,y1,x2,y2,outline)</button>
+				<div class="content2">
+				  Draws a rectangle to the screen.
+				  <br>
+				  <i>Example: draw_rectangle(0,0,64,64,0);</i>
+				</div>
+
+				<button class="collapsible2"> draw_roundrect(x1,y1,x2,y2,outline)</button>
+				<div class="content2">
+				  Draws a rectangle with rounded corners of a fixed radius.
+				  <br>
+				  <i>Example: draw_roundrect(20,20,50,50,1);</i>
+				</div>
+
+				<button class="collapsible2"> draw_roundrect_ext(x1,y1,x2,y2,xradius,yradius,outline)</button>
+				<div class="content2">
+				  Draws a rectangle with rounded corners of the given radius.
+				  <br>
+				  <i>Example: draw_roundrect_ext(50,50,60,60,2,2,0);</i>
+				</div>
+
+				<button class="collapsible2"> draw_triangle(x1,y1,x2,y2,x3,y3,outline)</button>
+				<div class="content2">
+				  Draws a triangle using three defined points.
+				  <br>
+				  <i>Example: draw_triangle(50,50,200,50,50,200,0);</i>
+				</div>
+
+				<button class="collapsible2"> draw_circle(x,y,radius,outline)</button>
+				<div class="content2">
+				  Draws a circle to the screen.
+				  <br>
+				  <i>Example: draw_circle(layer0.realX,layer0.realY,64,1);</i>
+				</div>
+
+				<button class="collapsible2"> draw_ellipse(x1,y1,x2,y2,outline)</button>
+				<div class="content2">
+				  Draws an ellipse to the screen.
+				  <br>
+				  <i>Example: draw_ellipse(100,100,300,200,0);</i>
+				</div>
+
+				<button class="collapsible2"> draw_set_circle_precision(precision)</button>
+				<div class="content2">
+				  Sets the precision for drawing a circle or ellipse.
+				  <br>
+				  <i>Example: draw_set_circle_precision(12);</i>
+				</div>
+			
+			</div>
+			<br>
+			
+			<button class="collapsible"> Functions: Text</button>
+			<div class="content">
+
+				<button class="collapsible2"> draw_set_halign(align)</button>
+				<div class="content2">
+				  Aligns any subsequently drawn text horizontally.
+				  <br>
+				  <i>Example: draw_set_halign(fa_left);</i>
+				</div>
+
+				<button class="collapsible2"> draw_set_valign(align)</button>
+				<div class="content2">
+				  Aligns any subsequently drawn text vertically.
+				  <br>
+				  <i>Example: draw_set_valign(fa_top);</i>
+				</div>
+
+				<button class="collapsible2"> draw_text(x,y,string)</button>
+				<div class="content2">
+				  Draws a text to the screen
+				  <br>
+				  <i>Example: draw_text(0,0,"Hellow World");</i>
+				</div>
+
+				<button class="collapsible2"> draw_text_ext(x,y,string,separation,width)</button>
+				<div class="content2">
+				  Draws a string at a given position with a specific spacing and within a limited area.
+				  <br>
+				  <i>Example: draw_text_ext(100, 50, "Hellow World", 3, 300);</i>
+				</div>
+
+				<button class="collapsible2"> draw_text_transformed(x,y,string,xscale,yscale,angle)</button>
+				<div class="content2">
+				  Draws a string with scaling and rotation.
+				  <br>
+				  <i>Example: draw_text_transformed(0,0,"Hellow World",2,2,0);</i>
+				</div>
+
+				<button class="collapsible2"> draw_text_ext_transformed(x,y,string,separation,width,xscale,yscale,angle)</button>
+				<div class="content2">
+				  Draws a string with custom spacing and scaling.
+				  <br>
+				  <i>Example: draw_text_ext_transformed(0,0,"Hellow World",-1,100,2,2,0);</i>
+				</div>
+
+				<button class="collapsible2"> draw_text_color(x,y,string,col1,col2,col3,col4,alpha)</button>
+				<div class="content2">
+				  Draw a string at a given position with a colour gradient.
+				  <br>
+				  <i>Example: draw_text_color(64,64,"Hellow World",c_black,c_black,c_white,c_white,1);</i>
+				</div>
+
+				<button class="collapsible2"> draw_text_ext_color(x,y,string,separation,width,col1,col2,col3,col4,alpha)</button>
+				<div class="content2">
+				  Draws a string with custom spacing and colours.
+				  <br>
+				  <i>Example: draw_text_ext_color(64,64,"Hello World",-1,100,c_red,c_blue,c_red,c_blue,1);</i>
+				</div>
+
+				<button class="collapsible2"> draw_text_transformed_color(x,y,string,xscale,yscale,col1,col2,col3,col4,alpha)</button>
+				<div class="content2">
+				  Draws a string with scaling and colour.
+				  <br>
+				  <i>Example: draw_text_transformed_color(20,20,"Hello World",2,2,c_white,c_gray,c_dkgray,c_black,1);</i>
+				</div>
+			
+			</div>
+			<br>
+			
+			<button class="collapsible"> Functions: Time</button>
+			<div class="content">
+				
+				<button class="collapsible2"> time()</button>
+				<div class="content2">
+				  Returns the time in microseconds.
+				  <br>
+				  <i>Example: layer0.xSkew = time() * 0.000001;</i>
+				</div>
+			
+				<button class="collapsible2"> wave(from,to,duration,offset)</button>
+				<div class="content2">
+				  Returns a value that oscilates between <b>from</b> and <b>to</b> given the <b>duration</b> in seconds.<br>You can also specify an <b>offset</b>.
+				  <br>
+				  <i>Example: layer0.xSkew = wave(-.5,.5,1,0);</i>
+				</div>
+				
+				<button class="collapsible2"> simulation_time()</button>
+				<div class="content2">
+				  Returns a number from <b>0</b> to <b>1</b> given the render time. This number gets reset after simulating the animation.
+				  <br>
+				  <i>Example: layer0.xScale = simulation_time();</i>
+				</div>
+				
+				<button class="collapsible2"> set_speed_multiplier(number)</button>
+				<div class="content2">
+				  Sets the speed multiplier that affects <b>time()</b>,<b>secs()</b> and <b>radsinsecs()</b>.
+				  <br>
+				  <i>Example: set_speed_multiplier(.5);</i>
+				</div>
+				
+				<button class="collapsible2"> get_speed_multiplier()</button>
+				<div class="content2">
+				  Returns the current speed multiplier for <b>time()</b>,<b>secs()</b> and <b>radsinsecs()</b> functions.
+				  <br>
+				  <i>Example: local current_multiplier = get_speed_multiplier();</i>
+				</div>
+							
+				<button class="collapsible2"> secs()</button>
+				<div class="content2">
+				  Returns the time of the animation in <b>seconds</b>.
+				  <br>
+				  <i>Example: layer0.xScale = secs();</i>
+				</div>
+				
+				<button class="collapsible2"> radsinsecs()</button>
+				<div class="content2">
+				  Returns the time of the animation in <b>radians</b>.
+				  <br>
+				  <i>Example: layer0.xScale = math.sin(radsinsecs());</i>
+				</div>
+			
+			</div>
+			<br>
+			
+			<button class="collapsible"> Functions: Sprites</button>
+			<div class="content">
+			<button class="collapsible2"> draw_sprite(sprite_index,subimg,x,y)</button>
+			
+				<div class="content2">
+				  Draws a sprite at a given position.
+				  <br>
+				  <i>Example: draw_sprite(layer0.sprite_index,0,64,64);</i>
+				</div>
+
+				<button class="collapsible2"> draw_sprite_pos(sprite,subimg,x1,y1,x2,y2,x3,y3,x4,y4,alpha)</button>
+				<div class="content2">
+				  Draws a sprite stretched between four given points and with an alpha blend.
+				  <br>
+				  <i>Example: draw_sprite_pos(layer0.sprite_index,0,20,20,40,20,40,40,20,40,1);</i>
+				  <br>
+				  <img src="https://docs2.yoyogames.com/source/_build/3_scripting/4_gml_reference/drawing/sprites_and_tiles/images/spr_pos.png" />
+				  <br>
+				  <i style="color: green;font-size: 13px">Image taken from Game Maker Studio documentation.</i>
+				</div>
+
+				<button class="collapsible2"> draw_sprite_ext(sprite,subimg,x,y,xscale,yscale,rotation,color,alpha)</button>
+				<div class="content2">
+				  Draws a sprite at a given position, with customizable scaling, rotation, blend and alpha.
+				  <br>
+				  <i>Example: draw_sprite_ext(layer0.sprite_index,0,64,64,.5,.5,90,c_red,1);</i>
+				</div>
+
+				<button class="collapsible2"> draw_sprite_stretched(sprite,subimg,x,y,width,height)</button>
+				<div class="content2">
+				  Draws a sprite at a given position, stretched.
+				  <br>
+				  <i>Example: draw_sprite_stretched(layer0.sprite_index,0,layer0.realX,layer0.realY,100,100);</i>
+				  <br>
+				  <img src="https://docs2.yoyogames.com/source/_build/3_scripting/4_gml_reference/drawing/sprites_and_tiles/images/spr_stretch.png" />
+				  <br>
+				  <i style="color: green;font-size: 13px">Image taken from Game Maker Studio documentation.</i>
+				</div>
+
+				<button class="collapsible2"> draw_sprite_stretched_ext(sprite,subimg,x,y,width,height,color,alpha)</button>
+				<div class="content2">
+				  Draws a sprite at a given position, stretched, and allows for a custom blend and alpha. This function ignores the sprite's origin.
+				  <br>
+				  <i>Example: draw_sprite_stretched_ext(layer0.sprite_index,0,layer0.X,layer0.Y,100,150,c_blue,1);</i>
+				</div>
+
+				<button class="collapsible2"> draw_sprite_tiled(sprite,subimg,x,y)</button>
+				<div class="content2">
+				  Draws a sprite at a given position, and tiles it to fill the entire view.
+				  <br>
+				  <i>Example: draw_sprite_tiled(layer0.sprite_index,0,layer0.realX,layer0.realY);</i>
+				</div>
+
+				<button class="collapsible2"> draw_sprite_tiled_ext(sprite,subimg,x,y,xscale,yscale,color,alpha)</button>
+				<div class="content2">
+				  Draws a sprite at a given position with scaling, blending and alpha, and tiles it to fill the entire view.
+				  <br>
+				  <i>Example: draw_sprite_tiled_ext(layer0.sprite_index,0,layer0.realX,layer0.realY,c_red,1);</i>
+				</div>
+
+				<button class="collapsible2"> draw_sprite_part(sprite,subimg,left,top,width,height,x,y)</button>
+				<div class="content2">
+				  Draws part of a sprite at a given position.
+				  <br>
+				  <i>Example: draw_sprite_part(layer0.sprite_index,0,0,0,20,20,layer0.realX,layer0.realY);</i>
+				</div>
+
+				<button class="collapsible2"> draw_sprite_part_ext(sprite,subimg,left,top,width,height,x,y,xscale,yscale,color,alpha)</button>
+				<div class="content2">
+				  Draws part of a sprite at a given position with scaling, blending and alpha options.
+				  <br>
+				  <i>Example: draw_sprite_part_ext(layer0.sprite_index,0,10,10,20,20,layer0.realX,layer0.realY,2,2,c_red,1);</i>
+				</div>
+
+				<button class="collapsible2"> draw_sprite_general(sprite,subimg,left,top,width,height,x,y,xscale,yscale,rot,col1,col2,col3,col4,alpha)</button>
+				<div class="content2">
+				  Draws a part of a given sprite with options for scaling, blending and rotation.
+				  <br>
+				  <i>Example: draw_sprite_general(layer0.sprite_index,0,20,20,40,40,layer0.realX,layer0.realY,2,1,90,c_red,c_blue,c_lime,c_black,1);</i>
+				</div>
+				
+			</div>
+			<br>
+			
+			<button class="collapsible"> Functions: Misc</button>
+			<div class="content">
+				
+				<button class="collapsible2"> choose(argument0,argument1...argument11)</button>
+				<div class="content2">
+				  Randomly returns one of the given arguments.
+				  <br>
+				  <i>Example: layer0.X = choose(0,10,20,30);</i>
+				</div>
+				
+				<button class="collapsible2"> lerp_multi(amount,val1,val2...val9)</button>
+				<div class="content2">
+				  Makes the linear interpolation between many values.
+				  <br>
+				  <i>Example: layer0.X = lerp_multi(.5,1,2,3,4,5);</i>
+				</div>
+				
+				<button class="collapsible2"> get_alarm(layer_id,alarm_id)</button>
+				<div class="content2">
+				  Returns the value of the given layer's <b>alarm</b>.
+				  <br>
+				  <i>Example: local alarm1 = get_alarm(layer0,1);</i>
+				</div>
+				
+				<button class="collapsible2"> set_alarm(layer_id,alarm_id,number)</button>
+				<div class="content2">
+				  Sets the value of the given layer's <b>alarm</b>.
+				  <br>
+				  <i>Example: set_alarm(layer0,1,10);</i>
+				</div>
+		
+				<button class="collapsible2"> mouse_x()</button>
+				<div class="content2">
+				  Returns the mouse's <b>X</b> position.
+				  <br>
+				  <i>Example: layer0.X = mouse_x();</i>
+				</div>
+				
+				<button class="collapsible2"> mouse_y()</button>
+				<div class="content2">
+				  Returns the mouse's <b>Y</b> position.
+				  <br>
+				  <i>Example: layer0.Y = mouse_y();</i>
+				</div>
+	
+				<button class="collapsible2"> clipboard_set_text(string)</button>
+				<div class="content2">
+				  Sets the clipboard text to the given one.
+				  <br>
+				  <i>Example: clipboard_set_text("Hello World");</i>
+				</div>
+				
+			</div>
+			<br>
+			
+			<button class="collapsible"> Constants</button>
+			<div class="content">
+			
+				<button class="collapsible2"> Colors</button>
+				<div class="content2" style="outline:dotted; padding:8px; padding-bottom: 28px; padding-left:30px;">
+					<a class="c">
+					<pre><code>
+					c_aqua
+					c_black
+					c_blue
+					c_dkgray
+					c_fuchsia
+					c_gray
+					c_green
+					c_lime
+					c_ltgray
+					c_maroon
+					c_navy
+					c_olive
+					c_purple
+					c_red
+					c_silver
+					c_teal
+					c_white
+					c_yellow
+					c_orange
+					</code></pre>
+					</a>
+				</div>
+			
+				<button class="collapsible2"> Text Alignment</button>
+				<div class="content2" style="outline:dotted; padding:8px; padding-bottom: 28px; padding-left:30px;">
+					<a class="c">
+					<pre><code>
+					fa_left
+					fa_center
+					fa_right
+					fa_top
+					fa_middle
+					fa_bottom
+					</code></pre>
+					</a>
+				</div>
+			
+			</div>
+			<br>
+			
+			<button class="collapsible"> Examples</button>
+			<div class="content">
+			<div class="examples2">
+				<div>
+				<button class="collapsible2"> Squishy</button>
+				<div class="content2" style="outline:dotted; padding:8px; padding-bottom: 28px; padding-left:30px;">
+				<img src="https://i.imgur.com/mKX2Qlj.gif" />
+				<div class="examples">
+					<pre><code>
+					function update()
+					    layer0.xScale = .75 + .25*math.sin(math.cos(radsinsecs()));
+					    layer0.yScale = math.cos(math.cos(radsinsecs()));
+					end
+					</code></pre>
+				</div>
+				</div>
+
+			
+				<button class="collapsible2"> Rotating Juice</button>
+				<div class="content2" style="outline:dotted; padding:8px; padding-bottom: 28px; padding-left:30px;">
+				<img src="https://i.imgur.com/xmwUfbx.gif" />
+				<div class="examples">
+					<pre><code>
+					function update()
+					    layer0.flashColor = merge_color(c_red,c_lime,wave(0,1,1,0));
+					    layer0.flashTimer = 10;
+					    layer0.flashIntensity = wave(0,4.5,0.5,0)
+					    layer0.xScale = .75+.25*math.sin(math.sin(radsinsecs()));
+					    layer0.yScale = math.cos(math.cos(radsinsecs()));
+					    layer0.imageAngle = wave(0,360,2,0);
+					end
+					</code></pre>
+				</div>
+				</div>
+				
+				<button class="collapsible2"> Burst Close-Up</button>
+				<div class="content2" style="outline:dotted; padding:8px; padding-bottom: 28px; padding-left:30px;">
+				<img src="https://i.imgur.com/ABcGkKR.gif" />
+				<div class="examples">
+					<pre><code>
+					function update()
+					    local t = 1-simulation_time();
+					    t = (t*t*t*t);
+					    local s = 1+math.sin(math.rad(t*270));
+					    layer0.xScale = s;
+					    layer0.yScale = s;
+					end
+					</code></pre>
+				</div>
+				</div>
+				
+				<button class="collapsible2"> Ease Appear</button>
+				<div class="content2" style="outline:dotted; padding:8px; padding-bottom: 28px; padding-left:30px;">
+				<img src="https://i.imgur.com/mTPjMeF.gif" />
+				<div class="examples">
+					<pre><code>
+					t = 0;
+
+					function simulate()
+					    t = 0;
+					end
+
+					function update()
+					    t = t + 0.025;
+					    local s = ease("easeOutBounce",t);
+					    layer0.xScale = s;
+					    layer0.yScale = s;
+					end
+					</code></pre>
+				</div>
+				</div>
+				
+				<button class="collapsible2"> Juicy Button Press</button>
+				<div class="content2" style="outline:dotted; padding:8px; padding-bottom: 28px; padding-left:30px;">
+				<img src="https://i.imgur.com/77NQk8e.gif" />
+				<div class="examples">
+					<pre><code>
+					t = 0;
+
+					function simulate()
+					    t = 0;
+					end
+
+					function update()
+					    t = t + 0.01;
+					    local s = ease("easeOutElastic",t);
+					    layer0.imageAngle = -20+s*20;
+					    layer0.xScale = .5+s*.5;
+					    layer0.yScale = .5+s*.5;
+					end
+					</code></pre>
+				</div>
+				</div>
+				
+				<button class="collapsible2"> JSON Export</button>
+				<div class="content2" style="outline:dotted; padding:8px; padding-bottom: 28px; padding-left:30px;">
+				<img src="https://i.imgur.com/GQ1EolW.png" />
+				<div class="examples">
+					<pre><code>
+					function render_start()
+						file = file_open_write("json|*.json","");
+						file_write_string(file,'{ "frames":[');
+						file_writeln(file);
+					end
+
+					function render()
+						write_frame_info()
+					end
+
+					function render_end()
+						file_write_string(file,']}');
+						file_close(file);
+					end
+
+					function write_frame_info()
+						frame_info = "";
+						file_write_string(file,'    {');
+						add_property("x",layer0.X);
+						add_property("y",layer0.Y);
+						add_property("xscale",layer0.xScale);
+						add_property("yscale",layer0.yScale);
+						frame_info.sub(1, -2);
+						file_write_string(file,frame_info);
+						file_write_string(file,'}');
+						if(frames_to_render() > 0) then
+							file_write_string(file,',');
+						end
+						file_writeln(file);
+					end
+
+					function add_property(name,value)
+						frame_info = frame_info..'"'..tostring(name)..'":'..tostring(value)..',';
+					end
+					</code></pre>
+				</div>
+				</div>
+				
+				<button class="collapsible2"> Eased Waves</button>
+				<div class="content2" style="outline:dotted; padding:8px; padding-bottom: 28px; padding-left:30px;">
+				<img src="https://i.imgur.com/9tq10HW.gif" />
+				<div class="examples">
+					<pre><code>
+					function update()
+						local time = 2;
+						layer0.xScale = .5 + ease_wave(0,.5,time,"easeInOutBack");
+						layer0.yScale = .5 + ease_wave(0,.5,time,"easeInOutBack");
+						layer0.imageAngle = ease_wave(0,360,time,"easeInOutBack");
+					end
+					</code></pre>
+				</div>
+				</div>
+				
+
+			</div>
+			</div>
+			
+		</div>
+
+		<div class="footer">
+		<br>
+		<a href="https://codemanu.itch.io/juicefx"> Get JuiceFX </a> <b>·</b> <a href="https://codemanu.itch.io/particle-fx-designer"> Get Pixel FX Designer</a>
+		</div>
+		
+	</center>
+	
+	<script>
+	
+	var ww = document.getElementsByClassName("collapse_all");
+	ww[0].addEventListener("click", function() {
+		var coll = document.getElementsByClassName("collapsible2");
+		var i;
+		for (i = 0; i < coll.length; i++) {
+			coll[i].nextElementSibling.style.display = "none";
+		}
+		var coll = document.getElementsByClassName("collapsible");
+		var i;
+		for (i = 0; i < coll.length; i++) {
+			coll[i].nextElementSibling.style.display = "none";
+		}
+	});
+	
+	var ww = document.getElementsByClassName("collapse_functions");
+	ww[0].addEventListener("click", function() {
+		var coll = document.getElementsByClassName("collapsible2");
+		var i;
+		for (i = 0; i < coll.length; i++) {
+			coll[i].nextElementSibling.style.display = "none";
+		}
+		var coll = document.getElementsByClassName("collapsible");
+		var i;
+		for (i = 0; i < coll.length; i++) {
+			coll[i].nextElementSibling.style.display = "block";
+		}
+	});
+	
+	var ww = document.getElementsByClassName("collapse_everything");
+	ww[0].addEventListener("click", function() {
+		var coll = document.getElementsByClassName("collapsible2");
+		var i;
+		for (i = 0; i < coll.length; i++) {
+			coll[i].nextElementSibling.style.display = "block";
+		}
+		var coll = document.getElementsByClassName("collapsible");
+		var i;
+		for (i = 0; i < coll.length; i++) {
+			coll[i].nextElementSibling.style.display = "block";
+		}
+	});
+	
+	var coll = document.getElementsByClassName("collapsible");
+	var i;
+
+	for (i = 0; i < coll.length; i++) {
+	  coll[i].addEventListener("click", function() {
+		this.classList.toggle("active");
+		var content = this.nextElementSibling;
+		if (content.style.display === "block") {
+		  content.style.display = "none";
+		} else {
+		  content.style.display = "block";
+		}
+	  });
+	}
+	
+	var coll = document.getElementsByClassName("collapsible2");
+	var i;
+
+	for (i = 0; i < coll.length; i++) {
+	  coll[i].addEventListener("click", function() {
+		this.classList.toggle("active");
+		var content = this.nextElementSibling;
+		if (content.style.display === "block") {
+		  content.style.display = "none";
+		} else {
+		  content.style.display = "block";
+		}
+	  });
+	}
+	
+	var t = document.getElementsByClassName("examples");
+	for (i = 0; i < t.length; i++) {
+		var text = t[i].innerHTML;
+		t[i].innerHTML = theworstsyntaxhighlightingpleasedonthitme(text);
+	}
+	
+	$("pre code").each(function(){
+		var html = $(this).html();
+		var pattern = html.match(/\s*\n[\t\s]*/);
+		$(this).html(html.replace(new RegExp(pattern, "g"),'\n'));
+	});
+	
+	function theworstsyntaxhighlightingpleasedonthitme(t) {
+	
+		//t = t.replace(/(".*?")/,'<a style=color:gray;>""</a>');
+	
+		t = t.replace(/render/g,'re<a>nd</a>er');
+		t = t.replace(/_end/g,'_e<a>nd</a>');
+	
+		t = t.replace(/function/g,'<a class="function">function</a>');
+		t = t.replace(/end/g,'<a class="function">end</a>');
+		t = t.replace(/then/g,'<a class="function">then</a>');
+		t = t.replace(/local/g,'<a class="function">local</a>');
+		
+		t = t.replace(/math.cos/g,'<a class="luafunction">math.cos</a>');
+		t = t.replace(/math.sin/g,'<a class="luafunction">math.sin</a>');
+		
+		t = t.replace(/sprite_index/g,'<a class="property">sprite_index</a>');
+		t = t.replace(/X/g,'<a class="property">X</a>');
+		t = t.replace(/Y/g,'<a class="property">Y</a>');
+		t = t.replace(/xScale/g,'<a class="property">xScale</a>');
+		t = t.replace(/yScale/g,'<a class="property">yScale</a>');
+		t = t.replace(/xSkew/g,'<a class="property">xSkew</a>');
+		t = t.replace(/ySkew/g,'<a class="property">ySkew</a>');
+		t = t.replace(/realX/g,'<a class="property">realX</a>');
+		t = t.replace(/realY/g,'<a class="property">realY</a>');
+		t = t.replace(/realXScale/g,'<a class="property">realXScale</a>');
+		t = t.replace(/realYScale/g,'<a class="property">realYScale</a>');
+		t = t.replace(/imageAngle/g,'<a class="property">imageAngle</a>');
+		t = t.replace(/flashTimer/g,'<a class="property">flashTimer</a>');
+		t = t.replace(/flashColor/g,'<a class="property">flashColor</a>');
+		t = t.replace(/flashIntensity/g,'<a class="property">flashIntensity</a>');
+		t = t.replace(/flashMode/g,'<a class="property">flashMode</a>');
+		t = t.replace(/shakeTimer/g,'<a class="property">shakeTimer</a>');
+		t = t.replace(/shakeSmooth/g,'<a class="property">shakeSmooth</a>');
+		t = t.replace(/shakeIntensity/g,'<a class="property">shakeIntensity</a>');
+		t = t.replace(/shakeRotational/g,'<a class="property">shakeRotational</a>');
+		
+		t = t.replace(/layer0/g,'<a class="variable">layer0</a>');
+		t = t.replace(/layer1/g,'<a class="variable">layer1</a>');
+		t = t.replace(/layer2/g,'<a class="variable">layer2</a>');
+		t = t.replace(/layer3/g,'<a class="variable">layer3</a>');
+		t = t.replace(/layer4/g,'<a class="variable">layer4</a>');
+		t = t.replace(/layer5/g,'<a class="variable">layer5</a>');
+		t = t.replace(/layer6/g,'<a class="variable">layer6</a>');
+		t = t.replace(/layer7/g,'<a class="variable">layer7</a>');
+	
+		t = t.replace(/0/g,'<a class="number">0</a>');
+		t = t.replace(/1/g,'<a class="number">1</a>');
+		t = t.replace(/2/g,'<a class="number">2</a>');
+		t = t.replace(/3/g,'<a class="number">3</a>');
+		t = t.replace(/4/g,'<a class="number">4</a>');
+		t = t.replace(/5/g,'<a class="number">5</a>');
+		t = t.replace(/6/g,'<a class="number">6</a>');
+		t = t.replace(/7/g,'<a class="number">7</a>');
+		t = t.replace(/8/g,'<a class="number">8</a>');
+		t = t.replace(/9/g,'<a class="number">9</a>');
+		return t;
+	}
+	
+	</script>
+
+</body>
