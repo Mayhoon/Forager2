@@ -1,5 +1,7 @@
 package com.mygdx.config;
 
+import javax.swing.*;
+
 public final class CFG {
 
     //Basic configuration
@@ -7,9 +9,6 @@ public final class CFG {
     public final static int INVENTORY_CAPACITY = 20;
     public final static int INVENTORY_SCROLLBAR_SIZE = 6;
     public final static String PNG = ".png";
-
-    //Fonts, skins and ui
-    public final static String ITEM_COUNT_FONT = "fonts/GravityBold8.ttf";
 
     //Base paths to the images, skins and maps
     public final static String CHARACTERS_PATH = "characters/";
@@ -20,10 +19,17 @@ public final class CFG {
     public final static String ITEMS_PATH = "items/";
     public final static String MAPS_PATH = "maps/";
 
+    //Fonts, skins and ui
+    public final static String ITEM_COUNT_FONT = "fonts/GravityBold8.ttf";
+    public static final String START_BUTTON = BUTTONS_PATH + "/startButton.png";
+
     //Inventory
     public final static String MISSING_ITEM = INVENTORY_PATH + "missing" + PNG;
     public final static String Inventory_INGAME_SCROLLBAR = INVENTORY_PATH + "inv" + PNG;
 
     //Player related
     public final static String PLAYER_PATH = CHARACTERS_PATH + "/player/player.png";
+
+    //Maps
+    public final static String TILESET_PATH = MAPS_PATH + "Tileset.png";
 }

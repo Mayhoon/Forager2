@@ -3,19 +3,18 @@ package com.mygdx.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.camera.Camera;
-import com.mygdx.camera.PlayerInputProcessor;
+import com.mygdx.config.CFG;
 import com.mygdx.hud.Hud;
 import com.mygdx.input.ControllerInput;
 import com.mygdx.player.Player;
 
 public class GameScreen implements Screen {
-    private ScreenManager game;
+    private Game game;
     private Texture texture;
     private Hud hud;
     private Camera camera;
@@ -23,7 +22,7 @@ public class GameScreen implements Screen {
     private Player player;
     private ControllerInput controllerInput;
 
-    public GameScreen(ScreenManager game) {
+    public GameScreen(Game game) {
         this.batch = game.getBatch();
         this.game = game;
 
@@ -37,7 +36,7 @@ public class GameScreen implements Screen {
         player = new Player(camera);
 
         hud = new Hud(this.batch);
-        texture = new Texture("maps/Tileset.png");
+        texture = new Texture(CFG.TILESET_PATH);
 
         Controllers.addListener(controllerInput);
 
@@ -58,23 +57,14 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(camera.combined);
+
         game.getBatch().begin();
-        for(int row=0; row < 40; row++) {
-            for (int col=0; col < 40; col++) {
-                //batch.draw(texture, row*tileSize,col*tileSize);
-            }
-        }
-
-        player.update(batch);
+        player.render(batch);
         batch.draw(texture, 0, 0);
-
         game.getBatch().end();
         game.getBatch().setProjectionMatrix(hud.getStage().getCamera().combined);
 
         hud.update();
-        hud.getStage().act();
-        hud.getStage().draw();
-
         camera.update();
     }
 

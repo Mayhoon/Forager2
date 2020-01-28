@@ -18,8 +18,8 @@ public class Player {
         tex = new Texture(CFG.PLAYER_PATH);
     }
 
-    public void update(SpriteBatch batch) {
-        batch.draw(tex, 0, 0);
+    public void render(SpriteBatch batch) {
+        batch.draw(tex, 500, 500);
     }
 
     public InputProcessor getProcessor() {

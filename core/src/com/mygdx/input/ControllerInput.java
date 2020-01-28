@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.mygdx.camera.Camera;
 import com.mygdx.player.Player;
 
+import java.awt.*;
+
 
 public class ControllerInput implements ControllerListener {
     Player player;
@@ -41,10 +43,17 @@ public class ControllerInput implements ControllerListener {
 
     @Override
     public boolean axisMoved(Controller controller, int axisCode, float value) {
+        float inputMinimum = 0.10f;
         float x = controller.getAxis(1);
         float y = controller.getAxis(0);
 
-        camera.moveByController(x, y*(-1));
+        if (x > inputMinimum || x < -inputMinimum && y < -inputMinimum || y > inputMinimum) {
+            camera.moveByController(x, y * (-1));
+        }
+
+        System.out.println("X: " + x + " Y: " + y);
+        //y < -inputMinimum && y > inputMinimum
+        //camera.moveByController(x, y * (-1));
         return false;
     }
 

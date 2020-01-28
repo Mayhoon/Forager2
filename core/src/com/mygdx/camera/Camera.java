@@ -5,9 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class Camera extends OrthographicCamera {
     private float cameraSpeed = 60f;
-    public boolean left, right, down, up;
-    float x;
-    float y;
+    private float x,y;
 
     public Camera() {
         super.setToOrtho(false, Gdx.graphics.getWidth() * 2, Gdx.graphics.getHeight() * 2);

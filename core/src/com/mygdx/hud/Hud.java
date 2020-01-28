@@ -18,7 +18,7 @@ import com.mygdx.items.Sword;
 
 import java.util.Locale;
 
-public class Hud implements InputProcessor {
+public class Hud extends Stage implements InputProcessor {
     private Texture texture;
     private FitViewport viewport;
     private Stage stage;
@@ -27,8 +27,8 @@ public class Hud implements InputProcessor {
     private Label labelList[];
 
     public Hud(SpriteBatch batch) {
-        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
-        stage = new Stage(viewport, batch);
+        super(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera()));
+        //stage = new Stage(viewport, batch);
         texture = new Texture(CFG.Inventory_INGAME_SCROLLBAR);
 
         inventory = new Inventory();
@@ -41,7 +41,7 @@ public class Hud implements InputProcessor {
         }
 
         table = new Table();
-        table.setDebug(true);
+        //table.setDebug(true);
         table.setWidth(Gdx.graphics.getWidth());
         table.setHeight(Gdx.graphics.getHeight());
         table.bottom();
@@ -60,17 +60,19 @@ public class Hud implements InputProcessor {
             Image scrollbarTexture = new Image(texture);
             table.add(scrollbarTexture);
         }
-        stage.addActor(table);
+        addActor(table);
     }
 
     public Stage getStage() {
-        return this.stage;
+        return this;
     }
 
     public void update() {
         for (int i = 0; i < CFG.INVENTORY_SCROLLBAR_SIZE; i++) {
             labelList[i].setText(inventory.getItem(i).getAmount());
         }
+        act();
+        draw();
     }
 
     @Override
