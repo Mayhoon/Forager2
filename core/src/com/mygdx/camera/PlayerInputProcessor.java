@@ -11,35 +11,35 @@ public class PlayerInputProcessor implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.W) {
-            camera.moveUp();
-        }
-        if (keycode == Input.Keys.A) {
-            camera.moveLeft();
-        }
-        if (keycode == Input.Keys.D) {
-            camera.moveRight();
-        }
-        if (keycode == Input.Keys.S) {
-            camera.moveDown();
-        }
+//        if (keycode == Input.Keys.W) {
+//            camera.translate();
+//        }
+//        if (keycode == Input.Keys.A) {
+//            camera.moveLeft();
+//        }
+//        if (keycode == Input.Keys.D) {
+//            camera.moveRight();
+//        }
+//        if (keycode == Input.Keys.S) {
+//            camera.moveDown();
+//        }
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        if (keycode == Input.Keys.W) {
-            camera.stopMotion("up");
-        }
-        if (keycode == Input.Keys.A) {
-            camera.stopMotion("left");
-        }
-        if (keycode == Input.Keys.D) {
-            camera.stopMotion("right");
-        }
-        if (keycode == Input.Keys.S) {
-            camera.stopMotion("down");
-        }
+//        if (keycode == Input.Keys.W) {
+//            camera.stopMotion("up");
+//        }
+//        if (keycode == Input.Keys.A) {
+//            camera.stopMotion("left");
+//        }
+//        if (keycode == Input.Keys.D) {
+//            camera.stopMotion("right");
+//        }
+//        if (keycode == Input.Keys.S) {
+//            camera.stopMotion("down");
+//        }
         return false;
     }
 

@@ -23,7 +23,6 @@ public class Player {
     }
 
     public InputProcessor getProcessor() {
-        System.out.println("Added inout processor");
         return playerInputProcessor;
     }
 }

@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class Camera extends OrthographicCamera {
-    private float cameraSpeed = 70f;
-    boolean left, right, down, up;
+    private float cameraSpeed = 60f;
+    public boolean left, right, down, up;
     float x;
     float y;
 
@@ -15,67 +15,12 @@ public class Camera extends OrthographicCamera {
     }
 
     public void update() {
-        if (left) {
-            super.translate(-(Gdx.graphics.getDeltaTime() * cameraSpeed), 0f);
-            super.update();
-        }
-
-        if (right) {
-            super.translate(Gdx.graphics.getDeltaTime() * cameraSpeed, 0f);
-            super.update();
-        }
-
-        if (up) {
-            super.translate(0f, Gdx.graphics.getDeltaTime() * cameraSpeed);
-            super.update();
-        }
-
-        if (down) {
-            super.translate(0f, -(Gdx.graphics.getDeltaTime() * cameraSpeed));
-            super.update();
-        }
-
         super.translate(x * Gdx.graphics.getDeltaTime(),y * Gdx.graphics.getDeltaTime());
         super.update();
     }
 
-    public void moveUp() {
-        up = true;
-        update();
-    }
-
-    public void moveDown() {
-        down = true;
-        update();
-    }
-
-    public void moveLeft() {
-        left = true;
-        update();
-    }
-
-    public void moveRight() {
-        right = true;
-        update();
-    }
-
-    public void stopMotion(String dir){
-        switch(dir) {
-            case "left": left = false;
-                break;
-            case "right": right = false;
-                break;
-            case "up": up = false;
-                break;
-            case "down": down = false;
-                break;
-            default: System.out.println("ERROR");
-        }
-    }
-
-    public void moveDirect(float x, float y) {
+    public void moveByController(float x, float y) {
         this.x = x * cameraSpeed;
         this.y = y * cameraSpeed;
-       // super.translate(Gdx.graphics.getDeltaTime() * (x  * cameraSpeed), Gdx.graphics.getDeltaTime() * (y * cameraSpeed));
     }
 }

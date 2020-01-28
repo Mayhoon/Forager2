@@ -1,7 +1,6 @@
 package com.mygdx.input;
 
 import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
@@ -11,9 +10,9 @@ import com.mygdx.player.Player;
 
 public class ControllerInput implements ControllerListener {
     Player player;
-    final Camera camera;
+    Camera camera;
 
-    public ControllerInput(final Camera camera) {
+    public ControllerInput(Camera camera) {
         player = new Player(camera);
         this.camera = camera;
     }
@@ -45,7 +44,7 @@ public class ControllerInput implements ControllerListener {
         float x = controller.getAxis(1);
         float y = controller.getAxis(0);
 
-        camera.moveDirect(x, y*(-1));
+        camera.moveByController(x, y*(-1));
         return false;
     }
 
