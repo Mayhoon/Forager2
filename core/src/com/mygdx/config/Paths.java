@@ -1,12 +1,8 @@
 package com.mygdx.config;
 
-import javax.swing.*;
-
-public final class CFG {
+public final class Paths {
 
     //Basic configuration
-    public final static int TILESIZE = 32;
-    public final static int INVENTORY_CAPACITY = 20;
     public final static int INVENTORY_SCROLLBAR_SIZE = 6;
     public final static String PNG = ".png";
 

@@ -11,9 +11,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.mygdx.config.CFG;
+import com.mygdx.config.Paths;
 import com.mygdx.inventory.Inventory;
-import com.mygdx.inventory.Item;
 import com.mygdx.items.Sword;
 
 import java.util.Locale;
@@ -29,7 +28,7 @@ public class Hud extends Stage implements InputProcessor {
     public Hud(SpriteBatch batch) {
         super(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera()));
         //stage = new Stage(viewport, batch);
-        texture = new Texture(CFG.Inventory_INGAME_SCROLLBAR);
+        texture = new Texture(Paths.Inventory_INGAME_SCROLLBAR);
 
         inventory = new Inventory();
         inventory.addItem(new Sword(10));
@@ -48,7 +47,7 @@ public class Hud extends Stage implements InputProcessor {
 
         //Generate inventory quick bar
         //Row 1
-        for (int i = 0; i < CFG.INVENTORY_SCROLLBAR_SIZE; i++) {
+        for (int i = 0; i < Paths.INVENTORY_SCROLLBAR_SIZE; i++) {
             Table innerTable = new Table();// Stack also useful?
             innerTable.add(inventory.getItem(i).getImage());
             innerTable.add(labelList[i]);
@@ -56,7 +55,7 @@ public class Hud extends Stage implements InputProcessor {
         }
         table.row();
         //Row 2
-        for (int i = 0; i < CFG.INVENTORY_SCROLLBAR_SIZE; i++) {
+        for (int i = 0; i < Paths.INVENTORY_SCROLLBAR_SIZE; i++) {
             Image scrollbarTexture = new Image(texture);
             table.add(scrollbarTexture);
         }
@@ -68,7 +67,7 @@ public class Hud extends Stage implements InputProcessor {
     }
 
     public void update() {
-        for (int i = 0; i < CFG.INVENTORY_SCROLLBAR_SIZE; i++) {
+        for (int i = 0; i < Paths.INVENTORY_SCROLLBAR_SIZE; i++) {
             labelList[i].setText(inventory.getItem(i).getAmount());
         }
         act();

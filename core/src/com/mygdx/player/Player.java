@@ -2,12 +2,10 @@ package com.mygdx.player;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.camera.Camera;
 import com.mygdx.camera.PlayerInputProcessor;
-import com.mygdx.config.CFG;
+import com.mygdx.config.Paths;
 
 public class Player {
     InputProcessor playerInputProcessor;
@@ -15,7 +13,7 @@ public class Player {
 
     public Player(Camera camera) {
         playerInputProcessor = new PlayerInputProcessor(camera);
-        tex = new Texture(CFG.PLAYER_PATH);
+        tex = new Texture(Paths.PLAYER_PATH);
     }
 
     public void render(SpriteBatch batch) {

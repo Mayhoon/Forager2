@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.camera.Camera;
-import com.mygdx.config.CFG;
+import com.mygdx.config.Paths;
 import com.mygdx.hud.Hud;
 import com.mygdx.input.ControllerInput;
 import com.mygdx.player.Player;
@@ -36,7 +36,7 @@ public class GameScreen implements Screen {
         player = new Player(camera);
 
         hud = new Hud(this.batch);
-        texture = new Texture(CFG.TILESET_PATH);
+        texture = new Texture(Paths.TILESET_PATH);
 
         Controllers.addListener(controllerInput);
 

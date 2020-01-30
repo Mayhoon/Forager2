@@ -1,134 +1,61 @@
 package com.mygdx.server;
 
-import jdk.jfr.internal.OldObjectSample;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.*;
-import java.net.InetAddress;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
-public class Client extends JFrame {
-    public static void main(String[] args) throws IOException {
-        Client c = new Client("localhost");
-        c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        c.start();
-    }
+public class Client {
+    private Socket clientSocket;
+    private PrintWriter out;
+    private BufferedReader in;
+    private Scanner scanner;
 
-    private JTextField userText;
-    private JTextArea chatWindow;
-    private ObjectOutputStream outputStream;
-    private ObjectInputStream inputStream;
-    String message;
-    String serverIp;
-    private Socket socket;
-
-    public Client(String host) {
-        super("Client mofo");
-        serverIp = host;
-        userText = new JTextField();
-        userText.setEditable(false);
-        userText.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sendMessage(e.getActionCommand());
-                userText.setText("");
-            }
-        });
-        add(userText, BorderLayout.NORTH);
-        chatWindow = new JTextArea();
-        add(new JScrollPane(chatWindow), BorderLayout.CENTER);
-        setSize(300, 150);
-        setVisible(true);
-    }
-
-    public void start() throws IOException {
+    public static void main(String[] args) {
         try {
-            connectToServer();
-            setupStreams();
-            whileChatting();
-        } catch (EOFException e) {
-            showMessage("Client terminated connection");
-        } catch (IOException ioExcepetion) {
-            ioExcepetion.printStackTrace();
-        } finally {
-            closeStuff();
+            new Client();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    private void connectToServer() throws IOException {
-        showMessage("Attempting to connect...");
-        socket = new Socket(InetAddress.getByName(serverIp), 6789);
-        showMessage("Connected to: " + socket.getInetAddress().getHostName());
-    }
-
-    //setup streams to send and receive messages
-    private void setupStreams() throws IOException {
-        outputStream = new ObjectOutputStream(socket.getOutputStream());
-        outputStream.flush();
-
-        inputStream = new ObjectInputStream(socket.getInputStream());
-        showMessage("Streams are setup correctly");
-    }
-
-    //while chatting with server
-    private void whileChatting() throws IOException {
-        ableToType(true);
+    public Client() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        startConnection("localhost", 6666);
         do {
-            try {
-                message = (String) inputStream.readObject();
-                showMessage(message);
-            } catch (ClassNotFoundException e) {
-                showMessage("I dont know that type of object");
-            }
-        } while (!message.equals("SERVER - END"));
+            sendMessage(scanner);
+            receiveMessage();
+        } while (true);
     }
 
-    private void closeStuff() throws IOException {
-        showMessage("Closing streams...");
-        ableToType(false);
-        try {
-            outputStream.close();
-            outputStream.flush();
-            inputStream.close();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
+    public void startConnection(String ip, int port) throws IOException {
+        clientSocket = new Socket(ip, port);
+        out = new PrintWriter(clientSocket.getOutputStream(), true);
+        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+    }
+
+    public void sendMessage(Scanner scanner) {
+        System.out.println("MESSAGE TO SERVER: ");
+        String msg = scanner.next();
+        out.println(msg);
+        out.flush();
+    }
+
+    private void receiveMessage() throws IOException {
+        String receivedMessage =  in.readLine();
+        if( receivedMessage.equals("end") ){
+            stopConnection();
         }
-        showMessage("Streams closed");
+
     }
 
-    //send message to server
-    private void sendMessage(String message) {
-        try {
-            outputStream.writeObject("CLIENT: " + message);
-            outputStream.flush();
-            showMessage("CLIENT: " + message);
-        } catch (IOException ioException) {
-            chatWindow.append("something went wrong messaging the server");
-        }
-    }
-
-    //update gui/ chat window
-    private void showMessage(final String message) {
-        SwingUtilities.invokeLater(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        chatWindow.append(message);
-                    }
-                }
-        );
-    }
-
-    private void ableToType(final boolean tof) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                userText.setEditable(tof);
-            }
-        });
+    public void stopConnection() throws IOException {
+        System.out.println("Closing connections...");
+        in.close();
+        out.close();
+        clientSocket.close();
+        System.out.println("Connections closed!");
     }
 }
-

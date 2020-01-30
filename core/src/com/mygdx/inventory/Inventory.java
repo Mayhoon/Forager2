@@ -2,15 +2,14 @@ package com.mygdx.inventory;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.mygdx.config.CFG;
+import com.mygdx.config.Paths;
 import com.mygdx.items.Sword;
 
 public class Inventory implements InputProcessor {
     private Item[] itemList;
 
     public Inventory() {
-        itemList = new Item[CFG.INVENTORY_SCROLLBAR_SIZE];
+        itemList = new Item[Paths.INVENTORY_SCROLLBAR_SIZE];
         itemList[0] = new Sword(0);
     }
 
