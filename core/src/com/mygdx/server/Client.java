@@ -1,17 +1,15 @@
 package com.mygdx.server;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class Client {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
-    private Scanner scanner;
+    private boolean running;
 
     public static void main(String[] args) {
         try {
@@ -22,12 +20,8 @@ public class Client {
     }
 
     public Client() throws IOException {
-        Scanner scanner = new Scanner(System.in);
         startConnection("localhost", 6666);
-        do {
-            sendMessage(scanner);
-            receiveMessage();
-        } while (true);
+        run();
     }
 
     public void startConnection(String ip, int port) throws IOException {
@@ -36,11 +30,18 @@ public class Client {
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
     }
 
-    public void sendMessage(Scanner scanner) {
-        System.out.println("MESSAGE TO SERVER: ");
-        String msg = scanner.next();
-        out.println(msg);
+    private void run () throws IOException {
+        running = true;
+        while (running) {
+            sendMessage();
+        }
+    }
+
+    public void sendMessage() throws IOException {
+        out.println("Nice to meet you!");
+        //out.println("end");
         out.flush();
+        //stopConnection();
     }
 
     private void receiveMessage() throws IOException {
@@ -52,6 +53,7 @@ public class Client {
     }
 
     public void stopConnection() throws IOException {
+        running = false;
         System.out.println("Closing connections...");
         in.close();
         out.close();
