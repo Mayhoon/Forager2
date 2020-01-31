@@ -1,4 +1,5 @@
 package com.mygdx.server;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,32 +25,35 @@ public class Client {
         run();
     }
 
+    private void run() throws IOException {
+        running = true;
+        while (running) {
+            sendMessage();
+            receiveMessage();
+        }
+    }
+
+    public void sendMessage() {
+        System.out.println("Sending message to the server...");
+        out.println("Nice to meet you!");
+        out.flush();
+    }
+
+    private void receiveMessage() throws IOException {
+        System.out.println("Receiving message from the server...");
+        String receivedMessage = in.readLine();
+        System.out.println("Server: " + receivedMessage);
+
+        System.out.println("RECEIVED");
+        if (receivedMessage.equals("end")) {
+            stopConnection();
+        }
+    }
+
     public void startConnection(String ip, int port) throws IOException {
         clientSocket = new Socket(ip, port);
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-    }
-
-    private void run () throws IOException {
-        running = true;
-        while (running) {
-            sendMessage();
-        }
-    }
-
-    public void sendMessage() throws IOException {
-        out.println("Nice to meet you!");
-        //out.println("end");
-        out.flush();
-        //stopConnection();
-    }
-
-    private void receiveMessage() throws IOException {
-        String receivedMessage =  in.readLine();
-        if( receivedMessage.equals("end") ){
-            stopConnection();
-        }
-
     }
 
     public void stopConnection() throws IOException {
