@@ -17,7 +17,8 @@ public class Player {
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(tex, 500, 500);
+
+        //batch.draw(tex, 500, 500);
     }
 
     public InputProcessor getProcessor() {

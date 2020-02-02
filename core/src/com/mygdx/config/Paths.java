@@ -17,7 +17,10 @@ public final class Paths {
 
     //Fonts, skins and ui
     public final static String ITEM_COUNT_FONT = "fonts/GravityBold8.ttf";
-    public static final String START_BUTTON = BUTTONS_PATH + "/startButton.png";
+    public final static String HOST_BUTTON = BUTTONS_PATH + "/host" + PNG;
+    public final static String JOIN_BUTTON = BUTTONS_PATH + "/join" + PNG;
+    public final static String HOST_HOVERED_BUTTON = BUTTONS_PATH + "/host_hovered" + PNG;
+    public final static String JOIN_HOVERED_BUTTON = BUTTONS_PATH + "/join_hovered" + PNG;
 
     //Inventory
     public final static String MISSING_ITEM = INVENTORY_PATH + "missing" + PNG;

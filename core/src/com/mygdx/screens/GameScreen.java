@@ -14,17 +14,15 @@ import com.mygdx.input.ControllerInput;
 import com.mygdx.player.Player;
 
 public class GameScreen implements Screen {
-    private Game game;
-    private Texture texture;
+    private Texture mapTexture;
     private Hud hud;
     private Camera camera;
     private SpriteBatch batch;
     private Player player;
-    private ControllerInput controllerInput;
 
-    public GameScreen(Game game) {
-        this.batch = game.getBatch();
-        this.game = game;
+    public GameScreen(SpriteBatch batch) {
+        mapTexture = new Texture(Paths.TILESET_PATH);
+        this.batch = batch;
 
         camera = new Camera();
         camera.zoom -= 0.9f;
@@ -32,14 +30,13 @@ public class GameScreen implements Screen {
         camera.position.y = 0;
         camera.update();
 
-        controllerInput = new ControllerInput(camera);
         player = new Player(camera);
+        hud = new Hud();
 
-        hud = new Hud(this.batch);
-        texture = new Texture(Paths.TILESET_PATH);
-
+        ControllerInput controllerInput = new ControllerInput(camera);
         Controllers.addListener(controllerInput);
 
+        //input listener
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(player.getProcessor());
         inputMultiplexer.addProcessor(hud);
@@ -56,14 +53,15 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(99,155,255,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
         batch.setProjectionMatrix(camera.combined);
 
-        game.getBatch().begin();
+        batch.begin();
         player.render(batch);
-        batch.draw(texture, 0, 0);
-        game.getBatch().end();
-        game.getBatch().setProjectionMatrix(hud.getStage().getCamera().combined);
+        batch.draw(mapTexture, 0, 0);
 
+        batch.setProjectionMatrix(hud.getStage().getCamera().combined);
+        batch.end();
         hud.update();
         camera.update();
     }

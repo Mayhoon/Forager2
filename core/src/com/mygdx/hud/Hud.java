@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -19,15 +18,12 @@ import java.util.Locale;
 
 public class Hud extends Stage implements InputProcessor {
     private Texture texture;
-    private FitViewport viewport;
-    private Stage stage;
     private Table table;
     private Inventory inventory;
     private Label labelList[];
 
-    public Hud(SpriteBatch batch) {
+    public Hud() {
         super(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera()));
-        //stage = new Stage(viewport, batch);
         texture = new Texture(Paths.Inventory_INGAME_SCROLLBAR);
 
         inventory = new Inventory();

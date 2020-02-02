@@ -8,10 +8,11 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		
-		config.title = "LoveInPackages";
-		config.width = 500;
-		config.height = 500;
-		config.fullscreen = false;
+		config.title = "Crafting Mayhem";
+		config.width = 1920;
+		config.height = 1080;
+		config.resizable = false;
+		config.fullscreen = true;
 		config.forceExit = true;
 		new LwjglApplication(new Game(), config);
 	}
