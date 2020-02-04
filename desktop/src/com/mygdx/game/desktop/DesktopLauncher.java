@@ -2,18 +2,18 @@ package com.mygdx.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.mygdx.screens.Game;
+import com.mygdx.game.Main;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		
 		config.title = "Crafting Mayhem";
-		config.width = 1920;
-		config.height = 1080;
+		config.width = 500;
+		config.height = 500;
 		config.resizable = false;
-		config.fullscreen = true;
+		config.fullscreen = false;
 		config.forceExit = true;
-		new LwjglApplication(new Game(), config);
+		new LwjglApplication(new Main(), config);
 	}
 }

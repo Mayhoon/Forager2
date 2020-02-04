@@ -16,20 +16,16 @@ public class Server {
     private BufferedReader in;
     private boolean running;
 
+    //for debug
     public static void main(String[] args) {
-        new Server();
-    }
-
-    public Server() {
         try {
-            start(6666);
-            run();
+            new Server().start(6666);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void start(int port) throws IOException {
+    public void start(int port) throws IOException {
         System.out.println("Waiting for connections...");
         serverSocket = new ServerSocket(port);
         clientSocket = serverSocket.accept();
@@ -40,12 +36,12 @@ public class Server {
         System.out.println("Streams setup");
     }
 
-    private void run() throws IOException {
-        running = true;
-        while (running) {
-            receiveMessage();
-            sendMessage();
-        }
+    public void run() throws IOException {
+        //running = true;
+        //while (running) {
+        receiveMessage();
+        sendMessage();
+        //}
     }
 
     private void receiveMessage() throws IOException {

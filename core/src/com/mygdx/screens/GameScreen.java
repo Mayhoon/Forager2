@@ -3,6 +3,7 @@ package com.mygdx.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,7 +14,7 @@ import com.mygdx.hud.Hud;
 import com.mygdx.input.ControllerInput;
 import com.mygdx.player.Player;
 
-public class GameScreen implements Screen {
+public class GameScreen extends ScreenAdapter {
     private Texture mapTexture;
     private Hud hud;
     private Camera camera;

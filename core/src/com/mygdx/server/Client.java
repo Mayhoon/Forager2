@@ -12,25 +12,21 @@ public class Client {
     private BufferedReader in;
     private boolean running;
 
+    //for debug
     public static void main(String[] args) {
         try {
-            new Client();
+            new Client().startConnection("localhost", 6666);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public Client() throws IOException {
-        startConnection("localhost", 6666);
-        run();
-    }
-
-    private void run() throws IOException {
-        running = true;
-        while (running) {
-            sendMessage();
-            receiveMessage();
-        }
+    public void run() throws IOException {
+        //running = true;
+        //while (running) {
+        sendMessage();
+        receiveMessage();
+        //}
     }
 
     public void sendMessage() {
