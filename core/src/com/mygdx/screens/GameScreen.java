@@ -1,9 +1,9 @@
 package com.mygdx.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,7 +14,7 @@ import com.mygdx.hud.Hud;
 import com.mygdx.input.ControllerInput;
 import com.mygdx.player.Player;
 
-public class GameScreen extends ScreenAdapter {
+public class GameScreen implements Screen {
     private Texture mapTexture;
     private Hud hud;
     private Camera camera;
@@ -51,9 +51,14 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            Gdx.app.exit();
+            System.exit(0);
+        }
+
+        System.out.println("Yo");
         Gdx.gl.glClearColor(99,155,255,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 
         batch.setProjectionMatrix(camera.combined);
 
