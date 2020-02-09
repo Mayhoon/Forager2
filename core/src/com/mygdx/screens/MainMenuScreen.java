@@ -69,13 +69,13 @@ public class MainMenuScreen extends TransitionManager implements Screen {
 
     }
 
-    public void startServer() throws IOException {
-        server = new Server();
-        server.start(6666);
+    public void startServer() {
+        Thread serverThread = new Thread(new Server());
+        serverThread.start();
     }
 
     public void startClient() throws IOException {
-        client = new Client();
-        client.startConnection("25.51.220.101", 6666);
+       Thread clientThread = new Thread(new Client());
+        clientThread.start();
     }
 }

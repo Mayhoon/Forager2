@@ -9,49 +9,54 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
-public class Server {
+public class Server implements Runnable {
     private ServerSocket serverSocket;
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
     private boolean running;
 
-    //for debug
-    public static void main(String[] args) {
+    public Server() {
+        //Print adress
+        String inet;
         try {
-            new Server().start(6666);
+            inet = InetAddress.getLocalHost().getHostAddress();
+            System.out.println("Adress is: " + inet);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void run() {
+        System.out.println("HEYHO IM RUNNING");
+        running = true;
+        try {
+            start();
+            while (running) {
+                sendMessage();
+                receiveMessage();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public Server (){
-        try{
-            String inet = InetAddress.getLocalHost().getHostAddress();
-            System.out.println(inet);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
+    public void start() throws IOException {
 
-    public void start(int port) throws IOException {
+        //Waiting for connections
         System.out.println("Waiting for connections...");
-        serverSocket = new ServerSocket(port);
+        serverSocket = new ServerSocket(6666);
         clientSocket = serverSocket.accept();
+
         System.out.println(clientSocket.getInetAddress().getHostName() + " has connected");
 
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         System.out.println("Streams setup");
-    }
 
-    public void run() throws IOException {
-        //running = true;
-        //while (running) {
-        receiveMessage();
-        sendMessage();
-        //}
     }
 
     private void receiveMessage() throws IOException {

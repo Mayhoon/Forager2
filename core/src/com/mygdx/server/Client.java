@@ -6,27 +6,24 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class Client {
+public class Client implements Runnable {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
     private boolean running;
 
-    //for debug
-    public static void main(String[] args) {
+    //Gets called by thread.start()
+    public void run() {
+        running = true;
         try {
-            new Client().startConnection("localhost", 6666);
+            startConnection("localhost", 6666);
+            while (running) {
+                sendMessage();
+                receiveMessage();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void run() throws IOException {
-        //running = true;
-        //while (running) {
-        sendMessage();
-        receiveMessage();
-        //}
     }
 
     public void sendMessage() {
@@ -47,6 +44,7 @@ public class Client {
     }
 
     public void startConnection(String ip, int port) throws IOException {
+        System.out.println("Initiate connection...");
         clientSocket = new Socket(ip, port);
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));

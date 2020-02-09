@@ -36,12 +36,7 @@ public class MainMenuHud extends ownStage {
         hostButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int a, int b) {
-
-                try {
-                    mainMenuScreen.startServer();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                mainMenuScreen.startServer();
 
                 //mainMenuScreen.changeStage(this, serverHud);
                 return true;
