@@ -10,13 +10,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.camera.Camera;
 import com.mygdx.config.Paths;
-import com.mygdx.hud.Hud;
+import com.mygdx.stages.hud.InventoryHud;
 import com.mygdx.input.ControllerInput;
 import com.mygdx.player.Player;
 
 public class GameScreen implements Screen {
     private Texture mapTexture;
-    private Hud hud;
+    private InventoryHud inventoryHud;
     private Camera camera;
     private SpriteBatch batch;
     private Player player;
@@ -32,7 +32,7 @@ public class GameScreen implements Screen {
         camera.update();
 
         player = new Player(camera);
-        hud = new Hud();
+        inventoryHud = new InventoryHud();
 
         ControllerInput controllerInput = new ControllerInput(camera);
         Controllers.addListener(controllerInput);
@@ -40,7 +40,7 @@ public class GameScreen implements Screen {
         //input listener
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(player.getProcessor());
-        inputMultiplexer.addProcessor(hud);
+        inputMultiplexer.addProcessor(inventoryHud);
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
@@ -66,9 +66,9 @@ public class GameScreen implements Screen {
         player.render(batch);
         batch.draw(mapTexture, 0, 0);
 
-        batch.setProjectionMatrix(hud.getStage().getCamera().combined);
+        batch.setProjectionMatrix(inventoryHud.getStage().getCamera().combined);
         batch.end();
-        hud.update();
+        inventoryHud.update();
         camera.update();
     }
 
@@ -95,6 +95,6 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
-        hud.dispose();
+        inventoryHud.dispose();
     }
 }

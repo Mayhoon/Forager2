@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -21,6 +22,15 @@ public class Server {
         try {
             new Server().start(6666);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Server (){
+        try{
+            String inet = InetAddress.getLocalHost().getHostAddress();
+            System.out.println(inet);
+        }catch(Exception e){
             e.printStackTrace();
         }
     }

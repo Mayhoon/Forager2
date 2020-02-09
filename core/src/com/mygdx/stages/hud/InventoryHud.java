@@ -1,4 +1,4 @@
-package com.mygdx.hud;
+package com.mygdx.stages.hud;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -16,13 +16,13 @@ import com.mygdx.items.Sword;
 
 import java.util.Locale;
 
-public class Hud extends Stage implements InputProcessor {
+public class InventoryHud extends Stage implements InputProcessor {
     private Texture texture;
     private Table table;
     private Inventory inventory;
     private Label labelList[];
 
-    public Hud() {
+    public InventoryHud() {
         super(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera()));
         texture = new Texture(Paths.Inventory_INGAME_SCROLLBAR);
 

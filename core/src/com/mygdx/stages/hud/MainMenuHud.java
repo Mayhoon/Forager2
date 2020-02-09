@@ -1,10 +1,9 @@
-package com.mygdx.hud;
+package com.mygdx.stages.hud;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -12,12 +11,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.config.Paths;
 import com.mygdx.screens.MainMenuScreen;
-import com.mygdx.server.Client;
-import com.mygdx.server.Server;
+import com.mygdx.stages.ownStage;
 
 import java.io.IOException;
 
-public class MainMenuHud extends Stage {
+public class MainMenuHud extends ownStage {
     MainMenuScreen mainMenuScreen;
     ImageButton hostButton, joinButton;
     Table table;
@@ -38,11 +36,14 @@ public class MainMenuHud extends Stage {
         hostButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int a, int b) {
+
                 try {
-                    mainMenuScreen.createServer();
+                    mainMenuScreen.startServer();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+                //mainMenuScreen.changeStage(this, serverHud);
                 return true;
             }
         });
@@ -55,6 +56,8 @@ public class MainMenuHud extends Stage {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+                //mainMenuScreen.changeStage(new ClientHud());
                 return true;
             }
         });
@@ -67,10 +70,5 @@ public class MainMenuHud extends Stage {
         table.add(joinButton).center().padTop(20);
 
         addActor(table);
-    }
-
-    public void update() {
-        act();
-        draw();
     }
 }

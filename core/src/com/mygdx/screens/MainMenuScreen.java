@@ -5,23 +5,26 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.mygdx.game.Main;
-import com.mygdx.hud.MainMenuHud;
+import com.mygdx.screens.transitions.TransitionManager;
 import com.mygdx.server.Client;
 import com.mygdx.server.Server;
+import com.mygdx.stages.hud.MainMenuHud;
+import com.mygdx.stages.ownStage;
 
 import java.io.IOException;
 
-public class MainMenuScreen implements Screen {
+public class MainMenuScreen extends TransitionManager implements Screen {
     private Main game;
+    private ownStage currentStage;
     private Server server;
     private Client client;
     private MainMenuHud mainMenuHud;
 
     public MainMenuScreen(Main game) {
-        System.out.println("SCREEN Created");
-        this.game = game;
         mainMenuHud = new MainMenuHud(this);
         Gdx.input.setInputProcessor(mainMenuHud);
+        this.game = game;
+        currentStage = mainMenuHud;
     }
 
     @Override
@@ -31,14 +34,14 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(221, 221, 221, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
             System.exit(0);
         }
-
-        Gdx.gl.glClearColor(221, 221, 221, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        mainMenuHud.update();
+        currentStage.update();
     }
 
     @Override
@@ -66,13 +69,13 @@ public class MainMenuScreen implements Screen {
 
     }
 
-    public void createServer() throws IOException {
+    public void startServer() throws IOException {
         server = new Server();
         server.start(6666);
     }
 
     public void startClient() throws IOException {
         client = new Client();
-        client.startConnection("localhost", 6666);
+        client.startConnection("25.51.220.101", 6666);
     }
 }

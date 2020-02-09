@@ -1,4 +1,4 @@
-package com.mygdx.hud;
+package com.mygdx.stages;
 
 import com.badlogic.gdx.InputProcessor;
 
