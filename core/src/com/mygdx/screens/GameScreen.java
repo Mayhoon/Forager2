@@ -10,9 +10,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.camera.Camera;
 import com.mygdx.config.Paths;
-import com.mygdx.stages.hud.InventoryHud;
-import com.mygdx.input.ControllerInput;
-import com.mygdx.player.Player;
+import com.mygdx.entities.player.GameControllerInput;
+import com.mygdx.entities.player.Player;
+import com.mygdx.stages.hud.inventory.InventoryHud;
 
 public class GameScreen implements Screen {
     private Texture mapTexture;
@@ -34,12 +34,11 @@ public class GameScreen implements Screen {
         player = new Player(camera);
         inventoryHud = new InventoryHud();
 
-        ControllerInput controllerInput = new ControllerInput(camera);
+        GameControllerInput controllerInput = new GameControllerInput(camera);
         Controllers.addListener(controllerInput);
 
         //input listener
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(player.getProcessor());
         inputMultiplexer.addProcessor(inventoryHud);
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
@@ -56,7 +55,6 @@ public class GameScreen implements Screen {
             System.exit(0);
         }
 
-        System.out.println("Yo");
         Gdx.gl.glClearColor(99,155,255,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

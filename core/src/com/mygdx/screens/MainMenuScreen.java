@@ -6,8 +6,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.mygdx.game.Main;
 import com.mygdx.screens.transitions.TransitionManager;
-import com.mygdx.server.Client;
-import com.mygdx.server.Server;
+import com.mygdx.networking.Client;
+import com.mygdx.networking.Server;
 import com.mygdx.stages.hud.MainMenuHud;
 import com.mygdx.stages.ownStage;
 
@@ -16,8 +16,6 @@ import java.io.IOException;
 public class MainMenuScreen extends TransitionManager implements Screen {
     private Main game;
     private ownStage currentStage;
-    private Server server;
-    private Client client;
     private MainMenuHud mainMenuHud;
 
     public MainMenuScreen(Main game) {
@@ -72,10 +70,12 @@ public class MainMenuScreen extends TransitionManager implements Screen {
     public void startServer() {
         Thread serverThread = new Thread(new Server());
         serverThread.start();
+        game.setScreen(new GameScreen(game.batch));
     }
 
     public void startClient() throws IOException {
-       Thread clientThread = new Thread(new Client());
+        Thread clientThread = new Thread(new Client());
         clientThread.start();
+        game.setScreen(new GameScreen(game.batch));
     }
 }

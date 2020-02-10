@@ -21,4 +21,8 @@ public class Camera extends OrthographicCamera {
         this.x = x * cameraSpeed;
         this.y = y * cameraSpeed;
     }
+
+    public void moveWithKeyboard(float x, float y){
+        super.translate(x, y);
+    }
 }
