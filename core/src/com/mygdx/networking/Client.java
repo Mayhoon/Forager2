@@ -11,12 +11,17 @@ public class Client implements Runnable {
     private PrintWriter out;
     private BufferedReader in;
     private boolean running;
+    private String serverIp;
+
+    public Client(String serverIp) {
+        this.serverIp = serverIp;
+    }
 
     //Gets called by thread.start()
     public void run() {
         running = true;
         try {
-            startConnection("localhost", 6666);
+            startConnection(serverIp, 6666);
             while (running) {
                 sendMessage();
                 receiveMessage();

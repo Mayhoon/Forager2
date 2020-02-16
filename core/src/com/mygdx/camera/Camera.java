@@ -9,6 +9,8 @@ public class Camera extends OrthographicCamera {
 
     public Camera() {
         super.setToOrtho(false, Gdx.graphics.getWidth() * 2, Gdx.graphics.getHeight() * 2);
+        super.position.x  = 0;
+        super.position.y = 0;
         super.update();
     }
 

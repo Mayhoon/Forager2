@@ -1,37 +1,22 @@
 package com.mygdx.entities.player;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
+import animations.AnimationLoader;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.camera.Camera;
 import com.mygdx.config.Paths;
 
-public class Player {
-    Texture tex;
-    Camera camera;
+public class Player extends PlayerInput {
+    private Camera camera;
+    private AnimationLoader animationLoader;
 
     public Player(Camera camera) {
+        super(camera);
         this.camera = camera;
-        tex = new Texture(Paths.PLAYER_PATH);
+        animationLoader = new AnimationLoader(1.4f, Paths.PLAYER_ANIMATIONS, 6, 1);
     }
 
     public void render(SpriteBatch batch) {
-        //batch.draw(tex, 500, 500);
-        float speed = 1.2f;
-
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            camera.moveWithKeyboard(0, speed);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            camera.moveWithKeyboard(-speed, 0);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            camera.moveWithKeyboard(speed, 0);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            camera.moveWithKeyboard(0, -speed);
-        }
-        camera.update();
+        animationLoader.update(batch);
+        update();
     }
 }

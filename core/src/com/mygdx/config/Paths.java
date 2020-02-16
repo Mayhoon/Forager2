@@ -19,7 +19,7 @@ public final class Paths {
     public final static String MAPS_PATH = "maps/";
 
     //Fonts, skins and ui
-    public final static String ITEM_COUNT_FONT = "fonts/GravityBold8.ttf";
+    public final static String ITEM_COUNT_FONT = FONTS_SKINS_PATH + "B8.ttf";
     public final static String HOST_BUTTON = BUTTONS_PATH + "/host" + PNG;
     public final static String JOIN_BUTTON = BUTTONS_PATH + "/join" + PNG;
     public final static String HOST_HOVERED_BUTTON = BUTTONS_PATH + "/host_hovered" + PNG;
@@ -32,6 +32,7 @@ public final class Paths {
 
     //Player related
     public final static String PLAYER_PATH = CHARACTERS_PATH + "/player/player.png";
+    public final static String PLAYER_ANIMATIONS = ANIMATIONS_PATH + "/player/run" + PNG;
 
     //Maps
     public final static String TILESET_PATH = MAPS_PATH + "Tileset.png";
