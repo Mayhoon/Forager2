@@ -16,7 +16,7 @@ public class AnimationLoader {
     public AnimationLoader(float timeBetweenFrames, String path, int tilesPerRow, int tilesPerColumn) {
         this.timeBetweenFrames = timeBetweenFrames;
         bundledAnimations = new Texture(path);
-        int amountOfImages = tilesPerColumn + tilesPerRow - 2;
+        int amountOfImages = tilesPerColumn * tilesPerRow;
 
         TextureRegion[][] tmpFrames = TextureRegion.split(bundledAnimations, bundledAnimations.getWidth() / tilesPerRow,
                 bundledAnimations.getHeight() / tilesPerColumn);
@@ -33,6 +33,7 @@ public class AnimationLoader {
 
     public void update(SpriteBatch batch) {
         elapsedTime += (Gdx.graphics.getDeltaTime());
-        batch.draw(animation.getKeyFrame(elapsedTime, true), 0, 0);
+        batch.draw(animation.getKeyFrame(elapsedTime, true), 100, 100);
+        System.out.println("This is working");
     }
 }

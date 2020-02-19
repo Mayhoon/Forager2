@@ -32,7 +32,8 @@ public final class Paths {
 
     //Player related
     public final static String PLAYER_PATH = CHARACTERS_PATH + "/player/player.png";
-    public final static String PLAYER_ANIMATIONS = ANIMATIONS_PATH + "/player/run" + PNG;
+    public final static String PLAYER_IDLE = ANIMATIONS_PATH + "/player/skeleton/idle" + PNG;
+    public final static String PLAYER_RUN = ANIMATIONS_PATH + "/player/skeleton/run" + PNG;
 
     //Maps
     public final static String TILESET_PATH = MAPS_PATH + "Tileset.png";

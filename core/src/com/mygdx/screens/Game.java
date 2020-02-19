@@ -57,6 +57,7 @@ public class Game extends ScreenAdapter {
 
         batch.setProjectionMatrix(camera.combined);
 
+        System.out.println("YO");
         batch.begin();
         player.render(batch);
         //batch.draw(mapTexture, 0, 0);

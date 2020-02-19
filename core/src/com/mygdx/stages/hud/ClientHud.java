@@ -2,48 +2,36 @@ package com.mygdx.stages.hud;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.config.Paths;
 import com.mygdx.networking.Client;
-import com.mygdx.stages.ownStage;
-import org.w3c.dom.Text;
-import sun.font.TrueTypeFont;
+import com.mygdx.stages.customStage;
+import com.mygdx.tools.FontLoader;
 
-import java.awt.*;
+import static jdk.internal.vm.PostVMInitHook.run;
 
-public class ClientHud extends ownStage {
+public class ClientHud extends customStage {
     private Table table;
     private BitmapFont font;
     private TextField textfield;
 
-    public ClientHud() {
-//        font = new BitmapFont(Gdx.files.internal(Paths.ITEM_COUNT_FONT));
+    private boolean renderConnectionMessage;
+    public String connectionStatus = "Trying to connect to ";
 
-        FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Fipps-Regular.otf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 24;
-        parameter.color = Color.BLACK;
-        font = fontGenerator.generateFont(parameter);
+    public ClientHud(SpriteBatch batch) {
+        super(batch);
 
-//        final String FONT_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;,{}\"´`'<>";
-//        font = new TrueTypeFont(Gdx.files.internal("B8.ttf"), FONT_CHARACTERS, 12.5f, 7.5f, 1.0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//        font.setColor(1f, 0f, 0f, 1f);
+        renderConnectionMessage = false;
 
         Gdx.input.setInputProcessor(this);
-
+        font = new FontLoader().loadFont(Paths.ITEM_COUNT_FONT, 24, Color.BLACK);
         table = new Table();
         table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -54,7 +42,9 @@ public class ClientHud extends ownStage {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
                 if (event.getKeyCode() == Input.Keys.ENTER) {
-                    startClient(textfield.getText());
+                    renderConnectionMessage = true;
+                    connectionStatus += textfield.getText();
+                    startClient(textfield.getText(), this);
                 }
                 return super.keyDown(event, keycode);
             }
@@ -63,17 +53,16 @@ public class ClientHud extends ownStage {
         addActor(table);
     }
 
-    public void startClient(String serverIp) {
-        Thread clientThread = new Thread(new Client(serverIp));
+    private void startClient(String serverIp, ClientHud clientHud) {
+        Thread clientThread = new Thread(new Client(serverIp, clientHud));
         clientThread.start();
     }
 
     @Override
-    public void update(SpriteBatch batch) {
-        super.update(batch);
-
-        batch.begin();
-        font.draw(batch, "Moin", 200, 200);
-        batch.end();
+    public void render(SpriteBatch batch) {
+        super.render(batch);
+        if (renderConnectionMessage) {
+            font.draw(batch, connectionStatus + textfield.getText(), Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3);
+        }
     }
 }

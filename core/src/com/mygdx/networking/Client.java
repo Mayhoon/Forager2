@@ -1,5 +1,8 @@
 package com.mygdx.networking;
 
+import com.mygdx.stages.hud.ClientHud;
+import com.mygdx.stages.hud.ServerHud;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,9 +15,12 @@ public class Client implements Runnable {
     private BufferedReader in;
     private boolean running;
     private String serverIp;
+    private ClientHud clientHud;
 
-    public Client(String serverIp) {
+    public Client(String serverIp, ClientHud clientHud) {
         this.serverIp = serverIp;
+        this.clientHud = clientHud;
+        clientHud.connectionStatus = "gasdg";
     }
 
     //Gets called by thread.start()

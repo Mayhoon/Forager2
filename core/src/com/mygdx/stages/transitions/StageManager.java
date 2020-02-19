@@ -2,17 +2,16 @@ package com.mygdx.stages.transitions;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.mygdx.stages.hud.ClientHud;
-import com.mygdx.stages.ownStage;
+import com.mygdx.stages.customStage;
 
 public class StageManager {
-    private ownStage currentStage;
+    private customStage currentStage;
 
-    public StageManager(ownStage currentStage){
+    public StageManager(customStage currentStage){
         this.currentStage = currentStage;
     }
 
-    public void changeStage(final ownStage nextStage) {
+    public void changeStage(final customStage nextStage) {
         currentStage.addAction(Actions.sequence(Actions.fadeOut(0.5f), Actions.run(new Runnable() {
             @Override
             public void run() {
@@ -23,11 +22,14 @@ public class StageManager {
         })));
     }
 
-    public ownStage getCurrentStage(){
-        return currentStage;
-    }
-
     public void updateCurrentStage(SpriteBatch batch) {
-        currentStage.update(batch);
+        //Render the currentStage if any
+        currentStage.draw();
+        currentStage.act();
+
+        //Render the game
+        batch.begin();
+        currentStage.render(batch);
+        batch.end();
     }
 }

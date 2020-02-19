@@ -12,7 +12,7 @@ public class Player extends PlayerInput {
     public Player(Camera camera) {
         super(camera);
         this.camera = camera;
-        animationLoader = new AnimationLoader(1.4f, Paths.PLAYER_ANIMATIONS, 6, 1);
+        animationLoader = new AnimationLoader(0.2f, Paths.PLAYER_RUN, 4, 1);
     }
 
     public void render(SpriteBatch batch) {

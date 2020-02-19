@@ -2,7 +2,6 @@ package com.mygdx.stages.hud;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -11,16 +10,17 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.config.Paths;
-import com.mygdx.screens.MainMenu;
-import com.mygdx.stages.ownStage;
+import com.mygdx.screens.Startmenu;
+import com.mygdx.stages.customStage;
 
-public class MainMenuHud extends ownStage {
-    MainMenu mainMenu;
+public class StartmenuHud extends customStage {
+    Startmenu startmenu;
     ImageButton hostButton, joinButton;
     Table table;
 
-    public MainMenuHud(final MainMenu mainMenuScreen) {
-        this.mainMenu = mainMenuScreen;
+    public StartmenuHud(Startmenu startmenu) {
+        super(startmenu.game.batch);
+        this.startmenu = startmenu;
         Gdx.input.setInputProcessor(this);
 
         //Button to host server
@@ -60,15 +60,11 @@ public class MainMenuHud extends ownStage {
     }
 
     private void hostButtonClicked() {
-        mainMenu.stageManager.changeStage(new ServerHud());
+        startmenu.stageManager.changeStage(new ServerHud(startmenu.game.batch));
+        //mainMenu.game.setScreen(new Game(mainMenu.game.batch));
     }
 
     private void joinButtonClicked() {
-        mainMenu.stageManager.changeStage(new ClientHud());
-    }
-
-    @Override
-    public void update(SpriteBatch batch) {
-        super.update(batch);
+        startmenu.stageManager.changeStage(new ClientHud(startmenu.game.batch));
     }
 }
