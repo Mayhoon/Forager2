@@ -25,6 +25,7 @@ public final class Paths {
     public final static String HOST_HOVERED_BUTTON = BUTTONS_PATH + "/host_hovered" + PNG;
     public final static String JOIN_HOVERED_BUTTON = BUTTONS_PATH + "/join_hovered" + PNG;
     public final static String TEXTINPUT_SERVER_IP = FONTS_SKINS_PATH + "3dventure/3Dventure" + TTF;
+    public final static String CONNECT_TO_SERVER_BUTTON = BUTTONS_PATH + "connect" + PNG;
 
     //Inventory
     public final static String MISSING_ITEM = INVENTORY_PATH + "missing" + PNG;

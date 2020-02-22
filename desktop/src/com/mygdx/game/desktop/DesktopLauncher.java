@@ -12,7 +12,7 @@ public class DesktopLauncher {
 		config.width = 500;
 		config.height = 500;
 		config.resizable = false;
-		config.fullscreen =  true;
+		config.fullscreen =  false;
 		config.forceExit = true;
 		new LwjglApplication(new Main(), config);
 	}

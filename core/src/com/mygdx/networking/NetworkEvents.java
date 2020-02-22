@@ -1,4 +1,6 @@
 package com.mygdx.networking;
 
-public class DataBridge {
+public class NetworkEvents {
+
+
 }

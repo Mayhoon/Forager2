@@ -1,7 +1,6 @@
 package com.mygdx.networking;
 
 import com.mygdx.stages.hud.ClientHud;
-import com.mygdx.stages.hud.ServerHud;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,10 +16,10 @@ public class Client implements Runnable {
     private String serverIp;
     private ClientHud clientHud;
 
-    public Client(String serverIp, ClientHud clientHud) {
-        this.serverIp = serverIp;
+    public Client(ClientHud clientHud) {
         this.clientHud = clientHud;
-        clientHud.connectionStatus = "gasdg";
+        this.serverIp = clientHud.serverIp;
+        clientHud.connectionStatus = "Connecting...";
     }
 
     //Gets called by thread.start()
@@ -28,6 +27,8 @@ public class Client implements Runnable {
         running = true;
         try {
             startConnection(serverIp, 6666);
+            clientHud.connectionStatus = "Connected to " + serverIp;
+            clientHud.startGameAsClient();
             while (running) {
                 sendMessage();
                 receiveMessage();

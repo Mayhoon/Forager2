@@ -28,7 +28,7 @@ public class StartmenuHud extends customStage {
         Drawable hostButtonHoveredDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Paths.HOST_HOVERED_BUTTON))));
         hostButton = new ImageButton(hostButtonDrawable, hostButtonHoveredDrawable);
 
-        //button for joining existing server
+        //Button for joining existing server
         Drawable joinButtonDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Paths.JOIN_BUTTON))));
         Drawable joinButtonHoveredDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Paths.JOIN_HOVERED_BUTTON))));
         joinButton = new ImageButton(joinButtonDrawable, joinButtonHoveredDrawable);
@@ -61,7 +61,6 @@ public class StartmenuHud extends customStage {
 
     private void hostButtonClicked() {
         startmenu.stageManager.changeStage(new ServerHud(startmenu.game.batch));
-        //mainMenu.game.setScreen(new Game(mainMenu.game.batch));
     }
 
     private void joinButtonClicked() {

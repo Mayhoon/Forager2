@@ -23,11 +23,11 @@ public class StageManager {
     }
 
     public void updateCurrentStage(SpriteBatch batch) {
-        //Render the currentStage if any
+        //Render actors of the stage
         currentStage.draw();
         currentStage.act();
 
-        //Render the game
+        //Render all non-actors
         batch.begin();
         currentStage.render(batch);
         batch.end();
