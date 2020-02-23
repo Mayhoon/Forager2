@@ -21,12 +21,12 @@ public class Client extends NetworkInterface implements Runnable {
         this.clientHud = clientHud;
     }
 
+    @Override
     public void run() {
         try {
-            clientHud.connectionStatus = "Connecting...";
+            Logger.log("Connecting...");
             startConnection(clientHud.serverIp, 6666);
             clientHud.connectionStatus = "Connected to " + clientHud.serverIp;
-            running = true;
             while (running) {
                 sendMessage();
                 receiveMessage();
@@ -56,6 +56,8 @@ public class Client extends NetworkInterface implements Runnable {
         clientSocket = new Socket(ip, port);
         OUT_printWriter = new PrintWriter(clientSocket.getOutputStream(), true);
         IN_bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        Logger.log("Running'");
+        running = true;
     }
 
     public void stopConnection() throws IOException {

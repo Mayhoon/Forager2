@@ -40,9 +40,6 @@ public class ClientHud extends customStage {
         super(game.batch);
         this.game = game;
         client = new Client(this);
-
-        /*  determines the length of the connection message
-        used for positioning */
         glyphLayout = new GlyphLayout();
 
         Gdx.input.setInputProcessor(this);
@@ -58,7 +55,7 @@ public class ClientHud extends customStage {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
                 if (event.getKeyCode() == Input.Keys.ENTER) {
-                    connectToIpAdress();
+                    startClient();
                 }
                 return super.keyDown(event, keycode);
             }
@@ -72,7 +69,8 @@ public class ClientHud extends customStage {
         connectButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int a, int b) {
-                connectToIpAdress();
+                serverIp = ipAdressField.getText();
+                startClient();
                 return true;
             }
         });
@@ -80,10 +78,8 @@ public class ClientHud extends customStage {
         addActor(table);
     }
 
-    private void connectToIpAdress() {
-        connectionStatus += ipAdressField.getText();
-        serverIp = ipAdressField.getText();
-        clientThread = new Thread();
+    private void startClient() {
+        clientThread = new Thread(client);
         clientThread.start();
     }
 
@@ -92,7 +88,7 @@ public class ClientHud extends customStage {
         super.render(batch);
 
         glyphLayout.setText(connectionStatusFont, connectionStatus);
-        float messageWidth = glyphLayout.width;// contains the width of the current set text
+        float messageWidth = glyphLayout.width; // contains the width of the current set text
         float messageHeight = glyphLayout.height; // contains the height of the current set text
         float fontPositionX = (ipAdressField.getX() + ipAdressField.getWidth() / 2) + (connectButton.getWidth() / 2) - messageWidth / 2;
         float fontPositionY = (ipAdressField.getY() + ipAdressField.getHeight()) + messageHeight * 3;
@@ -102,11 +98,9 @@ public class ClientHud extends customStage {
         if (client.running) {
             startGameAsClient();
         }
-
     }
 
     public void startGameAsClient() {
-        System.out.println("STARTING THE GAME");
-        game.setScreen(new Game(game.batch));
+        game.setScreen(new Game(client, game.batch));
     }
 }
