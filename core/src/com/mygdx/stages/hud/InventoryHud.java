@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.mygdx.config.Paths;
+import com.mygdx.config.Resources;
 import com.mygdx.items.Sword;
 
 import java.util.Locale;
@@ -25,7 +25,7 @@ public class InventoryHud extends Stage implements InputProcessor {
 
     public InventoryHud() {
         super(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera()));
-        texture = new Texture(Paths.Inventory_INGAME_SCROLLBAR);
+        texture = new Texture(Resources.Inventory_INGAME_SCROLLBAR);
 
         inventory = new Inventory();
         inventory.addItem(new Sword(10));
@@ -44,7 +44,7 @@ public class InventoryHud extends Stage implements InputProcessor {
 
         //Generate inventory quick bar
         //first row
-        for (int i = 0; i < Paths.INVENTORY_SCROLLBAR_SIZE; i++) {
+        for (int i = 0; i < Resources.INVENTORY_SCROLLBAR_SIZE; i++) {
             Table innerTable = new Table();// Stack also useful?
             innerTable.add(inventory.getItem(i).getImage());
             innerTable.add(labelList[i]);
@@ -52,7 +52,7 @@ public class InventoryHud extends Stage implements InputProcessor {
         }
         //second row
         table.row();
-        for (int i = 0; i < Paths.INVENTORY_SCROLLBAR_SIZE; i++) {
+        for (int i = 0; i < Resources.INVENTORY_SCROLLBAR_SIZE; i++) {
             Image scrollbarTexture = new Image(texture);
             table.add(scrollbarTexture);
         }
@@ -64,7 +64,7 @@ public class InventoryHud extends Stage implements InputProcessor {
     }
 
     public void update() {
-        for (int i = 0; i < Paths.INVENTORY_SCROLLBAR_SIZE; i++) {
+        for (int i = 0; i < Resources.INVENTORY_SCROLLBAR_SIZE; i++) {
             labelList[i].setText(inventory.getItem(i).getAmount());
         }
         act();

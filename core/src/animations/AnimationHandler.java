@@ -5,15 +5,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
-public class AnimationLoader {
+public class AnimationHandler {
     private Texture bundledAnimations;
     private TextureRegion[] animationFrames;
     public Animation<TextureRegion> animation;
     private float elapsedTime = 0;
     private float timeBetweenFrames;
 
-    public AnimationLoader(float timeBetweenFrames, String path, int tilesPerRow, int tilesPerColumn) {
+    public AnimationHandler(float timeBetweenFrames, String path, int tilesPerRow, int tilesPerColumn) {
         this.timeBetweenFrames = timeBetweenFrames;
         bundledAnimations = new Texture(path);
         int amountOfImages = tilesPerColumn * tilesPerRow;
@@ -31,9 +32,9 @@ public class AnimationLoader {
         animation = new Animation<>(timeBetweenFrames, animationFrames);
     }
 
-    public void update(SpriteBatch batch) {
+    public void update(Vector2 pos, SpriteBatch batch) {
+        System.out.println(pos.x + " " + pos.y);
         elapsedTime += (Gdx.graphics.getDeltaTime());
-        batch.draw(animation.getKeyFrame(elapsedTime, true), 100, 100);
-        System.out.println("This is working");
+        batch.draw(animation.getKeyFrame(elapsedTime, true), pos.x, pos.y);
     }
 }

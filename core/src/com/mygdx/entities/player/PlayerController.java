@@ -1,19 +1,31 @@
 package com.mygdx.entities.player;
 
+import animations.AnimationHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerAdapter;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.camera.Camera;
+import com.mygdx.config.Resources;
 
-public class PlayerInput extends ControllerAdapter {
+public class PlayerController extends ControllerAdapter {
     Camera camera;
+    private AnimationHandler animationHandler;
+    private Vector2 playerPosition;
 
-    public PlayerInput(Camera camera) {
+    public PlayerController(Camera camera) {
         this.camera = camera;
+        playerPosition = new Vector2();
+        animationHandler = new AnimationHandler(0.1f, Resources.PLAYER_RUN, 4, 1);
     }
 
-    public void update() {
+    public void update(SpriteBatch batch) {
+        playerPosition.x = camera.position.x;
+        playerPosition.y = camera.position.y;
+        animationHandler.update(playerPosition, batch);
+
         float speed = 1.2f;
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             camera.moveWithKeyboard(0, speed);
@@ -37,7 +49,7 @@ public class PlayerInput extends ControllerAdapter {
         if (x > inputMinimum || x < -inputMinimum && y < -inputMinimum || y > inputMinimum) {
             camera.moveByController(x, y * (-1));
         }
-        //System.out.println("X: " + x + " Y: " + y);
+//      Logger.log("X: " + x + " Y: " + y);
         return false;
     }
 

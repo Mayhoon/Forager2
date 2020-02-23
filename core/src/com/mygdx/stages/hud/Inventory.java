@@ -2,7 +2,7 @@ package com.mygdx.stages.hud;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.mygdx.config.Paths;
+import com.mygdx.config.Resources;
 import com.mygdx.items.Item;
 import com.mygdx.items.Sword;
 
@@ -10,7 +10,7 @@ public class Inventory implements InputProcessor {
     private Item[] itemList;
 
     public Inventory() {
-        itemList = new Item[Paths.INVENTORY_SCROLLBAR_SIZE];
+        itemList = new Item[Resources.INVENTORY_SCROLLBAR_SIZE];
         itemList[0] = new Sword(0);
     }
 

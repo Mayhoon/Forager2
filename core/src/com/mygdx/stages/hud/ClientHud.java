@@ -17,7 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.mygdx.config.Paths;
+import com.mygdx.config.Resources;
 import com.mygdx.game.Main;
 import com.mygdx.networking.Client;
 import com.mygdx.screens.Game;
@@ -31,19 +31,22 @@ public class ClientHud extends customStage {
     private GlyphLayout glyphLayout;
     public String serverIp;
     private Main game;
+    private Thread clientThread;
+    private Client client;
 
     public String connectionStatus = "Ip adress of the server:";
 
     public ClientHud(Main game) {
         super(game.batch);
         this.game = game;
+        client = new Client(this);
 
         /*  determines the length of the connection message
         used for positioning */
         glyphLayout = new GlyphLayout();
 
         Gdx.input.setInputProcessor(this);
-        connectionStatusFont = new FontLoader().loadFont(Paths.ITEM_COUNT_FONT, 20, Color.BLACK);
+        connectionStatusFont = new FontLoader().loadFont(Resources.ITEM_COUNT_FONT, 20, Color.BLACK);
         Table table = new Table();
         table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -63,8 +66,8 @@ public class ClientHud extends customStage {
         table.add(ipAdressField).center();
 
         //button for joining existing server
-        Drawable connectButtonDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Paths.CONNECT_TO_SERVER_BUTTON))));
-        Drawable connectButtonHoveredDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Paths.CONNECT_TO_SERVER_BUTTON))));
+        Drawable connectButtonDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Resources.CONNECT_TO_SERVER_BUTTON))));
+        Drawable connectButtonHoveredDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Resources.CONNECT_TO_SERVER_BUTTON))));
         connectButton = new ImageButton(connectButtonDrawable, connectButtonHoveredDrawable);
         connectButton.addListener(new ClickListener() {
             @Override
@@ -80,7 +83,7 @@ public class ClientHud extends customStage {
     private void connectToIpAdress() {
         connectionStatus += ipAdressField.getText();
         serverIp = ipAdressField.getText();
-        Thread clientThread = new Thread(new Client(this));
+        clientThread = new Thread();
         clientThread.start();
     }
 
@@ -95,6 +98,11 @@ public class ClientHud extends customStage {
         float fontPositionY = (ipAdressField.getY() + ipAdressField.getHeight()) + messageHeight * 3;
 
         connectionStatusFont.draw(batch, connectionStatus, fontPositionX, fontPositionY);
+
+        if (client.running) {
+            startGameAsClient();
+        }
+
     }
 
     public void startGameAsClient() {

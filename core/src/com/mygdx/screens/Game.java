@@ -9,8 +9,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.camera.Camera;
-import com.mygdx.config.Paths;
+import com.mygdx.config.Resources;
 import com.mygdx.entities.player.Player;
+import com.mygdx.networking.Client;
+import com.mygdx.networking.Server;
 import com.mygdx.stages.hud.InventoryHud;
 
 public class Game extends ScreenAdapter {
@@ -20,8 +22,16 @@ public class Game extends ScreenAdapter {
     private SpriteBatch batch;
     private Player player;
 
+    public Game(Server server, SpriteBatch batch) {
+        this(batch);
+    }
+
+    public Game(Client client, SpriteBatch batch) {
+        this(batch);
+    }
+
     public Game(SpriteBatch batch) {
-        mapTexture = new Texture(Paths.TILESET_PATH);
+        mapTexture = new Texture(Resources.TILESET_PATH);
         this.batch = batch;
 
         camera = new Camera();
@@ -56,11 +66,9 @@ public class Game extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(camera.combined);
-
-        System.out.println("YO");
         batch.begin();
         player.render(batch);
-        //batch.draw(mapTexture, 0, 0);
+        batch.draw(mapTexture, 60, 60);
 
         batch.setProjectionMatrix(inventoryHud.getStage().getCamera().combined);
         batch.end();

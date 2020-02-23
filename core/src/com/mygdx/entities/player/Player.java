@@ -1,22 +1,18 @@
 package com.mygdx.entities.player;
 
-import animations.AnimationLoader;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.camera.Camera;
-import com.mygdx.config.Paths;
 
-public class Player extends PlayerInput {
-    private Camera camera;
-    private AnimationLoader animationLoader;
+public class Player extends PlayerController {
+    private Vector2 playerPosition;
 
     public Player(Camera camera) {
         super(camera);
-        this.camera = camera;
-        animationLoader = new AnimationLoader(0.2f, Paths.PLAYER_RUN, 4, 1);
+        playerPosition = new Vector2(0,0);
     }
 
     public void render(SpriteBatch batch) {
-        animationLoader.update(batch);
-        update();
+        update(batch);
     }
 }

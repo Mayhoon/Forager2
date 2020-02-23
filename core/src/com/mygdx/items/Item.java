@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.mygdx.config.Paths;
+import com.mygdx.config.Resources;
 
 public class Item extends Actor {
     private String type;
@@ -15,7 +15,7 @@ public class Item extends Actor {
 
     public Item(String type, String itemName, boolean stackable, int amount, int durability) {
         this.type = type;
-        Texture texture = new Texture(Gdx.files.internal(Paths.ITEMS_PATH + itemName + ".png"));
+        Texture texture = new Texture(Gdx.files.internal(Resources.ITEMS_PATH + itemName + ".png"));
         image = new Image(texture);
         this.stackable = stackable;
         this.amount = amount;

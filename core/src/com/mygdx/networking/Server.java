@@ -2,36 +2,30 @@ package com.mygdx.networking;
 
 import com.mygdx.config.Color;
 import com.mygdx.stages.hud.ServerHud;
+import com.mygdx.tools.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
-public class Server implements Runnable {
+public class Server extends NetworkInterface implements Runnable {
+    public boolean running;
     private ServerSocket serverSocket;
     private Socket clientSocket;
-    private PrintWriter out;
-    private BufferedReader in;
+    private PrintWriter OUT_printWriter;
+    private BufferedReader IN_bufferedReader;
     private ServerHud serverHud;
-    private boolean running;
 
     public Server(ServerHud serverHud) {
+        super(true);
         this.serverHud = serverHud;
-        try {
-            System.out.println("Adress is: " + InetAddress.getLocalHost().getHostAddress());
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
     public void run() {
-        running = true;
         try {
             start();
             while (running) {
@@ -44,46 +38,45 @@ public class Server implements Runnable {
     }
 
     public void start() throws IOException {
-        //Waiting for connections
-        System.out.println("Waiting for connections...");
+        Logger.log("Waiting for connections...");
         serverHud.connectionStatus = "Waiting for connections";
 
         serverSocket = new ServerSocket(6666);
         clientSocket = serverSocket.accept();
 
         serverHud.connectionStatus = "Connected!";
-        serverHud.startGameAsServer();
-        System.out.println(clientSocket.getInetAddress().getHostName() + " has connected");
+        Logger.log(clientSocket.getInetAddress().getHostName() + " has connected");
 
-        out = new PrintWriter(clientSocket.getOutputStream(), true);
-        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        System.out.println("Streams setup");
+        OUT_printWriter = new PrintWriter(clientSocket.getOutputStream(), true);
+        IN_bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        Logger.log("Streams setup");
+
+        running = true;
     }
 
     private void receiveMessage() throws IOException {
-        System.out.println("Receiving message from the client...");
-        String receiveMessage = in.readLine();
-        System.out.println(receiveMessage);
-        System.out.println("RECEIVED");
+        Logger.log("Receiving message from the client...");
+        String receivedMessage = IN_bufferedReader.readLine();
+        Logger.log("Client: " + receivedMessage);
 
-        if (receiveMessage.equals("end")) {
+        if (receivedMessage.equals("end")) {
             stopConnections();
         }
     }
 
     private void sendMessage() {
-        System.out.println("Sending message to the client...");
-        out.println("Nice to meet you!");
-        out.flush();
+        Logger.log("Sending message to the client...");
+        OUT_printWriter.println();
+        OUT_printWriter.flush();
     }
 
     private void stopConnections() throws IOException {
-        System.out.println(Color.ANSI_PURPLE + "Closing connections..." + Color.ANSI_RESET);
+        Logger.log(Color.ANSI_PURPLE + "Closing connections..." + Color.ANSI_RESET);
         running = false;
-        in.close();
-        out.close();
+        IN_bufferedReader.close();
+        OUT_printWriter.close();
         clientSocket.close();
         serverSocket.close();
-        System.out.print("Connections closed");
+        Logger.log("Connections closed");
     }
 }

@@ -1,6 +1,6 @@
 package com.mygdx.config;
 
-public final class Paths {
+public final class Resources {
 
     //Basic configuration
     public final static int INVENTORY_SCROLLBAR_SIZE = 6;
