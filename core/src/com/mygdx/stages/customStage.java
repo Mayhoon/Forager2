@@ -14,4 +14,8 @@ public class customStage extends Stage {
     public void render(SpriteBatch batch) {
 
     }
+
+    public SpriteBatch getBatch() {
+        return batch;
+    }
 }

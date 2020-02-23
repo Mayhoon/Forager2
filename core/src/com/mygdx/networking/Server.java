@@ -1,6 +1,7 @@
 package com.mygdx.networking;
 
 import com.mygdx.config.Color;
+import com.mygdx.stages.hud.ServerHud;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,9 +17,11 @@ public class Server implements Runnable {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
+    private ServerHud serverHud;
     private boolean running;
 
-    public Server() {
+    public Server(ServerHud serverHud) {
+        this.serverHud = serverHud;
         try {
             System.out.println("Adress is: " + InetAddress.getLocalHost().getHostAddress());
         } catch (UnknownHostException e) {
@@ -43,9 +46,13 @@ public class Server implements Runnable {
     public void start() throws IOException {
         //Waiting for connections
         System.out.println("Waiting for connections...");
+        serverHud.connectionStatus = "Waiting for connections";
+
         serverSocket = new ServerSocket(6666);
         clientSocket = serverSocket.accept();
 
+        serverHud.connectionStatus = "Connected!";
+        serverHud.startGameAsServer();
         System.out.println(clientSocket.getInetAddress().getHostName() + " has connected");
 
         out = new PrintWriter(clientSocket.getOutputStream(), true);

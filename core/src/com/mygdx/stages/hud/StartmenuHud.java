@@ -60,10 +60,10 @@ public class StartmenuHud extends customStage {
     }
 
     private void hostButtonClicked() {
-        startmenu.stageManager.changeStage(new ServerHud(startmenu.game.batch));
+        startmenu.stageManager.changeStage(new ServerHud(startmenu.game));
     }
 
     private void joinButtonClicked() {
-        startmenu.stageManager.changeStage(new ClientHud(startmenu.game.batch));
+        startmenu.stageManager.changeStage(new ClientHud(startmenu.game));
     }
 }

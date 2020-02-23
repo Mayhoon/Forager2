@@ -18,7 +18,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.config.Paths;
+import com.mygdx.game.Main;
 import com.mygdx.networking.Client;
+import com.mygdx.screens.Game;
 import com.mygdx.stages.customStage;
 import com.mygdx.tools.FontLoader;
 
@@ -28,11 +30,13 @@ public class ClientHud extends customStage {
     private ImageButton connectButton;
     private GlyphLayout glyphLayout;
     public String serverIp;
+    private Main game;
 
     public String connectionStatus = "Ip adress of the server:";
 
-    public ClientHud(SpriteBatch batch) {
-        super(batch);
+    public ClientHud(Main game) {
+        super(game.batch);
+        this.game = game;
 
         /*  determines the length of the connection message
         used for positioning */
@@ -95,6 +99,6 @@ public class ClientHud extends customStage {
 
     public void startGameAsClient() {
         System.out.println("STARTING THE GAME");
-
+        game.setScreen(new Game(game.batch));
     }
 }
