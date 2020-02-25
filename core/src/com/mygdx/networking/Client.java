@@ -3,17 +3,19 @@ package com.mygdx.networking;
 import com.mygdx.stages.hud.ClientHud;
 import com.mygdx.tools.Logger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
 public class Client extends NetworkInterface implements Runnable {
     public boolean running;
     private Socket clientSocket;
+
     private PrintWriter OUT_printWriter;
     private BufferedReader IN_bufferedReader;
+
+    private DataOutputStream dataOutputStream;
+    private DataInputStream dataInputStream;
+
     private ClientHud clientHud;
 
     public Client(ClientHud clientHud) {
@@ -36,27 +38,31 @@ public class Client extends NetworkInterface implements Runnable {
         }
     }
 
-    public void sendMessage() {
-        Logger.log("Sending message to the server...");
-        OUT_printWriter.println("Nice to meet you!");
-        OUT_printWriter.flush();
+    public void sendMessage() throws IOException {
+//        OUT_printWriter.print(super.getOtherX());
+//        OUT_printWriter.flush();
+        System.out.println("S");
+        dataOutputStream.writeInt(ownPositionX);
+        dataOutputStream.flush();
     }
 
     private void receiveMessage() throws IOException {
-        String receivedMessage = IN_bufferedReader.readLine();
-        Logger.log("Server: " + receivedMessage);
-
-        if (receivedMessage.equals("end")) {
-            stopConnection();
-        }
+        System.out.println("R");
+        otherPositionX = dataInputStream.readInt();
+//        int receivedMessage = IN_bufferedReader.read();
     }
 
     public void startConnection(String ip, int port) throws IOException {
         Logger.log("Initiate connection...");
         clientSocket = new Socket(ip, port);
-        OUT_printWriter = new PrintWriter(clientSocket.getOutputStream(), true);
-        IN_bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        Logger.log("Running'");
+
+//        OUT_printWriter = new PrintWriter(clientSocket.getOutputStream(), true);
+//        IN_bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+        dataInputStream = new DataInputStream(clientSocket.getInputStream());
+        dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
+
+        Logger.log("Running");
         running = true;
     }
 

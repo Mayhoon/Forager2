@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.config.Resources;
 import com.mygdx.game.Main;
 import com.mygdx.networking.Client;
+import com.mygdx.networking.ServerClientWrapper;
 import com.mygdx.screens.Game;
 import com.mygdx.stages.customStage;
 import com.mygdx.tools.FontLoader;
@@ -33,7 +34,7 @@ public class ClientHud extends customStage {
     private Main game;
     private Thread clientThread;
     private Client client;
-
+    private ServerClientWrapper serverClientWrapper;
     public String connectionStatus = "Ip adress of the server:";
 
     public ClientHud(Main game) {
@@ -96,11 +97,12 @@ public class ClientHud extends customStage {
         connectionStatusFont.draw(batch, connectionStatus, fontPositionX, fontPositionY);
 
         if (client.running) {
+            serverClientWrapper = new ServerClientWrapper(client);
             startGameAsClient();
         }
     }
 
     public void startGameAsClient() {
-        game.setScreen(new Game(client, game.batch));
+        game.setScreen(new Game(serverClientWrapper, game.batch));
     }
 }

@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.config.Resources;
 import com.mygdx.game.Main;
 import com.mygdx.networking.Server;
+import com.mygdx.networking.ServerClientWrapper;
 import com.mygdx.screens.Game;
 import com.mygdx.stages.customStage;
 import com.mygdx.tools.FontLoader;
@@ -34,6 +35,7 @@ public class ServerHud extends customStage {
     private Main game;
     private Server server;
     private Thread serverThread;
+    private ServerClientWrapper serverClientWrapper;
 
     public ServerHud(Main game) {
         super(game.batch);
@@ -92,12 +94,13 @@ public class ServerHud extends customStage {
         font.draw(batch, connectionStatus, fontPositionX, fontPositionY);
 
         if (server.running && connectionStatus.equals("Connected!")) {
+            serverClientWrapper = new ServerClientWrapper(server);
             startGameAsServer();
         }
     }
 
     public void startGameAsServer() {
-       game.setScreen(new Game(server, game.batch));
+       game.setScreen(new Game(serverClientWrapper, game.batch));
     }
 
 }

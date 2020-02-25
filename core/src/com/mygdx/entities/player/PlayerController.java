@@ -9,24 +9,36 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.camera.Camera;
 import com.mygdx.config.Resources;
+import com.mygdx.networking.Client;
+import com.mygdx.networking.Server;
+import com.mygdx.networking.ServerClientWrapper;
 
 public class PlayerController extends ControllerAdapter {
     Camera camera;
+    public boolean isPuppet;
     private AnimationHandler animationHandler;
-    private Vector2 playerPosition;
+    private ServerClientWrapper serverClientWrapper;
 
-    public PlayerController(Camera camera) {
+    public PlayerController(boolean isPuppet, ServerClientWrapper serverClientWrapper, Camera camera) {
         this.camera = camera;
-        playerPosition = new Vector2();
         animationHandler = new AnimationHandler(0.1f, Resources.PLAYER_RUN, 4, 1);
+        this.serverClientWrapper = serverClientWrapper;
+        this.isPuppet = isPuppet;
     }
 
-    public void update(SpriteBatch batch) {
-        playerPosition.x = camera.position.x;
-        playerPosition.y = camera.position.y;
-        animationHandler.update(playerPosition, batch);
+    public void update(Player player, SpriteBatch batch) {
+        if (!isPuppet) {
+            player.position.x = camera.position.x;
+            player.position.y = camera.position.y;
+            serverClientWrapper.sendPosition((int) player.position.x);
+
+        } else {
+            player.position.x = serverClientWrapper.getOpponentPosition();
+        }
+        animationHandler.update(player.position, batch);
 
         float speed = 1.2f;
+
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             camera.moveWithKeyboard(0, speed);
         }

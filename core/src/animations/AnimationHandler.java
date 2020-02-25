@@ -33,7 +33,6 @@ public class AnimationHandler {
     }
 
     public void update(Vector2 pos, SpriteBatch batch) {
-        System.out.println(pos.x + " " + pos.y);
         elapsedTime += (Gdx.graphics.getDeltaTime());
         batch.draw(animation.getKeyFrame(elapsedTime, true), pos.x, pos.y);
     }

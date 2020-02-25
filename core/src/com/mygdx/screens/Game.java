@@ -13,6 +13,7 @@ import com.mygdx.config.Resources;
 import com.mygdx.entities.player.Player;
 import com.mygdx.networking.Client;
 import com.mygdx.networking.Server;
+import com.mygdx.networking.ServerClientWrapper;
 import com.mygdx.stages.hud.InventoryHud;
 
 public class Game extends ScreenAdapter {
@@ -20,17 +21,9 @@ public class Game extends ScreenAdapter {
     private InventoryHud inventoryHud;
     private Camera camera;
     private SpriteBatch batch;
-    private Player player;
+    private Player player, player2;
 
-    public Game(Server server, SpriteBatch batch) {
-        this(batch);
-    }
-
-    public Game(Client client, SpriteBatch batch) {
-        this(batch);
-    }
-
-    public Game(SpriteBatch batch) {
+    public Game(ServerClientWrapper serverClientWrapper, SpriteBatch batch) {
         mapTexture = new Texture(Resources.TILESET_PATH);
         this.batch = batch;
 
@@ -40,8 +33,9 @@ public class Game extends ScreenAdapter {
         camera.position.y = 0;
         camera.update();
 
-        player = new Player(camera);
         inventoryHud = new InventoryHud();
+        player = new Player(false, serverClientWrapper, camera);
+        player2 = new Player(true, serverClientWrapper, camera);
 
         //input listener
         Controllers.addListener(player);
@@ -68,6 +62,7 @@ public class Game extends ScreenAdapter {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         player.render(batch);
+        player2.render(batch);
         batch.draw(mapTexture, 60, 60);
 
         batch.setProjectionMatrix(inventoryHud.getStage().getCamera().combined);

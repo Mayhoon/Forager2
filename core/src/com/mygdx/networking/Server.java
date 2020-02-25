@@ -4,10 +4,7 @@ import com.mygdx.config.Color;
 import com.mygdx.stages.hud.ServerHud;
 import com.mygdx.tools.Logger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -17,6 +14,8 @@ public class Server extends NetworkInterface implements Runnable {
     private Socket clientSocket;
     private PrintWriter OUT_printWriter;
     private BufferedReader IN_bufferedReader;
+    private DataInputStream dataInputStream;
+    private DataOutputStream dataOutputStream;
     private ServerHud serverHud;
 
     public Server(ServerHud serverHud) {
@@ -46,28 +45,26 @@ public class Server extends NetworkInterface implements Runnable {
 
         serverHud.connectionStatus = "Connected!";
         Logger.log(clientSocket.getInetAddress().getHostName() + " has connected");
-
-        OUT_printWriter = new PrintWriter(clientSocket.getOutputStream(), true);
-        IN_bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        dataInputStream = new DataInputStream(clientSocket.getInputStream());
+        dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
+//        OUT_printWriter = new PrintWriter(clientSocket.getOutputStream(), true);
+//        IN_bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         Logger.log("Streams setup");
-
         running = true;
     }
 
-    private void receiveMessage() throws IOException {
-        Logger.log("Receiving message from the client...");
-        String receivedMessage = IN_bufferedReader.readLine();
-        Logger.log("Client: " + receivedMessage);
-
-        if (receivedMessage.equals("end")) {
-            stopConnections();
-        }
+    public void sendMessage() throws IOException {
+//        OUT_printWriter.print(super.getOtherX());
+//        OUT_printWriter.flush();
+        System.out.println("S");
+        dataOutputStream.writeInt(ownPositionX);
+        dataOutputStream.flush();
     }
 
-    private void sendMessage() {
-        Logger.log("Sending message to the client...");
-        OUT_printWriter.println();
-        OUT_printWriter.flush();
+    private void receiveMessage() throws IOException {
+        System.out.println("R");
+        otherPositionX = dataInputStream.readInt();
+//        int receivedMessage = IN_bufferedReader.read();
     }
 
     private void stopConnections() throws IOException {
