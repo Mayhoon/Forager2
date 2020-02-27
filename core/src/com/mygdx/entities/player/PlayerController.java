@@ -28,12 +28,12 @@ public class PlayerController extends ControllerAdapter {
 
     public void update(Player player, SpriteBatch batch) {
         if (!isPuppet) {
-            player.position.x = camera.position.x;
-            player.position.y = camera.position.y;
-            serverClientWrapper.sendPosition((int) player.position.x);
+           player.position = camera.position;
+            serverClientWrapper.sendPosition(player.position);
 
         } else {
-            player.position.x = serverClientWrapper.getOpponentPosition();
+            player.position.x = serverClientWrapper.getOpponentPositionX();
+            player.position.y = serverClientWrapper.getOpponentPositionY();
         }
         animationHandler.update(player.position, batch);
 

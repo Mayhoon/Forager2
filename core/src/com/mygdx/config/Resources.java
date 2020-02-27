@@ -5,9 +5,9 @@ public final class Resources {
     //Basic configuration
     public final static int INVENTORY_SCROLLBAR_SIZE = 6;
     public final static String PNG = ".png";
+    public final static String JSON = ".json";
     public final static String OTF = ".OTF";
     public final static String TTF = ".TTF";
-
 
     //Base paths to the images, skins and maps
     public final static String CHARACTERS_PATH = "characters/";
@@ -35,6 +35,7 @@ public final class Resources {
     public final static String PLAYER_PATH = CHARACTERS_PATH + "/player/player.png";
     public final static String PLAYER_IDLE = ANIMATIONS_PATH + "/player/skeleton/idle" + PNG;
     public final static String PLAYER_RUN = ANIMATIONS_PATH + "/player/skeleton/run" + PNG;
+    public final static String JSON_PLAYER_POSITION = CHARACTERS_PATH + "/player/player" + JSON;
 
     //Maps
     public final static String TILESET_PATH = MAPS_PATH + "Tileset.png";

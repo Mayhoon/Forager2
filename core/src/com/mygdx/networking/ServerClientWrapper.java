@@ -1,5 +1,7 @@
 package com.mygdx.networking;
 
+import com.badlogic.gdx.math.Vector3;
+
 // This class contains either the client or server
 // and provides methods to send/ read data from the NetworkInterface
 // which holds data describing the current game state
@@ -24,19 +26,33 @@ public class ServerClientWrapper {
         return false;
     }
 
-    public void sendPosition(int position) {
+    public void sendPosition(Vector3 playerPosition) {
+        int playerX = (int) playerPosition.x;
+        int playerY = (int) playerPosition.y;
+
         if (server != null) {
-            server.ownPositionX = position;
+            server.ownPositionX = playerX;
+            server.ownPositionY = playerY;
         } else if (client != null) {
-            client.ownPositionX = position;
+            client.ownPositionX = playerX;
+            client.ownPositionY = playerY;
         }
     }
 
-    public int getOpponentPosition() {
+    public int getOpponentPositionX() {
         if (server != null) {
             return server.otherPositionX;
         } else if (client != null) {
             return client.otherPositionX;
+        }
+        return 11111;
+    }
+
+    public int getOpponentPositionY() {
+        if (server != null) {
+            return server.otherPositionY;
+        } else if (client != null) {
+            return client.otherPositionY;
         }
         return 11111;
     }

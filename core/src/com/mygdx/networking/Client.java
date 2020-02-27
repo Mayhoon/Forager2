@@ -6,20 +6,15 @@ import com.mygdx.tools.Logger;
 import java.io.*;
 import java.net.Socket;
 
-public class Client extends NetworkInterface implements Runnable {
+public class Client extends NetworkData implements Runnable {
     public boolean running;
+    private ClientHud clientHud;
     private Socket clientSocket;
-
-    private PrintWriter OUT_printWriter;
-    private BufferedReader IN_bufferedReader;
 
     private DataOutputStream dataOutputStream;
     private DataInputStream dataInputStream;
 
-    private ClientHud clientHud;
-
     public Client(ClientHud clientHud) {
-        super(false);
         this.clientHud = clientHud;
     }
 
@@ -39,17 +34,16 @@ public class Client extends NetworkInterface implements Runnable {
     }
 
     public void sendMessage() throws IOException {
-//        OUT_printWriter.print(super.getOtherX());
-//        OUT_printWriter.flush();
         System.out.println("S");
         dataOutputStream.writeInt(ownPositionX);
+        dataOutputStream.writeInt(ownPositionY);
         dataOutputStream.flush();
     }
 
     private void receiveMessage() throws IOException {
         System.out.println("R");
         otherPositionX = dataInputStream.readInt();
-//        int receivedMessage = IN_bufferedReader.read();
+        otherPositionY = dataInputStream.readInt();
     }
 
     public void startConnection(String ip, int port) throws IOException {
@@ -69,8 +63,6 @@ public class Client extends NetworkInterface implements Runnable {
     public void stopConnection() throws IOException {
         running = false;
         Logger.log("Closing connections...");
-        IN_bufferedReader.close();
-        OUT_printWriter.close();
         clientSocket.close();
         Logger.log("Connections closed!");
     }

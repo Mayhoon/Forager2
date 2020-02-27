@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 public class AnimationHandler {
     private Texture bundledAnimations;
@@ -32,8 +32,8 @@ public class AnimationHandler {
         animation = new Animation<>(timeBetweenFrames, animationFrames);
     }
 
-    public void update(Vector2 pos, SpriteBatch batch) {
+    public void update(Vector3 entityPosition, SpriteBatch batch) {
         elapsedTime += (Gdx.graphics.getDeltaTime());
-        batch.draw(animation.getKeyFrame(elapsedTime, true), pos.x, pos.y);
+        batch.draw(animation.getKeyFrame(elapsedTime, true), entityPosition.x, entityPosition.y);
     }
 }
