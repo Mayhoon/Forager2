@@ -27,8 +27,8 @@ public class Server extends NetworkData implements Runnable {
         try {
             start();
             while (running) {
-                sendMessage();
                 receiveMessage();
+                sendMessage();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -51,16 +51,16 @@ public class Server extends NetworkData implements Runnable {
     }
 
     public void sendMessage() throws IOException {
-        System.out.println("S");
-        dataOutputStream.writeInt(ownPositionX);
-        dataOutputStream.writeInt(ownPositionY);
+        // System.out.println("S");
+        dataOutputStream.writeFloat(ownPositionX);
+        dataOutputStream.writeFloat(ownPositionY);
         dataOutputStream.flush();
     }
 
     private void receiveMessage() throws IOException {
-        System.out.println("R");
-        otherPositionX = dataInputStream.readInt();
-        otherPositionY = dataInputStream.readInt();
+        // System.out.println("R");
+        otherPositionX = dataInputStream.readFloat();
+        otherPositionY = dataInputStream.readFloat();
     }
 
     private void stopConnections() throws IOException {

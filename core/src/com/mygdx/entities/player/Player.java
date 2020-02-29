@@ -10,7 +10,7 @@ public class Player extends PlayerController {
 
     public Player(boolean isPuppet, ServerClientWrapper serverClientWrapper, Camera camera) {
         super(isPuppet, serverClientWrapper, camera);
-        position = new Vector3(30, 30, 0);
+        position = new Vector3(30f, 30f, 0f);
     }
 
     public void render(SpriteBatch batch) {

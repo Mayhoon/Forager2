@@ -6,17 +6,17 @@ import com.mygdx.config.Resources;
 import java.io.File;
 
 public class NetworkData {
-    public int ownPositionX = 0;
-    public int otherPositionX = 0;
+    public float ownPositionX = 0f;
+    public float otherPositionX = 0f;
 
-    public int ownPositionY = 0;
-    public int otherPositionY = 0;
+    public float ownPositionY = 0f;
+    public float otherPositionY = 0f;
 
-    private static Json playerJSON;
+   // private static Json playerJSON;
 
     public NetworkData() {
-        playerJSON = new Json();
-        File file = new File(Resources.JSON_PLAYER_POSITION);
+//        playerJSON = new Json();
+//        File file = new File(Resources.JSON_PLAYER_POSITION);
     }
 
 }

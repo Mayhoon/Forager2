@@ -21,7 +21,7 @@ public class Client extends NetworkData implements Runnable {
     @Override
     public void run() {
         try {
-            Logger.log("Connecting...");
+            Logger.log("Connecting to " + clientHud.serverIp);
             startConnection(clientHud.serverIp, 6666);
             clientHud.connectionStatus = "Connected to " + clientHud.serverIp;
             while (running) {
@@ -34,16 +34,16 @@ public class Client extends NetworkData implements Runnable {
     }
 
     public void sendMessage() throws IOException {
-        System.out.println("S");
-        dataOutputStream.writeInt(ownPositionX);
-        dataOutputStream.writeInt(ownPositionY);
+       // System.out.println("S");
+        dataOutputStream.writeFloat(ownPositionX);
+        dataOutputStream.writeFloat(ownPositionY);
         dataOutputStream.flush();
     }
 
     private void receiveMessage() throws IOException {
-        System.out.println("R");
-        otherPositionX = dataInputStream.readInt();
-        otherPositionY = dataInputStream.readInt();
+       // System.out.println("R");
+        otherPositionX = dataInputStream.readFloat();
+        otherPositionY = dataInputStream.readFloat();
     }
 
     public void startConnection(String ip, int port) throws IOException {

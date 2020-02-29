@@ -1,5 +1,6 @@
 package com.mygdx.entities.player;
 
+import Enums.PlayerState;
 import animations.AnimationHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -18,6 +19,7 @@ public class PlayerController extends ControllerAdapter {
     public boolean isPuppet;
     private AnimationHandler animationHandler;
     private ServerClientWrapper serverClientWrapper;
+    private float speed = 1.2f;
 
     public PlayerController(boolean isPuppet, ServerClientWrapper serverClientWrapper, Camera camera) {
         this.camera = camera;
@@ -28,16 +30,14 @@ public class PlayerController extends ControllerAdapter {
 
     public void update(Player player, SpriteBatch batch) {
         if (!isPuppet) {
-           player.position = camera.position;
+            player.position = camera.position;
             serverClientWrapper.sendPosition(player.position);
 
         } else {
             player.position.x = serverClientWrapper.getOpponentPositionX();
             player.position.y = serverClientWrapper.getOpponentPositionY();
         }
-        animationHandler.update(player.position, batch);
-
-        float speed = 1.2f;
+        animationHandler.update(player.position, PlayerState.IDLE, batch);
 
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             camera.moveWithKeyboard(0, speed);

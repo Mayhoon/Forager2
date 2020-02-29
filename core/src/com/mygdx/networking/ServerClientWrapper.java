@@ -27,8 +27,8 @@ public class ServerClientWrapper {
     }
 
     public void sendPosition(Vector3 playerPosition) {
-        int playerX = (int) playerPosition.x;
-        int playerY = (int) playerPosition.y;
+        float playerX = playerPosition.x;
+        float playerY = playerPosition.y;
 
         if (server != null) {
             server.ownPositionX = playerX;
@@ -39,7 +39,7 @@ public class ServerClientWrapper {
         }
     }
 
-    public int getOpponentPositionX() {
+    public float getOpponentPositionX() {
         if (server != null) {
             return server.otherPositionX;
         } else if (client != null) {
@@ -48,7 +48,7 @@ public class ServerClientWrapper {
         return 11111;
     }
 
-    public int getOpponentPositionY() {
+    public float getOpponentPositionY() {
         if (server != null) {
             return server.otherPositionY;
         } else if (client != null) {
