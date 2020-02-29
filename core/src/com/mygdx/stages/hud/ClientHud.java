@@ -19,40 +19,40 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.config.Resources;
 import com.mygdx.game.Main;
-import com.mygdx.networking.Client;
+import com.mygdx.networking.KryoClient;
 import com.mygdx.networking.ServerClientWrapper;
 import com.mygdx.screens.Game;
 import com.mygdx.stages.customStage;
 import com.mygdx.tools.FontLoader;
 
+import java.io.IOException;
+
 public class ClientHud extends customStage {
-    private BitmapFont connectionStatusFont;
-    private TextField ipAdressField;
-    private ImageButton connectButton;
-    private GlyphLayout glyphLayout;
-    public String serverIp;
     private Main game;
-    private Thread clientThread;
-    private Client client;
+    private KryoClient kryoClient;
+    private GlyphLayout glyphLayout;
+    private BitmapFont connectionStatusFont;
+    private TextField ipAddressField;
+    private ImageButton connectButton;
+    public String serverIp;
     private ServerClientWrapper serverClientWrapper;
     public String connectionStatus = "Ip adress of the server:";
 
     public ClientHud(Main game) {
         super(game.batch);
         this.game = game;
-        client = new Client(this);
-        glyphLayout = new GlyphLayout();
 
         Gdx.input.setInputProcessor(this);
+        kryoClient = new KryoClient();
+
+        glyphLayout = new GlyphLayout();
         connectionStatusFont = new FontLoader().loadFont(Resources.ITEM_COUNT_FONT, 20, Color.BLACK);
-        Table table = new Table();
-        table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         Skin skin = new Skin(Gdx.files.internal("fonts/skins/uiskin.json"));
-        ipAdressField = new TextField("localhost", skin);
-        ipAdressField.setMaxLength(14);
-        ipAdressField.setScale(2);
-        ipAdressField.addListener(new InputListener() {
+        ipAddressField = new TextField("localhost", skin);
+        ipAddressField.setMaxLength(14);
+        ipAddressField.setScale(2);
+        ipAddressField.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
                 if (event.getKeyCode() == Input.Keys.ENTER) {
@@ -61,27 +61,35 @@ public class ClientHud extends customStage {
                 return super.keyDown(event, keycode);
             }
         });
-        table.add(ipAdressField).center();
 
-        //button for joining existing server
+        //button to connect to server
         Drawable connectButtonDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Resources.CONNECT_TO_SERVER_BUTTON))));
         Drawable connectButtonHoveredDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Resources.CONNECT_TO_SERVER_BUTTON))));
         connectButton = new ImageButton(connectButtonDrawable, connectButtonHoveredDrawable);
         connectButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int a, int b) {
-                serverIp = ipAdressField.getText();
+                serverIp = ipAddressField.getText();
                 startClient();
                 return true;
             }
         });
+
+        Table table = new Table();
+        table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        table.add(ipAddressField).center();
         table.add(connectButton);
+
         addActor(table);
     }
 
     private void startClient() {
-        clientThread = new Thread(client);
-        clientThread.start();
+        try {
+            kryoClient = new KryoClient();
+            kryoClient.start(ipAddressField.getText());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -91,13 +99,14 @@ public class ClientHud extends customStage {
         glyphLayout.setText(connectionStatusFont, connectionStatus);
         float messageWidth = glyphLayout.width; // contains the width of the current set text
         float messageHeight = glyphLayout.height; // contains the height of the current set text
-        float fontPositionX = (ipAdressField.getX() + ipAdressField.getWidth() / 2) + (connectButton.getWidth() / 2) - messageWidth / 2;
-        float fontPositionY = (ipAdressField.getY() + ipAdressField.getHeight()) + messageHeight * 3;
+        float fontPositionX = (ipAddressField.getX() + ipAddressField.getWidth() / 2) + (connectButton.getWidth() / 2) - messageWidth / 2;
+        float fontPositionY = (ipAddressField.getY() + ipAddressField.getHeight()) + messageHeight * 3;
 
         connectionStatusFont.draw(batch, connectionStatus, fontPositionX, fontPositionY);
 
-        if (client.running) {
-            serverClientWrapper = new ServerClientWrapper(client);
+        System.out.println("Running? " + kryoClient.running);
+        if (kryoClient.running) {
+            serverClientWrapper = new ServerClientWrapper(kryoClient);
             startGameAsClient();
         }
     }

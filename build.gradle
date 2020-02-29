@@ -54,6 +54,7 @@ project(":desktop") {
         implementation "com.badlogicgames.gdx:gdx-controllers-platform:$gdxVersion:natives-desktop"
         implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
         implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        implementation "com.esotericsoftware:kryo:3.0.1"
     }
 }
 
@@ -134,6 +135,10 @@ project(":core") {
 
         implementation "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        implementation "com.esotericsoftware:kryo:3.0.1"
+        compile ("com.esotericsoftware:kryonet:2.22.0-RC1") {
+            exclude module : 'kryo'
+        }
 
         
     }

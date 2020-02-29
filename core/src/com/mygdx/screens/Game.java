@@ -24,8 +24,8 @@ public class Game extends ScreenAdapter {
     private Player player, player2;
 
     public Game(ServerClientWrapper serverClientWrapper, SpriteBatch batch) {
-        mapTexture = new Texture(Resources.TILESET_PATH);
         this.batch = batch;
+        mapTexture = new Texture(Resources.TILESET_PATH);
 
         camera = new Camera();
         camera.zoom -= 0.9f;
@@ -45,11 +45,6 @@ public class Game extends ScreenAdapter {
     }
 
     @Override
-    public void show() {
-
-    }
-
-    @Override
     public void render(float delta) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
@@ -61,12 +56,12 @@ public class Game extends ScreenAdapter {
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        player.render(batch);
         player2.render(batch);
+        player.render(batch);
         batch.draw(mapTexture, 60, 60);
-
         batch.setProjectionMatrix(inventoryHud.getStage().getCamera().combined);
         batch.end();
+
         inventoryHud.update();
         camera.update();
     }
