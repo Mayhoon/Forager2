@@ -21,12 +21,12 @@ import com.mygdx.networking.ServerClientWrapper;
 import com.mygdx.screens.Game;
 import com.mygdx.stages.customStage;
 import com.mygdx.tools.FontLoader;
+import com.sun.jdi.ThreadReference;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 public class ServerHud extends customStage {
-    private FontLoader fontLoader;
     private BitmapFont font;
     private ImageButton hostButton;
     public String connectionStatus;
@@ -34,7 +34,6 @@ public class ServerHud extends customStage {
     private GlyphLayout glyphLayout;
     private Main game;
     private Server server;
-    private Thread serverThread;
     private ServerClientWrapper serverClientWrapper;
 
     public ServerHud(Main game) {
@@ -53,7 +52,7 @@ public class ServerHud extends customStage {
 
         Table table = new Table();
         table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        fontLoader = new FontLoader();
+        FontLoader fontLoader = new FontLoader();
         font = fontLoader.loadFont(Resources.ITEM_COUNT_FONT, 32, Color.BLACK);
 
         Drawable hostButtonDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Resources.HOST_BUTTON))));
@@ -71,7 +70,7 @@ public class ServerHud extends customStage {
     }
 
     public void startServer() {
-        serverThread = new Thread(server);
+        Thread serverThread = new Thread(server);
         serverThread.start();
     }
 
