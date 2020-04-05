@@ -2,7 +2,6 @@ package com.mygdx.entities.player;
 
 import Enums.PlayerState;
 import animations.AnimationHandler;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controller;
@@ -16,36 +15,42 @@ public class PlayerController extends ControllerAdapter {
     private Camera camera;
     public boolean isPuppet;
     private AnimationHandler animationHandler;
-    private ServerClientWrapper serverClientWrapper;
+    private ServerClientWrapper wrapper;
 
-    public PlayerController(boolean isPuppet, ServerClientWrapper serverClientWrapper, Camera camera) {
+    public PlayerController(boolean isPuppet, ServerClientWrapper wrapper, Camera camera) {
         this.camera = camera;
         animationHandler = new AnimationHandler(0.1f, Resources.PLAYER_RUN, 4, 1);
-        this.serverClientWrapper = serverClientWrapper;
+        this.wrapper = wrapper;
         this.isPuppet = isPuppet;
     }
 
     public void update(Player player, SpriteBatch batch) {
-        if (!isPuppet) {
-            player.position = camera.position;
-            serverClientWrapper.setPosition(player.position);
+        if (isPuppet) {
+            player.position.x = wrapper.getNetworkData().otherPositionX;
+            player.position.y = wrapper.getNetworkData().otherPositionY;
+            wrapper.sendTCP();
+
         } else {
-            player.position.x = serverClientWrapper.getOpponentPositionX();
-            player.position.y = serverClientWrapper.getOpponentPositionY();
+            player.position = camera.position;
+            wrapper.setPosition(player.position);
         }
         animationHandler.update(player.position, PlayerState.IDLE, batch);
 
         float speed = 0.8f;
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            wrapper.sendTCP();
             camera.moveWithKeyboard(0, speed);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            wrapper.sendTCP();
             camera.moveWithKeyboard(-speed, 0);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            wrapper.sendTCP();
             camera.moveWithKeyboard(speed, 0);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            wrapper.sendTCP();
             camera.moveWithKeyboard(0, -speed);
         }
     }

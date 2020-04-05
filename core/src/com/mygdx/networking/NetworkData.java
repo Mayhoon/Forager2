@@ -3,7 +3,6 @@ package com.mygdx.networking;
 public class NetworkData {
     public float ownPositionX = 0f;
     public float ownPositionY = 0f;
-
     public float otherPositionX = 0f;
     public float otherPositionY = 0f;
 
@@ -13,5 +12,4 @@ public class NetworkData {
 //        playerJSON = new Json();
 //        File file = new File(Resources.JSON_PLAYER_POSITION);
     }
-
 }

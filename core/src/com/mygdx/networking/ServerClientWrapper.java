@@ -17,6 +17,14 @@ public class ServerClientWrapper {
         isClient = true;
     }
 
+    public void sendTCP() {
+        if (isServer) {
+            server.sendTCP();
+        } else {
+            client.sendTCP();
+        }
+    }
+
     public void setPosition(Vector3 playerPosition) {
         float playerX = playerPosition.x;
         float playerY = playerPosition.y;
@@ -30,19 +38,11 @@ public class ServerClientWrapper {
         }
     }
 
-    public float getOpponentPositionX() {
+    public NetworkData getNetworkData() {
         if (isServer) {
-            return server.getNetworkData().otherPositionX;
+            return server.getNetworkData();
         } else {
-            return client.getNetworkData().otherPositionX;
-        }
-    }
-
-    public float getOpponentPositionY() {
-        if (isServer) {
-            return server.getNetworkData().otherPositionY;
-        } else {
-            return client.getNetworkData().otherPositionY;
+            return client.getNetworkData();
         }
     }
 }

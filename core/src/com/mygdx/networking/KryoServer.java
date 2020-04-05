@@ -8,24 +8,24 @@ import com.esotericsoftware.kryonet.Server;
 import java.io.IOException;
 
 public class KryoServer {
-    private Server kryoServer;
+    private Server server;
     private NetworkData networkData;
     public boolean running;
 
     public KryoServer() {
-        kryoServer = new Server();
+        server = new Server();
         networkData = new NetworkData();
 
         //Register classes
-        Kryo kryo = kryoServer.getKryo();
+        Kryo kryo = server.getKryo();
         kryo.register(NetworkData.class);
     }
 
     public void start() throws IOException {
-        kryoServer.start();
-        kryoServer.bind(54555, 54777);
+        server.start();
+        server.bind(54555, 54777);
 
-        kryoServer.addListener(new Listener() {
+        server.addListener(new Listener() {
             @Override
             public void connected(Connection connection) {
                 super.connected(connection);
@@ -35,14 +35,14 @@ public class KryoServer {
             public void received(Connection connection, Object object) {
                 if (object instanceof NetworkData) {
                     NetworkData response = (NetworkData) object;
-
                     networkData.otherPositionX = response.ownPositionX;
                     networkData.otherPositionY = response.ownPositionY;
-
-                    connection.sendTCP(networkData);
                 }
             }
         });
+    }
+    public void sendTCP() {
+        server.sendToAllTCP(networkData);
     }
 
     public NetworkData getNetworkData() {

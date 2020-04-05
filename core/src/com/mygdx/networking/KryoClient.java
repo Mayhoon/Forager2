@@ -6,43 +6,43 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 
 import java.io.IOException;
-import java.net.InetAddress;
 
 public class KryoClient {
-    private Client kryoClient;
+    private Client client;
     private NetworkData networkData;
     public boolean running;
 
     public KryoClient() {
-        kryoClient = new Client();
+        client = new Client();
         networkData = new NetworkData();
 
         //Register classes
-        Kryo kryo = kryoClient.getKryo();
+        Kryo kryo = client.getKryo();
         kryo.register(NetworkData.class);
     }
 
     public void start(String ip) throws IOException {
-        InetAddress address = kryoClient.discoverHost(54777, 5000);
-        System.out.println("SERVER found with ip address: " + address);
+//        Discover hosted games within the network
+//        InetAddress address = kryoClient.discoverHost(54777, 5000);
+//        System.out.println("SERVER found with ip address: " + address);
 
-        kryoClient.start();
-        kryoClient.connect(5000, ip, 54555, 54777);
+        client.start();
+        client.connect(5000, ip, 54555, 54777);
         running = true;
-        kryoClient.sendTCP(networkData);
 
-        kryoClient.addListener(new Listener() {
+        client.addListener(new Listener() {
             public void received(Connection connection, Object object) {
                 if (object instanceof NetworkData) {
                     NetworkData response = (NetworkData) object;
-
                     networkData.otherPositionX = response.ownPositionX;
                     networkData.otherPositionY = response.ownPositionY;
-
-                    connection.sendTCP(networkData);
                 }
             }
         });
+    }
+
+    public void sendTCP() {
+        client.sendTCP(networkData);
     }
 
     public NetworkData getNetworkData() {

@@ -59,6 +59,10 @@ public class ServerHud extends customStage {
             public boolean touchDown(InputEvent event, float x, float y, int a, int b) {
                 try {
                     kryoServer.start();
+
+                    serverClientWrapper = new ServerClientWrapper(kryoServer);
+                    startGameAsServer();
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

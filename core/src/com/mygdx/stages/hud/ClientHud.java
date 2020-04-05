@@ -44,7 +44,6 @@ public class ClientHud extends customStage {
 
         Gdx.input.setInputProcessor(this);
         kryoClient = new KryoClient();
-
         glyphLayout = new GlyphLayout();
         connectionStatusFont = new FontLoader().loadFont(Resources.ITEM_COUNT_FONT, 20, Color.BLACK);
 
@@ -79,7 +78,6 @@ public class ClientHud extends customStage {
         table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         table.add(ipAddressField).center();
         table.add(connectButton);
-
         addActor(table);
     }
 
