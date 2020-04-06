@@ -1,6 +1,6 @@
 package com.mygdx.entities.player;
 
-import Enums.PlayerState;
+import Enums.AnimationState;
 import animations.AnimationHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,20 +8,23 @@ import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerAdapter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.camera.Camera;
-import com.mygdx.config.Resources;
+import com.mygdx.config.Paths;
 import com.mygdx.networking.ServerClientWrapper;
 
 public class PlayerController extends ControllerAdapter {
     private Camera camera;
-    public boolean isPuppet;
     private AnimationHandler animationHandler;
     private ServerClientWrapper wrapper;
+    public boolean isPuppet;
 
     public PlayerController(boolean isPuppet, ServerClientWrapper wrapper, Camera camera) {
         this.camera = camera;
-        animationHandler = new AnimationHandler(0.1f, Resources.PLAYER_RUN, 4, 1);
         this.wrapper = wrapper;
         this.isPuppet = isPuppet;
+        animationHandler = new AnimationHandler(Paths.PLAYER_ANIMATION, 4, 2);
+        animationHandler.addAnimation(AnimationState.IDLE, 0.05f, 0, 0, 4);
+        animationHandler.addAnimation(AnimationState.MOVING, 0.1f, 1, 0, 4);
+        animationHandler.setAnimation(AnimationState.IDLE);
     }
 
     public void update(Player player, SpriteBatch batch) {
@@ -29,30 +32,28 @@ public class PlayerController extends ControllerAdapter {
             player.position.x = wrapper.getNetworkData().otherPositionX;
             player.position.y = wrapper.getNetworkData().otherPositionY;
             wrapper.sendTCP();
-
         } else {
             player.position = camera.position;
             wrapper.setPosition(player.position);
         }
-        animationHandler.update(player.position, PlayerState.IDLE, batch);
 
-        float speed = 0.8f;
+        animationHandler.update(player.position, batch);
+
+        float speed = 0.5f;
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            wrapper.sendTCP();
             camera.moveWithKeyboard(0, speed);
+            animationHandler.setAnimation(AnimationState.MOVING);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            wrapper.sendTCP();
             camera.moveWithKeyboard(-speed, 0);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            wrapper.sendTCP();
             camera.moveWithKeyboard(speed, 0);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            wrapper.sendTCP();
             camera.moveWithKeyboard(0, -speed);
         }
+        wrapper.sendTCP();
     }
 
     public boolean axisMoved(Controller controller, int axisCode, float value) {

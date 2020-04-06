@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.mygdx.config.Resources;
+import com.mygdx.config.Paths;
 import com.mygdx.game.Main;
 import com.mygdx.networking.*;
 import com.mygdx.screens.Game;
@@ -49,10 +49,10 @@ public class ServerHud extends customStage {
         connectionStatus = "";
         glyphLayout = new GlyphLayout();
         FontLoader fontLoader = new FontLoader();
-        font = fontLoader.loadFont(Resources.ITEM_COUNT_FONT, 20, Color.BLACK);
+        font = fontLoader.loadFont(Paths.ITEM_COUNT_FONT, 20, Color.BLACK);
 
-        Drawable hostButtonDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Resources.HOST_BUTTON))));
-        Drawable hostButtonHoveredDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Resources.HOST_HOVERED_BUTTON))));
+        Drawable hostButtonDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Paths.HOST_BUTTON))));
+        Drawable hostButtonHoveredDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Paths.HOST_HOVERED_BUTTON))));
         hostButton = new ImageButton(hostButtonDrawable, hostButtonHoveredDrawable);
         hostButton.addListener(new ClickListener() {
             @Override

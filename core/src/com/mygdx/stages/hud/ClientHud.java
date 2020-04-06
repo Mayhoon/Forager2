@@ -17,7 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.mygdx.config.Resources;
+import com.mygdx.config.Paths;
 import com.mygdx.game.Main;
 import com.mygdx.networking.KryoClient;
 import com.mygdx.networking.ServerClientWrapper;
@@ -45,7 +45,7 @@ public class ClientHud extends customStage {
         Gdx.input.setInputProcessor(this);
         kryoClient = new KryoClient();
         glyphLayout = new GlyphLayout();
-        connectionStatusFont = new FontLoader().loadFont(Resources.ITEM_COUNT_FONT, 20, Color.BLACK);
+        connectionStatusFont = new FontLoader().loadFont(Paths.ITEM_COUNT_FONT, 20, Color.BLACK);
 
         Skin skin = new Skin(Gdx.files.internal("fonts/skins/uiskin.json"));
         ipAddressField = new TextField("localhost", skin);
@@ -62,8 +62,8 @@ public class ClientHud extends customStage {
         });
 
         //button to connect to server
-        Drawable connectButtonDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Resources.CONNECT_TO_SERVER_BUTTON))));
-        Drawable connectButtonHoveredDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Resources.CONNECT_TO_SERVER_BUTTON))));
+        Drawable connectButtonDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Paths.CONNECT_TO_SERVER_BUTTON))));
+        Drawable connectButtonHoveredDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Paths.CONNECT_TO_SERVER_BUTTON))));
         connectButton = new ImageButton(connectButtonDrawable, connectButtonHoveredDrawable);
         connectButton.addListener(new ClickListener() {
             @Override
@@ -93,16 +93,13 @@ public class ClientHud extends customStage {
     @Override
     public void render(SpriteBatch batch) {
         super.render(batch);
-
         glyphLayout.setText(connectionStatusFont, connectionStatus);
         float messageWidth = glyphLayout.width; // contains the width of the current set text
         float messageHeight = glyphLayout.height; // contains the height of the current set text
         float fontPositionX = (ipAddressField.getX() + ipAddressField.getWidth() / 2) + (connectButton.getWidth() / 2) - messageWidth / 2;
         float fontPositionY = (ipAddressField.getY() + ipAddressField.getHeight()) + messageHeight * 3;
-
         connectionStatusFont.draw(batch, connectionStatus, fontPositionX, fontPositionY);
 
-        System.out.println("Running? " + kryoClient.running);
         if (kryoClient.running) {
             serverClientWrapper = new ServerClientWrapper(kryoClient);
             startGameAsClient();

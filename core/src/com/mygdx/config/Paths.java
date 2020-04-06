@@ -1,6 +1,6 @@
 package com.mygdx.config;
 
-public final class Resources {
+public final class Paths {
 
     //Basic configuration
     public final static int INVENTORY_SCROLLBAR_SIZE = 6;
@@ -10,13 +10,13 @@ public final class Resources {
     public final static String TTF = ".TTF";
 
     //Base paths to the images, skins and maps
-    public final static String CHARACTERS_PATH = "characters/";
-    public final static String ANIMATIONS_PATH = "animations/";
-    public final static String BUTTONS_PATH = "buttons/";
-    public final static String FONTS_SKINS_PATH = "fonts/";
-    public final static String INVENTORY_PATH = "inventory/";
-    public final static String ITEMS_PATH = "items/";
-    public final static String MAPS_PATH = "maps/";
+    private final static String CHARACTERS_PATH = "characters/";
+    private final static String ANIMATIONS_PATH = "animations/";
+    private final static String BUTTONS_PATH = "buttons/";
+    private final static String FONTS_SKINS_PATH = "fonts/";
+    private final static String INVENTORY_PATH = "inventory/";
+    private final static String ITEMS_PATH = "items/";
+    private  final static String MAPS_PATH = "maps/";
 
     //Fonts, skins and ui
     public final static String ITEM_COUNT_FONT = FONTS_SKINS_PATH + "B8.ttf";
@@ -32,8 +32,7 @@ public final class Resources {
     public final static String Inventory_INGAME_SCROLLBAR = INVENTORY_PATH + "inv" + PNG;
 
     //Player related
-    public final static String PLAYER_PATH = CHARACTERS_PATH + "/player/player.png";
-    public final static String PLAYER_IDLE = ANIMATIONS_PATH + "/player/skeleton/idle" + PNG;
+    public final static String PLAYER_ANIMATION = ANIMATIONS_PATH + "/player/player.png";
     public final static String PLAYER_RUN = ANIMATIONS_PATH + "/player/skeleton/run" + PNG;
     public final static String JSON_PLAYER_POSITION = CHARACTERS_PATH + "/player/player" + JSON;
 

@@ -1,6 +1,6 @@
 package animations;
 
-import Enums.PlayerState;
+import Enums.AnimationState;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -9,49 +9,47 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AnimationHandler {
     private Texture bundledTextures;
-    private TextureRegion[] animationFrames;
-    private Animation<TextureRegion> walkAnimation;
-    private ArrayList<Animation<TextureRegion>> animations;
+    private TextureRegion[][] allFrames;
+    private AnimationState animationState;
+    Map<AnimationState, Animation<TextureRegion>> map;
 
     private float elapsedTime = 0;
 
-    public AnimationHandler(float timeBetweenFrames, String path, int tilesPerRow, int tilesPerColumn) {
+    public AnimationHandler(String path, int tilesPerRow, int tilesPerColumn) {
         bundledTextures = new Texture(path);
-        int amountOfImages = tilesPerColumn * tilesPerRow;
         int individualTextureWidth = bundledTextures.getWidth() / tilesPerRow;
         int individualTextureHeight = bundledTextures.getHeight() / tilesPerColumn;
-
-        TextureRegion[][] tmpFrames = TextureRegion.split(bundledTextures, individualTextureWidth, individualTextureHeight);
-        animationFrames = new TextureRegion[amountOfImages];
-
-        int frameIndex = 0;
-        for (int column = 0; column < amountOfImages; column++) {
-            for (int row = 0; row < 1; row++) {
-                animationFrames[frameIndex++] = tmpFrames[row][column];
-            }
-        }
-        walkAnimation = new Animation<>(timeBetweenFrames, animationFrames);
-
-        animations = new ArrayList<>();
-        animations.add(walkAnimation);
+        allFrames = TextureRegion.split(bundledTextures, individualTextureWidth, individualTextureHeight);
     }
 
-    public void update(Vector3 entityPosition, PlayerState STATE, SpriteBatch batch) {
+    public void setAnimation(AnimationState state) {
+        animationState = state;
+    }
+
+    public void update(Vector3 entityPosition, SpriteBatch batch) {
         elapsedTime += (Gdx.graphics.getDeltaTime());
+        batch.draw(map.get(animationState).getKeyFrame(elapsedTime, true), entityPosition.x, entityPosition.y);
+    }
 
-        switch (STATE) {
-            case IDLE:
-                batch.draw(animations.get(0).getKeyFrame(elapsedTime, true), entityPosition.x, entityPosition.y);
-                break;
-            case MOVING:
-                batch.draw(animations.get(0).getKeyFrame(elapsedTime, true), entityPosition.x, entityPosition.y);
-                break;
-            default:
-                System.out.println("State cant be animated");
+    //Get animation frames
+    public void addAnimation(AnimationState animationState, float timeBetweenFrames, int col, int startFrame, int endFrame) {
+        int numberOfFrames = endFrame - startFrame;
+        TextureRegion[] animationFrames = new TextureRegion[numberOfFrames];
+
+        int index = 0;
+        for (int row = startFrame; row < numberOfFrames; row++) {
+            animationFrames[index] = allFrames[col][row];
+            index++;
         }
 
+        Animation<TextureRegion> animation = new Animation<>(timeBetweenFrames, animationFrames);
+        map = new HashMap<>();
+        map.put(animationState, animation);
     }
+
 }

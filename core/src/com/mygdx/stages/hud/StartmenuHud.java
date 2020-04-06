@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.mygdx.config.Resources;
+import com.mygdx.config.Paths;
 import com.mygdx.screens.Startmenu;
 import com.mygdx.stages.customStage;
 
@@ -24,13 +24,13 @@ public class StartmenuHud extends customStage {
         Gdx.input.setInputProcessor(this);
 
         //Button to host server
-        Drawable hostButtonDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Resources.HOST_BUTTON))));
-        Drawable hostButtonHoveredDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Resources.HOST_HOVERED_BUTTON))));
+        Drawable hostButtonDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Paths.HOST_BUTTON))));
+        Drawable hostButtonHoveredDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Paths.HOST_HOVERED_BUTTON))));
         hostButton = new ImageButton(hostButtonDrawable, hostButtonHoveredDrawable);
 
         //Button for joining existing server
-        Drawable joinButtonDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Resources.JOIN_BUTTON))));
-        Drawable joinButtonHoveredDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Resources.JOIN_HOVERED_BUTTON))));
+        Drawable joinButtonDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Paths.JOIN_BUTTON))));
+        Drawable joinButtonHoveredDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Paths.JOIN_HOVERED_BUTTON))));
         joinButton = new ImageButton(joinButtonDrawable, joinButtonHoveredDrawable);
 
         hostButton.addListener(new ClickListener() {
@@ -62,7 +62,6 @@ public class StartmenuHud extends customStage {
     private void hostButtonClicked() {
         startmenu.stageManager.changeStage(new ServerHud(startmenu.game));
     }
-
 
     private void joinButtonClicked() {
         startmenu.stageManager.changeStage(new ClientHud(startmenu.game));
