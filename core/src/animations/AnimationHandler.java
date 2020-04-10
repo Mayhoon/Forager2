@@ -13,15 +13,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AnimationHandler {
-    private Texture bundledTextures;
     private TextureRegion[][] allFrames;
     private AnimationState animationState;
     Map<AnimationState, Animation<TextureRegion>> map;
-
     private float elapsedTime = 0;
 
     public AnimationHandler(String path, int tilesPerRow, int tilesPerColumn) {
-        bundledTextures = new Texture(path);
+        map = new HashMap<>();
+        Texture bundledTextures = new Texture(path);
         int individualTextureWidth = bundledTextures.getWidth() / tilesPerRow;
         int individualTextureHeight = bundledTextures.getHeight() / tilesPerColumn;
         allFrames = TextureRegion.split(bundledTextures, individualTextureWidth, individualTextureHeight);
@@ -33,7 +32,9 @@ public class AnimationHandler {
 
     public void update(Vector3 entityPosition, SpriteBatch batch) {
         elapsedTime += (Gdx.graphics.getDeltaTime());
-        batch.draw(map.get(animationState).getKeyFrame(elapsedTime, true), entityPosition.x, entityPosition.y);
+        System.out.println(map.size());
+        TextureRegion keyFrame = map.get(animationState).getKeyFrame(elapsedTime, true);
+        batch.draw(keyFrame, entityPosition.x, entityPosition.y);
     }
 
     //Get animation frames
@@ -48,7 +49,6 @@ public class AnimationHandler {
         }
 
         Animation<TextureRegion> animation = new Animation<>(timeBetweenFrames, animationFrames);
-        map = new HashMap<>();
         map.put(animationState, animation);
     }
 
