@@ -32,7 +32,6 @@ public class AnimationHandler {
 
     public void update(Vector3 entityPosition, SpriteBatch batch) {
         elapsedTime += (Gdx.graphics.getDeltaTime());
-        System.out.println(map.size());
         TextureRegion keyFrame = map.get(animationState).getKeyFrame(elapsedTime, true);
         batch.draw(keyFrame, entityPosition.x, entityPosition.y);
     }
@@ -47,7 +46,6 @@ public class AnimationHandler {
             animationFrames[index] = allFrames[col][row];
             index++;
         }
-
         Animation<TextureRegion> animation = new Animation<>(timeBetweenFrames, animationFrames);
         map.put(animationState, animation);
     }

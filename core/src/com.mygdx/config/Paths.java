@@ -32,10 +32,9 @@ public final class Paths {
     public final static String Inventory_INGAME_SCROLLBAR = INVENTORY_PATH + "inv" + PNG;
 
     //Player related
-    public final static String PLAYER_ANIMATION = ANIMATIONS_PATH + "/player/player.png";
-    public final static String PLAYER_RUN = ANIMATIONS_PATH + "/player/skeleton/run" + PNG;
+    public final static String PLAYER_ANIMATION = ANIMATIONS_PATH + "player/Adventurer/Adventurer.png";
     public final static String JSON_PLAYER_POSITION = CHARACTERS_PATH + "/player/player" + JSON;
 
     //Maps
-    public final static String TILESET_PATH = MAPS_PATH + "Tileset.png";
+    public final static String GROUND = MAPS_PATH + "Ground" + PNG;
 }

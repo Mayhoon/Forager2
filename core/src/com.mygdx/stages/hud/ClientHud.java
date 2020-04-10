@@ -47,6 +47,17 @@ public class ClientHud extends customStage {
         glyphLayout = new GlyphLayout();
         connectionStatusFont = new FontLoader().loadFont(Paths.ITEM_COUNT_FONT, 20, Color.BLACK);
 
+        ipAddressField();
+        connectButton();
+
+        Table table = new Table();
+        table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        table.add(ipAddressField).center();
+        table.add(connectButton);
+        addActor(table);
+    }
+
+    private void ipAddressField() {
         Skin skin = new Skin(Gdx.files.internal("fonts/skins/uiskin.json"));
         ipAddressField = new TextField("localhost", skin);
         ipAddressField.setMaxLength(14);
@@ -60,8 +71,18 @@ public class ClientHud extends customStage {
                 return super.keyDown(event, keycode);
             }
         });
+    }
 
-        //button to connect to server
+    private void startClient() {
+        try {
+            kryoClient = new KryoClient();
+            kryoClient.start(ipAddressField.getText());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void connectButton() {
         Drawable connectButtonDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Paths.CONNECT_TO_SERVER_BUTTON))));
         Drawable connectButtonHoveredDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(Paths.CONNECT_TO_SERVER_BUTTON))));
         connectButton = new ImageButton(connectButtonDrawable, connectButtonHoveredDrawable);
@@ -73,21 +94,6 @@ public class ClientHud extends customStage {
                 return true;
             }
         });
-
-        Table table = new Table();
-        table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        table.add(ipAddressField).center();
-        table.add(connectButton);
-        addActor(table);
-    }
-
-    private void startClient() {
-        try {
-            kryoClient = new KryoClient();
-            kryoClient.start(ipAddressField.getText());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -102,11 +108,11 @@ public class ClientHud extends customStage {
 
         if (kryoClient.running) {
             serverClientWrapper = new ServerClientWrapper(kryoClient);
-            startGameAsClient();
+            startGame();
         }
     }
 
-    public void startGameAsClient() {
+    public void startGame() {
         game.setScreen(new Game(serverClientWrapper, game.batch));
     }
 }

@@ -22,10 +22,6 @@ public class KryoClient {
     }
 
     public void start(String ip) throws IOException {
-//        Discover hosted games within the network
-//        InetAddress address = kryoClient.discoverHost(54777, 5000);
-//        System.out.println("SERVER found with ip address: " + address);
-
         client.start();
         client.connect(5000, ip, 54555, 54777);
         running = true;
