@@ -1,45 +1,27 @@
 package player;
 
-import Enums.AnimationState;
+import Enums.Button;
 import Enums.Entity;
-import animations.Animations;
+import animations.AnimationStates;
 import camera.Camera;
-import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.PovDirection;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import config.Paths;
 import networking.ServerClientWrapper;
+
+import javax.swing.plaf.synth.SynthScrollBarUI;
 
 public class GamePadInput implements ControllerListener {
     private Camera camera;
-    private Animations animations;
     private ServerClientWrapper wrapper;
     private Entity entity;
+    private AnimationStates animationStates;
 
-    public GamePadInput(Entity entity, ServerClientWrapper wrapper, Camera camera) {
+    public GamePadInput(Entity entity, ServerClientWrapper wrapper, Camera camera, AnimationStates animationStates) {
         this.camera = camera;
         this.wrapper = wrapper;
         this.entity = entity;
-        animations = new Animations(Paths.PLAYER_ANIMATION, 8 , 10);
-        animations.add(AnimationState.IDLE_SWORD_NOT_DRAWN, 0.1f, 0, 0, 4);
-        animations.add(AnimationState.IDLE_SWORD_DRAWN, 0.05f, 1, 0, 4);
-        animations.set(AnimationState.IDLE_SWORD_NOT_DRAWN);
-    }
-
-    public void update(Player player, SpriteBatch batch) {
-        if (entity.equals(Entity.Opponent)) {
-            player.position.x = wrapper.getNetworkData().otherPositionX;
-            //player.position.y = wrapper.getNetworkData().otherPositionY;
-            wrapper.sendTCP();
-        } else {
-            player.position = camera.position;
-            wrapper.setPosition(player.position);
-        }
-
-        animations.update(player.position, batch);
-        wrapper.sendTCP();
+        this.animationStates = animationStates;
     }
 
     @Override
@@ -49,8 +31,8 @@ public class GamePadInput implements ControllerListener {
         float y = controller.getAxis(0);
 
         //if (x > inputMinimum || x < -inputMinimum && y < -inputMinimum || y > inputMinimum) {
-            //y * (-1)
-            camera.move(x, 0);
+        //y * (-1)
+        camera.move(x, 0);
         //}
         return false;
     }
@@ -85,6 +67,35 @@ public class GamePadInput implements ControllerListener {
 
     @Override
     public boolean buttonDown(com.badlogic.gdx.controllers.Controller controller, int buttonCode) {
+        Button button;
+        switch (buttonCode) {
+            case 0:
+                button = Button.A;
+                break;
+            case 1:
+                button = Button.B;
+                break;
+            case 2:
+                button = Button.X;
+                break;
+            case 3:
+                button = Button.Y;
+                break;
+            case 4:
+                button = Button.LB;
+                break;
+            case 5:
+                button = Button.RB;
+                break;
+            case 6:
+                button = Button.TAB;
+                break;
+            case 7:
+                button = Button.MENU;
+                break;
+            default: button = Button.A;
+        }
+        animationStates.buttonPressed(button);
         return false;
     }
 

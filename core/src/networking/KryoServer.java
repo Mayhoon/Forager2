@@ -1,5 +1,6 @@
 package networking;
 
+import Enums.AnimationState;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -15,10 +16,11 @@ public class KryoServer {
     public KryoServer() {
         server = new Server();
         networkData = new NetworkData();
+        ClassRegistry classRegistry = new ClassRegistry();
 
         //Register classes
         Kryo kryo = server.getKryo();
-        kryo.register(NetworkData.class);
+        kryo = classRegistry.addClassesTo(kryo);
     }
 
     public void start() throws IOException {

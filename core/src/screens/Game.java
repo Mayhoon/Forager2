@@ -47,8 +47,8 @@ public class Game extends ScreenAdapter {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-        player2.render(batch);
         player.render(batch);
+        player2.render(batch);
 
         batch.draw(groundSprite, 0, -17);
 

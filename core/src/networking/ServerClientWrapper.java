@@ -1,5 +1,7 @@
 package networking;
 
+import Enums.AnimationState;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 
 public class ServerClientWrapper {
@@ -25,20 +27,7 @@ public class ServerClientWrapper {
         }
     }
 
-    public void setPosition(Vector3 playerPosition) {
-        float playerX = playerPosition.x;
-        float playerY = playerPosition.y;
-
-        if (isServer) {
-            server.getNetworkData().ownPositionX = playerX;
-            server.getNetworkData().ownPositionY = playerY;
-        } else if (isClient) {
-            client.getNetworkData().ownPositionX = playerX;
-            client.getNetworkData().ownPositionY = playerY;
-        }
-    }
-
-    public NetworkData getNetworkData() {
+    public NetworkData data() {
         if (isServer) {
             return server.getNetworkData();
         } else {

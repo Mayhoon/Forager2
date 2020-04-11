@@ -15,10 +15,11 @@ public class KryoClient {
     public KryoClient() {
         client = new Client();
         networkData = new NetworkData();
+        ClassRegistry classRegistry = new ClassRegistry();
 
         //Register classes
         Kryo kryo = client.getKryo();
-        kryo.register(NetworkData.class);
+        kryo = classRegistry.addClassesTo(kryo);
     }
 
     public void start(String ip) throws IOException {

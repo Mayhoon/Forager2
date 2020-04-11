@@ -9,10 +9,10 @@ public class DesktopLauncher {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
         config.title = "Pixelworld";
-        config.width = 1920;
-        config.height = 1080;
+        config.width = 800;
+        config.height = 800;
         config.resizable = false;
-        config.fullscreen = true;
+        config.fullscreen = false;
         config.forceExit = true;
         new LwjglApplication(new Main(), config);
     }

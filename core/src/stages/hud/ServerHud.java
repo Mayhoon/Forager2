@@ -112,4 +112,10 @@ public class ServerHud extends customStage {
         float fontPositionY = (hostButton.getY() + hostButton.getHeight()) + messageHeight * 3;
         font.draw(batch, connectionStatus, fontPositionX, fontPositionY);
     }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        hostButton.remove();
+    }
 }
