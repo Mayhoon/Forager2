@@ -5,6 +5,7 @@ import animations.AnimationStates;
 import camera.Camera;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import networking.ServerClientWrapper;
 
@@ -12,7 +13,7 @@ public class Player {
     private Entity entity;
     private ServerClientWrapper wrapper;
     private Camera camera;
-    public Vector3 position;
+    public Vector2 position;
     private GamePadInput gamePadInput;
     private AnimationStates animationStates;
 
@@ -20,7 +21,7 @@ public class Player {
         this.entity = entity;
         this.wrapper = wrapper;
         this.camera = camera;
-        position = new Vector3(0, 0, 0);
+        position = new Vector2(0, 0);
         animationStates = new AnimationStates(wrapper, entity);
 
         if(entity.equals(Entity.Player)){
@@ -33,13 +34,12 @@ public class Player {
         animationStates.update(batch, position);
 
         if (entity.equals(Entity.Opponent)) {
-            position.x = wrapper.data().otherPositionX;
-            position.y = wrapper.data().otherPositionY;
+            position = wrapper.ownData().position;
             wrapper.sendTCP();
         } else {
-            position = camera.position;
-            wrapper.data().ownPositionX = position.x;
-            wrapper.data().ownPositionY = position.y;
+            position.x = camera.position.x;
+            position.y = camera.position.y;
+            wrapper.ownData().position = position;
         }
         wrapper.sendTCP();
     }

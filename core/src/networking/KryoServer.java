@@ -9,16 +9,18 @@ import java.io.IOException;
 
 public class KryoServer {
     private Server server;
-    private NetworkData networkData;
+    private NetworkData ownData;
+    private NetworkData opponentData;
     public boolean running;
 
     public KryoServer() {
         server = new Server();
-        networkData = new NetworkData();
-        ClassRegistry classRegistry = new ClassRegistry();
+        ownData = new NetworkData();
+        opponentData = new NetworkData();
 
         //Register classes
         Kryo kryo = server.getKryo();
+        ClassRegistry classRegistry = new ClassRegistry();
         kryo = classRegistry.addClassesTo(kryo);
     }
 
@@ -33,20 +35,24 @@ public class KryoServer {
                 running = true;
             }
 
+            //Get informations from opponent
             public void received(Connection connection, Object object) {
                 if (object instanceof NetworkData) {
-                    NetworkData response = (NetworkData) object;
-                    networkData.otherPositionX = response.ownPositionX;
-                    networkData.otherPositionY = response.ownPositionY;
+                    opponentData = (NetworkData) object;
                 }
             }
         });
     }
+
     public void sendTCP() {
-        server.sendToAllTCP(networkData);
+        server.sendToAllTCP(ownData);
     }
 
-    public NetworkData getNetworkData() {
-        return networkData;
+    public NetworkData getOwnData() {
+        return ownData;
+    }
+
+    public NetworkData getOpponentData() {
+        return opponentData;
     }
 }

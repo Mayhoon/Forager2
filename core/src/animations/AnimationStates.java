@@ -20,9 +20,8 @@ public class AnimationStates {
         animations.set(AnimationState.IDLE_SWORD_NOT_DRAWN);
     }
 
-    public void update(SpriteBatch batch, Vector3 position) {
-        Vector2 vec2Position = new Vector2(position.x, position.y);
-        animations.update(vec2Position, batch);
+    public void update(SpriteBatch batch, Vector2 position) {
+        animations.update(position, batch);
     }
 
     public void buttonPressed(Button button) {

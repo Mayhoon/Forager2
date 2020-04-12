@@ -23,11 +23,19 @@ public class ServerClientWrapper {
         }
     }
 
-    public NetworkData data() {
+    public NetworkData ownData() {
         if (isServer) {
-            return server.getNetworkData();
+            return server.getOwnData();
         } else {
-            return client.getNetworkData();
+            return client.getOwnData();
+        }
+    }
+
+    public NetworkData opponentData() {
+        if(isServer) {
+            return server.getOpponentData();
+        }else {
+            return client.getOpponentData();
         }
     }
 }

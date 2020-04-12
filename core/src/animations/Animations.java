@@ -29,32 +29,26 @@ public class Animations {
         this.wrapper = wrapper;
         this.entity = entity;
 
-        if (entity.equals(Entity.Player)) {
-            test = true;
-        } else {
-            test = false;
-        }
-
         map = new HashMap<>();
         allFrames = TextureRegion.split(bundledTextures, individualTextureWidth, individualTextureHeight);
     }
 
     public void set(AnimationState state) {
         animationState = state;
-        wrapper.data().ownAnimationState = state;
+        wrapper.ownData().animationState = state;
     }
 
     public void update(Vector2 entityPosition, SpriteBatch batch) {
         elapsedTime += (Gdx.graphics.getDeltaTime());
-        if (test) {
-            wrapper.data().ownAnimationState = animationState;
+
+        if (entity.equals(Entity.Player)) {
+            wrapper.ownData().animationState = animationState;
             TextureRegion keyFrame = map.get(animationState).getKeyFrame(elapsedTime, true);
             batch.draw(keyFrame, entityPosition.x, entityPosition.y);
 
         } else if(entity.equals(Entity.Opponent)) {
-            System.out.println("OPPONENT: " + animationState);
-            TextureRegion keyFrame = map.get(wrapper.data().ownAnimationState).getKeyFrame(elapsedTime, true);
-            batch.draw(keyFrame, wrapper.data().otherPositionX, wrapper.data().otherPositionY);
+            TextureRegion keyFrame = map.get(wrapper.opponentData().animationState).getKeyFrame(elapsedTime, true);
+            batch.draw(keyFrame, wrapper.opponentData().position.x, wrapper.opponentData().position.y);
         }
     }
 

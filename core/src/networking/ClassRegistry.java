@@ -19,6 +19,8 @@ public class ClassRegistry {
         kryo.register(TextureRegion.class);
 
         //Animations
+        kryo.register(com.badlogic.gdx.math.Vector2.class);
+
         kryo.register(AnimationState.class);
         kryo.register(Texture.class);
         kryo.register(FileTextureData.class);
