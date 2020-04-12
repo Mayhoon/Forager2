@@ -1,6 +1,5 @@
 package networking;
 
-import Enums.AnimationState;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;

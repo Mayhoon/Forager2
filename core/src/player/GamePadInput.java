@@ -9,8 +9,6 @@ import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
 import networking.ServerClientWrapper;
 
-import javax.swing.plaf.synth.SynthScrollBarUI;
-
 public class GamePadInput implements ControllerListener {
     private Camera camera;
     private ServerClientWrapper wrapper;

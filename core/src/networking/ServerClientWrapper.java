@@ -1,9 +1,5 @@
 package networking;
 
-import Enums.AnimationState;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector3;
-
 public class ServerClientWrapper {
     private KryoServer server;
     private KryoClient client;

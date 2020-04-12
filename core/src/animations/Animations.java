@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import networking.ServerClientWrapper;
-import player.Player;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,19 +41,20 @@ public class Animations {
 
     public void set(AnimationState state) {
         animationState = state;
+        wrapper.data().ownAnimationState = state;
     }
 
     public void update(Vector2 entityPosition, SpriteBatch batch) {
         elapsedTime += (Gdx.graphics.getDeltaTime());
-        TextureRegion keyFrame = map.get(animationState).getKeyFrame(elapsedTime, true);
-        wrapper.data().ownAnimationState = animationState;
-        wrapper.data().ownKeyFrame = keyFrame;
-
-        if (test && keyFrame != null) {
-            System.out.println("ENTITY: " + entity);
+        if (test) {
+            wrapper.data().ownAnimationState = animationState;
+            TextureRegion keyFrame = map.get(animationState).getKeyFrame(elapsedTime, true);
             batch.draw(keyFrame, entityPosition.x, entityPosition.y);
-        } else {
-            batch.draw(wrapper.data().otherKeyFrame, wrapper.data().otherPositionX, wrapper.data().otherPositionY);
+
+        } else if(entity.equals(Entity.Opponent)) {
+            System.out.println("OPPONENT: " + animationState);
+            TextureRegion keyFrame = map.get(wrapper.data().ownAnimationState).getKeyFrame(elapsedTime, true);
+            batch.draw(keyFrame, wrapper.data().otherPositionX, wrapper.data().otherPositionY);
         }
     }
 

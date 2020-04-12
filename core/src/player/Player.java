@@ -31,6 +31,7 @@ public class Player {
 
     public void render(SpriteBatch batch) {
         animationStates.update(batch, position);
+
         if (entity.equals(Entity.Opponent)) {
             position.x = wrapper.data().otherPositionX;
             position.y = wrapper.data().otherPositionY;

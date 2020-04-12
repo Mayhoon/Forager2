@@ -21,8 +21,8 @@ public class AnimationStates {
     }
 
     public void update(SpriteBatch batch, Vector3 position) {
-        Vector2 p = new Vector2(position.x, position.y);
-        animations.update(p, batch);
+        Vector2 vec2Position = new Vector2(position.x, position.y);
+        animations.update(vec2Position, batch);
     }
 
     public void buttonPressed(Button button) {

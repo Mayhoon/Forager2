@@ -139,7 +139,7 @@ project(":core") {
         compile ("com.esotericsoftware:kryonet:2.22.0-RC1") {
             exclude module : 'kryo'
         }
-
+        implementation fileTree(dir:"libs", include: "*.jar")
         
     }
 }
