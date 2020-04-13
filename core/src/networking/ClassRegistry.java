@@ -18,20 +18,10 @@ public class ClassRegistry {
 
     public Kryo addClassesTo(Kryo kryo) {
         kryo.register(NetworkData.class);
-        kryo.register(TextureRegion.class);
 
         //Animations
         kryo.register(Vector2.class);
         kryo.register(AnimationState.class);
-
-//        kryo.register(Animations.class);
-//        kryo.register(Texture.class);
-//        kryo.register(FileTextureData.class);
-//        kryo.register(FileHandle.class);
-//        kryo.register(LwjglFileHandle.class);
-//        kryo.register(File.class);
-//        kryo.register(Files.FileType.class);
-//        kryo.register(Pixmap.class);
 
         return kryo;
     }

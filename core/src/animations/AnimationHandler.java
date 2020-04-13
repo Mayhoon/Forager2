@@ -6,27 +6,31 @@ import Enums.Buttons;
 import Enums.Entity;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import config.Paths;
+import jdk.nashorn.internal.ir.BaseNode;
 import networking.ServerClientWrapper;
 
 public class AnimationHandler {
-    private Animations animations;
+    private Animator animator;
 
     public AnimationHandler(ServerClientWrapper wrapper, Entity entity) {
-        animations = new Animations(Paths.PLAYER_ANIMATION, 8, 10, wrapper, entity);
-        animations.add(AnimationState.IDLE_SWORD_NOT_DRAWN, 0.05f, 0, 0, 4);
-        animations.add(AnimationState.IDLE_SWORD_DRAWN, 0.05f, 0, 5, 8);
-        animations.add(AnimationState.DRAW_SWORD, 0.05f, 3, 0, 4);
-        animations.set(AnimationState.IDLE_SWORD_NOT_DRAWN, false);
+        animator = new Animator(wrapper, entity);
     }
 
     public void update(SpriteBatch batch, Vector2 position) {
-        animations.update(position, batch);
+        animator.update(batch, position);
     }
 
     public void buttonPressed(Buttons button) {
         if (button.equals(Buttons.X)) {
-          animations.set(AnimationState.DRAW_SWORD, false);
+
+        }
+
+        switch (button) {
+            case X: animator.setAnimation(AnimationState.DRAW_SWORD); break;
+            case RB: animator.setAnimation(AnimationState.SWORD_SLASH_SPIN);break;
+            case A: animator.setAnimation(AnimationState.SWORD_SLASH_UP_DOWN_STANDING);break;
+            case Y: animator.setAnimation(AnimationState.IDLE_SWORD_NOT_DRAWN); break;
+            default: animator.setAnimation(AnimationState.IDLE_SWORD_NOT_DRAWN);
         }
     }
 }
