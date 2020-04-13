@@ -1,8 +1,8 @@
 package player;
 
-import Enums.Button;
+import Enums.Buttons;
 import Enums.Entity;
-import animations.AnimationStates;
+import animations.AnimationHandler;
 import camera.Camera;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.PovDirection;
@@ -13,25 +13,19 @@ public class GamePadInput implements ControllerListener {
     private Camera camera;
     private ServerClientWrapper wrapper;
     private Entity entity;
-    private AnimationStates animationStates;
+    private AnimationHandler animationHandler;
 
-    public GamePadInput(Entity entity, ServerClientWrapper wrapper, Camera camera, AnimationStates animationStates) {
+    public GamePadInput(Entity entity, ServerClientWrapper wrapper, Camera camera, AnimationHandler animationHandler) {
         this.camera = camera;
         this.wrapper = wrapper;
         this.entity = entity;
-        this.animationStates = animationStates;
+        this.animationHandler = animationHandler;
     }
 
     @Override
     public boolean axisMoved(com.badlogic.gdx.controllers.Controller controller, int axisCode, float value) {
-        float inputMinimum = 0.30f;
         float x = controller.getAxis(1);
-        float y = controller.getAxis(0);
-
-        //if (x > inputMinimum || x < -inputMinimum && y < -inputMinimum || y > inputMinimum) {
-        //y * (-1)
         camera.move(x, 0);
-        //}
         return false;
     }
 
@@ -65,35 +59,35 @@ public class GamePadInput implements ControllerListener {
 
     @Override
     public boolean buttonDown(com.badlogic.gdx.controllers.Controller controller, int buttonCode) {
-        Button button;
+        Buttons button;
         switch (buttonCode) {
             case 0:
-                button = Button.A;
+                button = Buttons.A;
                 break;
             case 1:
-                button = Button.B;
+                button = Buttons.B;
                 break;
             case 2:
-                button = Button.X;
+                button = Buttons.X;
                 break;
             case 3:
-                button = Button.Y;
+                button = Buttons.Y;
                 break;
             case 4:
-                button = Button.LB;
+                button = Buttons.LB;
                 break;
             case 5:
-                button = Button.RB;
+                button = Buttons.RB;
                 break;
             case 6:
-                button = Button.TAB;
+                button = Buttons.TAB;
                 break;
             case 7:
-                button = Button.MENU;
+                button = Buttons.MENU;
                 break;
-            default: button = Button.A;
+            default: button = Buttons.A;
         }
-        animationStates.buttonPressed(button);
+        animationHandler.buttonPressed(button);
         return false;
     }
 

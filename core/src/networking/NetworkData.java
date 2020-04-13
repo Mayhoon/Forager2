@@ -11,7 +11,7 @@ public class NetworkData {
     public Vector2 position = new Vector2(0,0);
 
     //Animations
-    public AnimationState animationState = AnimationState.IDLE_SWORD_NOT_DRAWN;
+    public AnimationState animation = AnimationState.IDLE_SWORD_NOT_DRAWN;
 
     public NetworkData() {
 

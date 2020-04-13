@@ -1,6 +1,6 @@
 package Enums;
 
-public enum Button {
+public enum Buttons {
     A,
     B,
     X,

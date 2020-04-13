@@ -1,12 +1,11 @@
 package player;
 
 import Enums.Entity;
-import animations.AnimationStates;
+import animations.AnimationHandler;
 import camera.Camera;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import networking.ServerClientWrapper;
 
 public class Player {
@@ -15,23 +14,23 @@ public class Player {
     private Camera camera;
     public Vector2 position;
     private GamePadInput gamePadInput;
-    private AnimationStates animationStates;
+    private AnimationHandler animationHandler;
 
     public Player(Entity entity, ServerClientWrapper wrapper, Camera camera) {
         this.entity = entity;
         this.wrapper = wrapper;
         this.camera = camera;
         position = new Vector2(0, 0);
-        animationStates = new AnimationStates(wrapper, entity);
+        animationHandler = new AnimationHandler(wrapper, entity);
 
         if(entity.equals(Entity.Player)){
-            gamePadInput = new GamePadInput(entity, wrapper, camera, animationStates);
+            gamePadInput = new GamePadInput(entity, wrapper, camera, animationHandler);
             Controllers.addListener(gamePadInput);
         }
     }
 
     public void render(SpriteBatch batch) {
-        animationStates.update(batch, position);
+        animationHandler.update(batch, position);
 
         if (entity.equals(Entity.Opponent)) {
             position = wrapper.ownData().position;
