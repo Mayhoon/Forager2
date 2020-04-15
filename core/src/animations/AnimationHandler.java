@@ -30,6 +30,7 @@ public class AnimationHandler {
             case RB: animator.setAnimation(AnimationState.SWORD_SLASH_SPIN);break;
             case A: animator.setAnimation(AnimationState.SWORD_SLASH_UP_DOWN_STANDING);break;
             case Y: animator.setAnimation(AnimationState.IDLE_SWORD_NOT_DRAWN); break;
+            case LB: animator.setAnimation(AnimationState.IDLE_SWORD_DRAWN);break;
             default: animator.setAnimation(AnimationState.IDLE_SWORD_NOT_DRAWN);
         }
     }

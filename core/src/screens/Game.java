@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import config.Paths;
 import player.Player;
 import networking.ServerClientWrapper;
@@ -19,6 +22,8 @@ public class Game extends ScreenAdapter {
     private Player player, player2;
     private Texture groundTexture;
     private Sprite groundSprite;
+    private World world;
+    private Box2DDebugRenderer debugRenderer;
 
     public Game(ServerClientWrapper serverClientWrapper, SpriteBatch batch) {
         this.batch = batch;
@@ -42,7 +47,10 @@ public class Game extends ScreenAdapter {
             System.exit(0);
         }
 
-        Gdx.gl.glClearColor(99, 155, 255, 1);
+        world = new World(new Vector2(0,0), true);
+        debugRenderer = new Box2DDebugRenderer();
+
+        Gdx.gl.glClearColor(99/255, 155/255, 255/255, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
@@ -54,6 +62,9 @@ public class Game extends ScreenAdapter {
 
         batch.end();
         camera.update();
+
+//        debugRenderer.render(world, camera.combined);
+//        world.step(1/60f, 6, 2);
     }
 
     @Override

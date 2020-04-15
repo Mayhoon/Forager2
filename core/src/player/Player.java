@@ -39,6 +39,8 @@ public class Player {
             position.x = camera.position.x;
             position.y = camera.position.y;
             wrapper.ownData().position = position;
+
+
         }
         wrapper.sendTCP();
     }
