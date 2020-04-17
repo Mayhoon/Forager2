@@ -40,13 +40,15 @@ public class Game extends ScreenAdapter {
         groundSprite = new Sprite(groundTexture);
     }
 
+
+
     @Override
     public void render(float delta) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
             System.exit(0);
         }
-
+        System.out.println(Gdx.graphics.getFramesPerSecond());
         world = new World(new Vector2(0,0), true);
         debugRenderer = new Box2DDebugRenderer();
 

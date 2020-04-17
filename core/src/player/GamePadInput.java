@@ -1,64 +1,66 @@
 package player;
 
 import Enums.Buttons;
+import Enums.Direction;
 import Enums.Entity;
 import animations.AnimationHandler;
 import camera.Camera;
+import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
 import networking.ServerClientWrapper;
 
 public class GamePadInput implements ControllerListener {
-    private Camera camera;
-    private ServerClientWrapper wrapper;
-    private Entity entity;
-    private AnimationHandler animationHandler;
+    private Player player;
 
-    public GamePadInput(Entity entity, ServerClientWrapper wrapper, Camera camera, AnimationHandler animationHandler) {
-        this.camera = camera;
-        this.wrapper = wrapper;
-        this.entity = entity;
-        this.animationHandler = animationHandler;
+    public GamePadInput(Player player) {
+        this.player = player;
     }
 
     @Override
-    public boolean axisMoved(com.badlogic.gdx.controllers.Controller controller, int axisCode, float value) {
-        float x = controller.getAxis(1);
-        camera.move(x, 0);
+    public boolean axisMoved(Controller controller, int axisCode, float value) {
+        float xAmount = controller.getAxis(1);
+        if(xAmount < -0.045f) {
+            player.moveX(xAmount, Direction.LEFT);
+        }else if (xAmount > 0.045f) {
+            player.moveX(xAmount, Direction.RIGHT);
+        }else {
+            player.moveX(0, Direction.NONE);
+        }
         return false;
     }
 
     @Override
-    public boolean povMoved(com.badlogic.gdx.controllers.Controller controller, int povCode, PovDirection value) {
+    public boolean povMoved(Controller controller, int povCode, PovDirection value) {
         return false;
     }
 
     @Override
-    public boolean xSliderMoved(com.badlogic.gdx.controllers.Controller controller, int sliderCode, boolean value) {
+    public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
         return false;
     }
 
     @Override
-    public boolean ySliderMoved(com.badlogic.gdx.controllers.Controller controller, int sliderCode, boolean value) {
+    public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
         return false;
     }
 
     @Override
-    public boolean accelerometerMoved(com.badlogic.gdx.controllers.Controller controller, int accelerometerCode, Vector3 value) {
+    public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
         return false;
     }
 
-    public void connected(com.badlogic.gdx.controllers.Controller controller) {
+    public void connected(Controller controller) {
         System.out.println("Controller connected");
     }
 
-    public void disconnected(com.badlogic.gdx.controllers.Controller controller) {
+    public void disconnected(Controller controller) {
         System.out.println("Controller disconnected");
     }
 
     @Override
-    public boolean buttonDown(com.badlogic.gdx.controllers.Controller controller, int buttonCode) {
+    public boolean buttonDown(Controller controller, int buttonCode) {
         Buttons button;
         switch (buttonCode) {
             case 0:
@@ -85,14 +87,15 @@ public class GamePadInput implements ControllerListener {
             case 7:
                 button = Buttons.MENU;
                 break;
-            default: button = Buttons.A;
+            default:
+                button = Buttons.A;
         }
-        animationHandler.buttonPressed(button);
+        player.animationHandler.buttonPressed(button);
         return false;
     }
 
     @Override
-    public boolean buttonUp(com.badlogic.gdx.controllers.Controller controller, int buttonCode) {
+    public boolean buttonUp(Controller controller, int buttonCode) {
         return false;
     }
 }

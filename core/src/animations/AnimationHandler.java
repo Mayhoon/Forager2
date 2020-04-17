@@ -3,6 +3,7 @@ package animations;
 
 import Enums.AnimationState;
 import Enums.Buttons;
+import Enums.Direction;
 import Enums.Entity;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -17,14 +18,10 @@ public class AnimationHandler {
     }
 
     public void update(SpriteBatch batch, Vector2 position) {
-        animator.update(batch, position);
+        animator.update(batch, position, Direction.LEFT);
     }
 
     public void buttonPressed(Buttons button) {
-        if (button.equals(Buttons.X)) {
-
-        }
-
         switch (button) {
             case X: animator.setAnimation(AnimationState.DRAW_SWORD); break;
             case RB: animator.setAnimation(AnimationState.SWORD_SLASH_SPIN);break;
