@@ -8,7 +8,7 @@ public class Camera extends OrthographicCamera {
     private float x, y;
 
     public Camera() {
-        super.setToOrtho(false, Gdx.graphics.getWidth() * 2, Gdx.graphics.getHeight() * 2);
+        super.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         super.position.x = 0;
         super.position.y = 0;
         super.update();
@@ -19,7 +19,7 @@ public class Camera extends OrthographicCamera {
         super.update();
     }
 
-    public void move(float x, float y) {
+    public void setToPosition(float x, float y) {
         this.x = x;
         this.y = y;
     }

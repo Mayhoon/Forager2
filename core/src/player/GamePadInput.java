@@ -20,11 +20,11 @@ public class GamePadInput implements ControllerListener {
 
     @Override
     public boolean axisMoved(Controller controller, int axisCode, float value) {
-        float xAmount = controller.getAxis(1);
-        if(xAmount < -0.045f) {
-            player.moveX(xAmount, Direction.LEFT);
-        }else if (xAmount > 0.045f) {
-            player.moveX(xAmount, Direction.RIGHT);
+        float amount = controller.getAxis(1);
+        if(amount < -0.045f) {
+            player.moveX(amount, Direction.LEFT);
+        }else if (amount > 0.045f) {
+            player.moveX(amount, Direction.RIGHT);
         }else {
             player.moveX(0, Direction.NONE);
         }

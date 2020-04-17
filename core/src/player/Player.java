@@ -17,7 +17,7 @@ public class Player {
     private GamePadInput gamePadInput;
     public AnimationHandler animationHandler;
     private Boolean moving;
-    float tmp;
+    float previousAmount;
     private Direction direction;
 
     public Player(Entity entity, ServerClientWrapper wrapper, Camera camera) {
@@ -25,7 +25,7 @@ public class Player {
         this.wrapper = wrapper;
         this.camera = camera;
         this.moving = false;
-        this.tmp = 0f;
+        this.previousAmount = 0f;
         this.direction = Direction.RIGHT;
 
         position = new Vector2(0, 0);
@@ -38,45 +38,43 @@ public class Player {
     }
 
     public void render(SpriteBatch batch) {
+
         if (moving == true && direction.equals(Direction.LEFT)) {
-            position.x += 1.5f * tmp;
+            position.x += 1.5f * previousAmount;
             animationHandler.update(batch, position);
         } else if (moving == true && direction.equals(Direction.RIGHT)) {
-            position.x += 1.5f * tmp;
+            position.x += 1.5f * previousAmount;
             animationHandler.update(batch, position);
         } else {
             animationHandler.update(batch, position);
         }
 
-//        if (entity.equals(Entity.Opponent)) {
-//            position = wrapper.ownData().position;
-//            wrapper.sendTCP();
-//        } else {
-//            camera.position.x = position.x;
-//            camera.position.y = position.y;
-//        }
+        if (entity.equals(Entity.Opponent)) {
+            position = wrapper.ownData().position;
+            wrapper.sendTCP();
+        } else {
+            camera.position.x = position.x;
+            camera.position.y = position.y;
+        }
         wrapper.sendTCP();
     }
 
     public void moveX(float amount, Direction direction) {
         if (direction.equals(Direction.LEFT)) {
-            if (tmp + (Math.abs(amount)) >= 0) {
+            if (previousAmount + (Math.abs(amount)) >= 0) {
                 this.direction = direction;
                 moving = true;
-                tmp = amount;
+                previousAmount = amount;
             }
         } else if (direction.equals(Direction.RIGHT)) {
-            if ((amount - tmp) >= 0) {
+            if ((amount - previousAmount) >= 0) {
                 this.direction = direction;
                 moving = true;
-                tmp = amount;
+                previousAmount = amount;
             }
         } else if (direction.equals(Direction.NONE)) {
-            System.out.println("Not moving");
             moving = false;
         }
-
-        System.out.println(amount);
         wrapper.ownData().position = position;
     }
 }

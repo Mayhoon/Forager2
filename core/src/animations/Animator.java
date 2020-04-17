@@ -72,5 +72,4 @@ public class Animator {
         this.animationState = animationState;
         wrapper.ownData().animation = animationState;
     }
-
 }
