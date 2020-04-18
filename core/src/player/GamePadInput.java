@@ -2,14 +2,10 @@ package player;
 
 import Enums.Buttons;
 import Enums.Direction;
-import Enums.Entity;
-import animations.AnimationHandler;
-import camera.Camera;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
-import networking.ServerClientWrapper;
 
 public class GamePadInput implements ControllerListener {
     private Player player;
@@ -90,7 +86,7 @@ public class GamePadInput implements ControllerListener {
             default:
                 button = Buttons.A;
         }
-        player.animationHandler.buttonPressed(button);
+        player.animationMapper.buttonPressed(button);
         return false;
     }
 

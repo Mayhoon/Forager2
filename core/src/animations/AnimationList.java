@@ -8,11 +8,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Animations {
+public class AnimationList {
     private TextureRegion[][] allFrames;
-    private Map<AnimationState, Animation<TextureRegion>> map;
+    private Map<AnimationState, CustomAnimation> map;
 
-    public Animations(String path, int tilesPerRow, int tilesPerColumn) {
+    public AnimationList(String path, int tilesPerRow, int tilesPerColumn) {
         Texture bundledTextures = new Texture(path);
         int individualTextureWidth = bundledTextures.getWidth() / tilesPerRow;
         int individualTextureHeight = bundledTextures.getHeight() / tilesPerColumn;
@@ -21,7 +21,7 @@ public class Animations {
     }
 
     //Get animation frames
-    public void add(AnimationState animations, float timeBetweenFrames, int col, int startFrame, int endFrame) {
+    public void add(AnimationState name, float timeBetweenFrames, int col, int startFrame, int endFrame) {
         int numberOfFrames = endFrame - startFrame;
         TextureRegion[] animationFrames = new TextureRegion[numberOfFrames];
 
@@ -31,10 +31,10 @@ public class Animations {
             index++;
         }
         Animation<TextureRegion> animation = new Animation<>(timeBetweenFrames, animationFrames);
-        map.put(animations, animation);
+        map.put(name, new CustomAnimation(animation));
     }
 
-    public Animation<TextureRegion> getAnimation(AnimationState animation) {
-        return map.get(animation);
+    public Animation<TextureRegion> getAnimation(AnimationState name) {
+        return map.get(name).getAnimation();
     }
 }

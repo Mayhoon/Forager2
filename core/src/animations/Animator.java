@@ -20,7 +20,7 @@ import java.util.List;
 public class Animator {
     private ServerClientWrapper wrapper;
     private Entity entity;
-    private Animations animations;
+    private AnimationList animations;
     private AnimationState animationState;
     private List<String> animationQueue;
     private float elapsedTime = 0f;
@@ -45,7 +45,7 @@ public class Animator {
         pixmap.dispose();
         region = new TextureRegion(texture, 0, 0, 1, 1);
 
-        animations = new Animations(Paths.PLAYER_ANIMATION, 8, 10);
+        animations = new AnimationList(Paths.PLAYER_ANIMATION, 8, 10);
         animations.add(AnimationState.IDLE_SWORD_NOT_DRAWN, 0.1f, 0, 0, 4);
         animations.add(AnimationState.IDLE_SWORD_DRAWN, 0.1f, 0, 5, 8);
         animations.add(AnimationState.DRAW_SWORD, 0.1f, 3, 0, 4);

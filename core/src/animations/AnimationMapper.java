@@ -1,6 +1,5 @@
 package animations;
 
-
 import Enums.AnimationState;
 import Enums.Buttons;
 import Enums.Direction;
@@ -10,10 +9,10 @@ import com.badlogic.gdx.math.Vector2;
 import jdk.nashorn.internal.ir.BaseNode;
 import networking.ServerClientWrapper;
 
-public class AnimationHandler {
+public class AnimationMapper {
     private Animator animator;
 
-    public AnimationHandler(ServerClientWrapper wrapper, Entity entity) {
+    public AnimationMapper(ServerClientWrapper wrapper, Entity entity) {
         animator = new Animator(wrapper, entity);
     }
 
