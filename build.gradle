@@ -57,6 +57,8 @@ project(":desktop") {
         implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
         implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         implementation "com.esotericsoftware:kryo:3.0.1"
+
+        implementation "space.earlygrey:shapedrawer:$shapedrawerVersion"
     }
 }
 

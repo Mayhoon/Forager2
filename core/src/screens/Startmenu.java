@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import game.Main;
-import stages.hud.StartmenuHud;
+import stages.gui.StartmenuHud;
 import stages.transitions.StageManager;
 
 public class Startmenu extends ScreenAdapter {

@@ -1,4 +1,4 @@
-package stages.hud;
+package stages.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

@@ -1,4 +1,4 @@
-package stages.hud;
+package stages.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -27,7 +27,7 @@ import tools.FontLoader;
 
 import java.io.IOException;
 
-public class ClientHud extends customStage {
+public class ClientGui extends customStage {
     private Main game;
     private KryoClient kryoClient;
     private GlyphLayout glyphLayout;
@@ -38,7 +38,7 @@ public class ClientHud extends customStage {
     private ServerClientWrapper serverClientWrapper;
     public String connectionStatus = "Ip adress of the server:";
 
-    public ClientHud(Main game) {
+    public ClientGui(Main game) {
         super(game.batch);
         this.game = game;
 

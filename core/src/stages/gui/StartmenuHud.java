@@ -1,4 +1,4 @@
-package stages.hud;
+package stages.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -64,6 +64,6 @@ public class StartmenuHud extends customStage {
     }
 
     private void joinButtonClicked() {
-        startmenu.stageManager.changeStage(new ClientHud(startmenu.game));
+        startmenu.stageManager.changeStage(new ClientGui(startmenu.game));
     }
 }

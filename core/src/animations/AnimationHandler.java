@@ -17,8 +17,8 @@ public class AnimationHandler {
         animator = new Animator(wrapper, entity);
     }
 
-    public void update(SpriteBatch batch, Vector2 position) {
-        animator.update(batch, position, Direction.LEFT);
+    public void update(SpriteBatch batch, Vector2 position, Direction direction) {
+        animator.update(batch, position, direction);
     }
 
     public void buttonPressed(Buttons button) {

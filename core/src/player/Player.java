@@ -27,12 +27,11 @@ public class Player {
         this.moving = false;
         this.previousAmount = 0f;
         this.direction = Direction.RIGHT;
-
-        position = new Vector2(0, 0);
-        animationHandler = new AnimationHandler(wrapper, entity);
+        this.position = new Vector2(0, 0);
+        this.animationHandler = new AnimationHandler(wrapper, entity);
 
         if (entity.equals(Entity.Player)) {
-            gamePadInput = new GamePadInput(this);
+            this.gamePadInput = new GamePadInput(this);
             Controllers.addListener(gamePadInput);
         }
     }
@@ -40,14 +39,14 @@ public class Player {
     public void render(SpriteBatch batch) {
         if (moving == true && direction.equals(Direction.LEFT)) {
             position.x += 1.5f * previousAmount;
-            animationHandler.update(batch, position);
+            animationHandler.update(batch, position, direction);
 
         } else if (moving == true && direction.equals(Direction.RIGHT)) {
             position.x += 1.5f * previousAmount;
-            animationHandler.update(batch, position);
+            animationHandler.update(batch, position, direction);
             
         } else {
-            animationHandler.update(batch, position);
+            animationHandler.update(batch, position, Direction.NONE);
         }
        sendPlayerInformation();
     }

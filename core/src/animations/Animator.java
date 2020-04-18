@@ -26,12 +26,15 @@ public class Animator {
     private float elapsedTime = 0f;
     private TextureRegion region;
     private TextureRegion keyFrame;
+    private Direction currentDirection;
+    private int xDirection;
 
     private ShapeRenderer shapeRenderer;
 
     public Animator(ServerClientWrapper wrapper, Entity entity) {
         this.wrapper = wrapper;
         this.entity = entity;
+        this.xDirection = -1;
 
         //Debug renderer for shapes
         shapeRenderer = new ShapeRenderer();
@@ -56,8 +59,15 @@ public class Animator {
         ShapeDrawer shapedrawer = new ShapeDrawer(batch, region);
 
         if (entity.equals(Entity.Player)) {
-            keyFrame = animations.getAnimation(animationState).getKeyFrame(elapsedTime, false);
-            batch.draw(keyFrame, position.x, position.y);
+            keyFrame = animations.getAnimation(animationState).getKeyFrame(elapsedTime, true);
+
+            if (direction.equals(Direction.LEFT)) {
+                xDirection = -1;
+            } else if (direction.equals(Direction.RIGHT)) {
+                xDirection = 1;
+            }
+
+            batch.draw(keyFrame, position.x, position.y, keyFrame.getRegionWidth() / 2, keyFrame.getRegionHeight() / 2, keyFrame.getRegionWidth(), keyFrame.getRegionHeight(), xDirection, 1, 0);
             wrapper.ownData().animation = animationState;
             shapedrawer.rectangle(position.x, position.y, keyFrame.getRegionWidth(), keyFrame.getRegionHeight());
 
