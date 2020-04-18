@@ -38,20 +38,23 @@ public class Player {
     }
 
     public void render(SpriteBatch batch) {
-
         if (moving == true && direction.equals(Direction.LEFT)) {
             position.x += 1.5f * previousAmount;
             animationHandler.update(batch, position);
+
         } else if (moving == true && direction.equals(Direction.RIGHT)) {
             position.x += 1.5f * previousAmount;
             animationHandler.update(batch, position);
+            
         } else {
             animationHandler.update(batch, position);
         }
+       sendPlayerInformation();
+    }
 
+    private void sendPlayerInformation() {
         if (entity.equals(Entity.Opponent)) {
             position = wrapper.ownData().position;
-            wrapper.sendTCP();
         } else {
             camera.position.x = position.x;
             camera.position.y = position.y;

@@ -56,7 +56,7 @@ public class Animator {
         ShapeDrawer shapedrawer = new ShapeDrawer(batch, region);
 
         if (entity.equals(Entity.Player)) {
-            keyFrame = animations.getAnimation(animationState).getKeyFrame(1, false);
+            keyFrame = animations.getAnimation(animationState).getKeyFrame(elapsedTime, false);
             batch.draw(keyFrame, position.x, position.y);
             wrapper.ownData().animation = animationState;
             shapedrawer.rectangle(position.x, position.y, keyFrame.getRegionWidth(), keyFrame.getRegionHeight());

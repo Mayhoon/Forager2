@@ -1,0 +1,14 @@
+{
+    "platform": "windows64",
+    "jdk": "C:/Program Files/Java/openjdk8",
+    "executable": "Game",
+    "classpath": [
+        "Game.jar"
+    ],
+    "mainclass": "com.my.gdx.game.desktop.DesktopLauncher.class",
+    "vmargs": [
+       "Xmx1G"
+    ],
+    "minimizejre": "soft",
+    "output": "out-game"
+}

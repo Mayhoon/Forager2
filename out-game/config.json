@@ -1,0 +1,9 @@
+{
+  "classPath": [
+    "Game.jar"
+  ],
+  "mainClass": "com.my.gdx.game.desktop.DesktopLauncher.class",
+  "vmArgs": [
+    "-Xmx1G"
+  ]
+}

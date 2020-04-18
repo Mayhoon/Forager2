@@ -9,8 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import config.Paths;
 
 public class FpsDisplay {
-    private Table table;
-    private float fps;
     private GlyphLayout glyphLayout;
     private BitmapFont bitmapFont;
 
@@ -20,11 +18,10 @@ public class FpsDisplay {
     }
 
     public void update(SpriteBatch batch) {
-        fps = Gdx.graphics.getFramesPerSecond();
+        float fps = Gdx.graphics.getFramesPerSecond();
         glyphLayout.setText(bitmapFont, "Fps: " + fps);
 
         bitmapFont.draw(batch, glyphLayout, Gdx.graphics.getWidth() / 2  - glyphLayout.width, Gdx.graphics.getHeight() / 2 - glyphLayout.height);
-
         glyphLayout.setText(bitmapFont, "Dt: " + Gdx.graphics.getDeltaTime());
         bitmapFont.draw(batch, glyphLayout, - Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() / 2 - glyphLayout.height);
     }
