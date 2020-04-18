@@ -9,10 +9,10 @@ import com.badlogic.gdx.math.Vector2;
 import jdk.nashorn.internal.ir.BaseNode;
 import networking.ServerClientWrapper;
 
-public class AnimationMapper {
+public class PlayerInputAnimationMapper {
     private Animator animator;
 
-    public AnimationMapper(ServerClientWrapper wrapper, Entity entity) {
+    public PlayerInputAnimationMapper(ServerClientWrapper wrapper, Entity entity) {
         animator = new Animator(wrapper, entity);
     }
 

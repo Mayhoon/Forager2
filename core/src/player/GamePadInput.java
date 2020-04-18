@@ -86,7 +86,7 @@ public class GamePadInput implements ControllerListener {
             default:
                 button = Buttons.A;
         }
-        player.animationMapper.buttonPressed(button);
+        player.playerInputAnimationMapper.buttonPressed(button);
         return false;
     }
 

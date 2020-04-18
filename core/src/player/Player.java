@@ -2,7 +2,7 @@ package player;
 
 import Enums.Direction;
 import Enums.Entity;
-import animations.AnimationMapper;
+import animations.PlayerInputAnimationMapper;
 import camera.Camera;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,7 +15,7 @@ public class Player {
     private Camera camera;
     public Vector2 position;
     private GamePadInput gamePadInput;
-    public AnimationMapper animationMapper;
+    public PlayerInputAnimationMapper playerInputAnimationMapper;
     private Boolean moving;
     float previousAmount;
     private Direction direction;
@@ -28,7 +28,7 @@ public class Player {
         this.previousAmount = 0f;
         this.direction = Direction.RIGHT;
         this.position = new Vector2(0, 0);
-        this.animationMapper = new AnimationMapper(wrapper, entity);
+        this.playerInputAnimationMapper = new PlayerInputAnimationMapper(wrapper, entity);
 
         if (entity.equals(Entity.Player)) {
             this.gamePadInput = new GamePadInput(this);
@@ -39,14 +39,14 @@ public class Player {
     public void render(SpriteBatch batch) {
         if (moving == true && direction.equals(Direction.LEFT)) {
             position.x += 1.5f * previousAmount;
-            animationMapper.update(batch, position, direction);
+            playerInputAnimationMapper.update(batch, position, direction);
 
         } else if (moving == true && direction.equals(Direction.RIGHT)) {
             position.x += 1.5f * previousAmount;
-            animationMapper.update(batch, position, direction);
+            playerInputAnimationMapper.update(batch, position, direction);
 
         } else {
-            animationMapper.update(batch, position, Direction.NONE);
+            playerInputAnimationMapper.update(batch, position, Direction.NONE);
         }
        sendPlayerInformation();
     }
