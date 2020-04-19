@@ -8,7 +8,7 @@ public class NetworkData {
 //    public float ownPositionY = 0f;
 //    public float otherPositionX = 0f;
 //    public float otherPositionY = 0f;
-    public Vector2 position = new Vector2(0,0);
+    public Vector2 position = new Vector2(100,0);
 
     //Animations
     public AnimationState animation = AnimationState.IDLE_SWORD_NOT_DRAWN;

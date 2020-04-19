@@ -3,7 +3,7 @@ package networking;
 public class ServerClientWrapper {
     private KryoServer server;
     private KryoClient client;
-    private boolean isServer, isClient;
+    public boolean isServer, isClient;
 
     public ServerClientWrapper(KryoServer server) {
         this.server = server;

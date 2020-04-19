@@ -8,6 +8,7 @@ import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import networking.ServerClientWrapper;
+import org.graalvm.compiler.lir.amd64.AMD64Arithmetic;
 
 public class Player {
     private Entity entity;
@@ -29,7 +30,6 @@ public class Player {
         this.direction = Direction.RIGHT;
         this.position = new Vector2(0, 0);
         this.playerInputAnimationMapper = new PlayerInputAnimationMapper(wrapper, entity);
-
         if (entity.equals(Entity.Player)) {
             this.gamePadInput = new GamePadInput(this);
             Controllers.addListener(gamePadInput);
@@ -48,7 +48,7 @@ public class Player {
         } else {
             playerInputAnimationMapper.update(batch, position, Direction.NONE);
         }
-       sendPlayerInformation();
+        sendPlayerInformation();
     }
 
     private void sendPlayerInformation() {
@@ -61,20 +61,25 @@ public class Player {
         wrapper.sendTCP();
     }
 
-    public void moveX(float amount, Direction direction) {
-        if (direction.equals(Direction.LEFT)) {
+    public void moveX(float amount) {
+        //Find out to which direction the player faces
+        if (amount < -0.045f) {
+            direction = Direction.LEFT;
             if (previousAmount + (Math.abs(amount)) >= 0) {
                 this.direction = direction;
                 moving = true;
                 previousAmount = amount;
             }
-        } else if (direction.equals(Direction.RIGHT)) {
+        } else if (amount > 0.045f) {
+            direction = Direction.RIGHT;
             if ((amount - previousAmount) >= 0) {
                 this.direction = direction;
                 moving = true;
                 previousAmount = amount;
             }
-        } else if (direction.equals(Direction.NONE)) {
+        } else {
+            amount = 0;
+            direction = Direction.NONE;
             moving = false;
         }
         wrapper.ownData().position = position;
