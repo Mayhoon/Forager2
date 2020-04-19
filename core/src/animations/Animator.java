@@ -54,9 +54,7 @@ public class Animator {
         ShapeDrawer shapedrawer = new ShapeDrawer(batch, region);
 
         if (entity.equals(Entity.Player)) {
-            ////////////////////////
-            keyFrame = playerAnimations.get(animationState).getAnimation().getKeyFrame(elapsedTime, true);
-            ////////////////////////
+            keyFrame = playerAnimations.get(animationState).getKeyFrame(elapsedTime, true);
 
             if (direction.equals(Direction.LEFT)) {
                 xDirection = -1;
@@ -69,9 +67,7 @@ public class Animator {
             shapedrawer.rectangle(position.x, position.y, keyFrame.getRegionWidth(), keyFrame.getRegionHeight());
 
         } else if (entity.equals(Entity.Opponent)) {
-            ////////////////////////
-            TextureRegion keyFrame = playerAnimations.get(wrapper.opponentData().animation).getAnimation().getKeyFrame(elapsedTime, true);
-            ////////////////////////
+            TextureRegion keyFrame = playerAnimations.get(wrapper.opponentData().animation).getKeyFrame(elapsedTime, true);
             batch.draw(keyFrame, wrapper.opponentData().position.x, wrapper.opponentData().position.y);
             shapedrawer.rectangle(wrapper.opponentData().position.x, wrapper.opponentData().position.y, keyFrame.getRegionWidth(), keyFrame.getRegionHeight());
         }

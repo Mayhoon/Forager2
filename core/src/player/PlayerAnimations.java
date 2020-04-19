@@ -3,6 +3,8 @@ package player;
 import Enums.AnimationState;
 import animations.AnimationLoader;
 import animations.CustomAnimation;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import config.Paths;
 
 import java.util.HashMap;
@@ -22,7 +24,7 @@ public class PlayerAnimations {
         map.put(AnimationState.SWORD_SLASH_SPIN, new CustomAnimation(animationLoader.load(2, 0, 6)));
     }
 
-    public CustomAnimation get (AnimationState name) {
-        return map.get(name);
+    public Animation<TextureRegion> get (AnimationState name) {
+        return map.get(name).getAnimation();
     }
 }
