@@ -13,12 +13,12 @@ import config.Paths;
 import screens.Startmenu;
 import stages.customStage;
 
-public class StartmenuHud extends customStage {
+public class StartmenuGui extends customStage {
     Startmenu startmenu;
     ImageButton hostButton, joinButton;
     Table table;
 
-    public StartmenuHud(Startmenu startmenu) {
+    public StartmenuGui(Startmenu startmenu) {
         super(startmenu.game.batch);
         this.startmenu = startmenu;
         Gdx.input.setInputProcessor(this);
@@ -60,7 +60,7 @@ public class StartmenuHud extends customStage {
     }
 
     private void hostButtonClicked() {
-        startmenu.stageManager.changeStage(new ServerHud(startmenu.game));
+        startmenu.stageManager.changeStage(new ServerGui(startmenu.game));
     }
 
     private void joinButtonClicked() {

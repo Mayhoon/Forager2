@@ -11,6 +11,7 @@ public class CustomAnimation {
     private float timeBetweenFrames;
     private TextureRegion[] animationFrames;
     private Animation<TextureRegion> animation;
+    //private
 
     public CustomAnimation(TextureRegion[] animationFrames) {
         timeBetweenFrames = 0.1f;
@@ -22,4 +23,6 @@ public class CustomAnimation {
     public Animation<TextureRegion> getAnimation() {
         return animation;
     }
+
+   // public
 }

@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-public class ServerHud extends customStage {
+public class ServerGui extends customStage {
     private Main game;
     private KryoServer kryoServer;
     public String serverIp;
@@ -35,7 +35,7 @@ public class ServerHud extends customStage {
     private ImageButton hostButton;
     private ServerClientWrapper serverClientWrapper;
 
-    public ServerHud(Main game) {
+    public ServerGui(Main game) {
         super(game.batch);
         this.game = game;
         Gdx.input.setInputProcessor(this);

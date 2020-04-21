@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import game.Main;
-import stages.gui.StartmenuHud;
+import stages.gui.StartmenuGui;
 import stages.transitions.StageManager;
 
 public class Startmenu extends ScreenAdapter {
@@ -14,7 +14,7 @@ public class Startmenu extends ScreenAdapter {
 
     public Startmenu(Main game) {
         this.game = game;
-        stageManager = new StageManager(new StartmenuHud(this));
+        stageManager = new StageManager(new StartmenuGui(this));
     }
 
     @Override

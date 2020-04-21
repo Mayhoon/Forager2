@@ -13,34 +13,30 @@ import com.badlogic.gdx.physics.box2d.World;
 import config.Paths;
 import networking.ServerClientWrapper;
 import player.Player;
+import stages.gui.GameGui;
 import tools.FpsDisplay;
 
 public class Game extends ScreenAdapter {
-    private Camera camera, ui_camera;
+    private Camera camera;
     private SpriteBatch batch;
     private Player player, player2;
     private Texture groundTexture;
     private Sprite groundSprite;
     private FpsDisplay fpsDisplay;
+    private GameGui gameGui;
 
 
     public Game(ServerClientWrapper serverClientWrapper, SpriteBatch batch) {
         this.batch = batch;
+        this.gameGui = new GameGui();
+        this.camera = new Camera();
+        this.camera.zoom -= 0.7f;
+        this.camera.update();
 
-        camera = new Camera();
-        camera.zoom -= 0.7f;
-        camera.position.x = 0;
-        camera.position.y = 0;
-        camera.update();
-
-        ui_camera = new Camera();
-        fpsDisplay = new FpsDisplay();
-
-        player = new Player(Entity.Player, serverClientWrapper, camera);
-        player2 = new Player(Entity.Opponent, serverClientWrapper, camera);
-
-        groundTexture = new Texture(Paths.GROUND);
-        groundSprite = new Sprite(groundTexture);
+        this.player = new Player(Entity.Player, serverClientWrapper, camera);
+        this.player2 = new Player(Entity.Opponent, serverClientWrapper, camera);
+        this.groundTexture = new Texture(Paths.GROUND);
+        this.groundSprite = new Sprite(groundTexture);
     }
 
 
@@ -58,14 +54,12 @@ public class Game extends ScreenAdapter {
         //Render world
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-
         player.render(batch);
         player2.render(batch);
         batch.draw(groundSprite, 0, -17);
 
-        //Render ui
-        batch.setProjectionMatrix(ui_camera.combined);
-        fpsDisplay.update(batch);
+        //Render Gui
+        gameGui.update(batch);
 
         batch.end();
         camera.update();
