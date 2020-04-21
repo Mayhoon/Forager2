@@ -4,14 +4,12 @@ import Enums.Direction;
 import Enums.Entity;
 import animations.PlayerInputAnimationMapper;
 import camera.Camera;
-import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import networking.ServerClientWrapper;
-import org.graalvm.compiler.lir.amd64.AMD64Arithmetic;
 
 public class Player {
-    private Entity entity;
+    public Entity entity;
     private ServerClientWrapper wrapper;
     private Camera camera;
     public Vector2 position;
@@ -19,7 +17,6 @@ public class Player {
     public PlayerInputAnimationMapper playerInputAnimationMapper;
     private Boolean moving;
     float previousAmount;
-    private Direction direction;
 
     public Player(Entity entity, ServerClientWrapper wrapper, Camera camera) {
         this.entity = entity;
@@ -27,26 +24,23 @@ public class Player {
         this.camera = camera;
         this.moving = false;
         this.previousAmount = 0f;
-        this.direction = Direction.RIGHT;
-        this.position = new Vector2(0, 0);
         this.playerInputAnimationMapper = new PlayerInputAnimationMapper(wrapper, entity);
-        if (entity.equals(Entity.Player)) {
-            this.gamePadInput = new GamePadInput(this);
-            Controllers.addListener(gamePadInput);
-        }
+        this.gamePadInput = new GamePadInput(this);
+        this.position = new Vector2(0, 0);
+
     }
 
     public void render(SpriteBatch batch) {
-        if (moving == true && direction.equals(Direction.LEFT)) {
-            position.x += 1.5f * previousAmount;
-            playerInputAnimationMapper.update(batch, position, direction);
+        if (moving == true && wrapper.ownData().direction.equals(Direction.LEFT)) {
+            wrapper.ownData().position.x += previousAmount;
+            playerInputAnimationMapper.update(batch);
 
-        } else if (moving == true && direction.equals(Direction.RIGHT)) {
-            position.x += 1.5f * previousAmount;
-            playerInputAnimationMapper.update(batch, position, direction);
+        } else if (moving == true && wrapper.ownData().direction.equals(Direction.RIGHT)) {
+            wrapper.ownData().position.x += previousAmount;
+            playerInputAnimationMapper.update(batch);
 
         } else {
-            playerInputAnimationMapper.update(batch, position, Direction.NONE);
+            playerInputAnimationMapper.update(batch);
         }
         sendPlayerInformation();
     }
@@ -55,8 +49,8 @@ public class Player {
         if (entity.equals(Entity.Opponent)) {
             position = wrapper.ownData().position;
         } else {
-            camera.position.x = position.x;
-            camera.position.y = position.y;
+            camera.position.x = wrapper.ownData().position.x;
+            camera.position.y = wrapper.ownData().position.y;
         }
         wrapper.sendTCP();
     }
@@ -64,22 +58,20 @@ public class Player {
     public void moveX(float amount) {
         //Find out to which direction the player faces
         if (amount < -0.045f) {
-            direction = Direction.LEFT;
+            wrapper.ownData().direction = Direction.LEFT;
             if (previousAmount + (Math.abs(amount)) >= 0) {
-                this.direction = direction;
                 moving = true;
-                previousAmount = amount;
+                previousAmount = 1.5f * amount;
             }
         } else if (amount > 0.045f) {
-            direction = Direction.RIGHT;
+            wrapper.ownData().direction = Direction.RIGHT;
             if ((amount - previousAmount) >= 0) {
-                this.direction = direction;
                 moving = true;
-                previousAmount = amount;
+                previousAmount = 1.5f * amount;
             }
         } else {
             amount = 0;
-            direction = Direction.NONE;
+            wrapper.ownData().direction = Direction.NONE;
             moving = false;
         }
         wrapper.ownData().position = position;

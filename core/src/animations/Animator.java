@@ -1,6 +1,6 @@
 package animations;
 
-import Enums.AnimationState;
+import Enums.AnimationName;
 import Enums.Direction;
 import Enums.Entity;
 import com.badlogic.gdx.Gdx;
@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
+import networking.NetworkData;
 import networking.ServerClientWrapper;
 import player.PlayerAnimations;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -20,7 +20,6 @@ import java.util.List;
 public class Animator {
     private ServerClientWrapper wrapper;
     private Entity entity;
-    private AnimationState animationState;
     private List<String> animationQueue;
     private float elapsedTime = 0f;
     private TextureRegion region;
@@ -34,8 +33,8 @@ public class Animator {
     public Animator(ServerClientWrapper wrapper, Entity entity) {
         this.wrapper = wrapper;
         this.entity = entity;
-        this.xDirection = -1;
         this.playerAnimations = new PlayerAnimations();
+        this.xDirection = -1;
 
         //Debug renderer for shapes
         shapeRenderer = new ShapeRenderer();
@@ -46,25 +45,24 @@ public class Animator {
         pixmap.dispose();
         region = new TextureRegion(texture, 0, 0, 1, 1);
 
-        setAnimation(AnimationState.IDLE_SWORD_NOT_DRAWN);
+        setAnimation(AnimationName.IDLE_SWORD_NOT_DRAWN);
     }
 
-    public void update(SpriteBatch batch, Vector2 position, Direction direction) {
+    public void update(SpriteBatch batch) {
         elapsedTime += (Gdx.graphics.getDeltaTime());
         ShapeDrawer shapedrawer = new ShapeDrawer(batch, region);
 
         if (entity.equals(Entity.Player)) {
-            keyFrame = playerAnimations.get(animationState).getKeyFrame(elapsedTime, true);
+            keyFrame = playerAnimations.get(wrapper.ownData().animation).getKeyFrame(elapsedTime, true);
 
-            if (direction.equals(Direction.LEFT)) {
+            if (wrapper.ownData().equals(Direction.LEFT)) {
                 xDirection = -1;
-            } else if (direction.equals(Direction.RIGHT)) {
+            } else if (wrapper.ownData().direction.equals(Direction.RIGHT)) {
                 xDirection = 1;
             }
 
-            batch.draw(keyFrame, position.x, position.y, keyFrame.getRegionWidth() / 2, keyFrame.getRegionHeight() / 2, keyFrame.getRegionWidth(), keyFrame.getRegionHeight(), xDirection, 1, 0);
-            wrapper.ownData().animation = animationState;
-            shapedrawer.rectangle(position.x, position.y, keyFrame.getRegionWidth(), keyFrame.getRegionHeight());
+            batch.draw(keyFrame, wrapper.ownData().position.x, wrapper.ownData().position.y, keyFrame.getRegionWidth() / 2, keyFrame.getRegionHeight() / 2, keyFrame.getRegionWidth(), keyFrame.getRegionHeight(), xDirection, 1, 0);
+            shapedrawer.rectangle(wrapper.ownData().position.x, wrapper.ownData().position.y, keyFrame.getRegionWidth(), keyFrame.getRegionHeight());
 
         } else if (entity.equals(Entity.Opponent)) {
             TextureRegion keyFrame = playerAnimations.get(wrapper.opponentData().animation).getKeyFrame(elapsedTime, true);
@@ -73,8 +71,7 @@ public class Animator {
         }
     }
 
-    public void setAnimation(AnimationState animationState) {
-        this.animationState = animationState;
-        wrapper.ownData().animation = animationState;
+    public void setAnimation(AnimationName animationName) {
+        wrapper.ownData().animation = animationName;
     }
 }

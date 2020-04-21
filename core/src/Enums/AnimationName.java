@@ -1,6 +1,6 @@
 package Enums;
 
-public enum AnimationState {
+public enum AnimationName {
     IDLE_SWORD_DRAWN,
     IDLE_SWORD_NOT_DRAWN,
     DRAW_SWORD,

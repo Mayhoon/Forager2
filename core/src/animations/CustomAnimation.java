@@ -1,13 +1,13 @@
 package animations;
 
-import Enums.AnimationState;
+import Enums.AnimationName;
 import Enums.Direction;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class CustomAnimation {
     private Direction direction;
-    private AnimationState animationName;
+    private AnimationName animationName;
     private float timeBetweenFrames;
     private TextureRegion[] animationFrames;
     private Animation<TextureRegion> animation;

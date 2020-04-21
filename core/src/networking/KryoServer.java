@@ -1,5 +1,9 @@
 package networking;
 
+import Enums.AnimationName;
+import Enums.Direction;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;

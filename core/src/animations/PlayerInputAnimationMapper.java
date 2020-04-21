@@ -1,12 +1,9 @@
 package animations;
 
-import Enums.AnimationState;
+import Enums.AnimationName;
 import Enums.Buttons;
-import Enums.Direction;
 import Enums.Entity;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import jdk.nashorn.internal.ir.BaseNode;
 import networking.ServerClientWrapper;
 
 public class PlayerInputAnimationMapper {
@@ -16,29 +13,29 @@ public class PlayerInputAnimationMapper {
         animator = new Animator(wrapper, entity);
     }
 
-    public void update(SpriteBatch batch, Vector2 position, Direction direction) {
-        animator.update(batch, position, direction);
+    public void update(SpriteBatch batch) {
+        animator.update(batch);
     }
 
     public void buttonPressed(Buttons button) {
         switch (button) {
             case X:
-                animator.setAnimation(AnimationState.DRAW_SWORD);
+                animator.setAnimation(AnimationName.DRAW_SWORD);
                 break;
             case RB:
-                animator.setAnimation(AnimationState.SWORD_SLASH_SPIN);
+                animator.setAnimation(AnimationName.SWORD_SLASH_SPIN);
                 break;
             case A:
-                animator.setAnimation(AnimationState.SWORD_SLASH_UP_DOWN_STANDING);
+                animator.setAnimation(AnimationName.SWORD_SLASH_UP_DOWN_STANDING);
                 break;
             case Y:
-                animator.setAnimation(AnimationState.IDLE_SWORD_NOT_DRAWN);
+                animator.setAnimation(AnimationName.IDLE_SWORD_NOT_DRAWN);
                 break;
             case LB:
-                animator.setAnimation(AnimationState.IDLE_SWORD_DRAWN);
+                animator.setAnimation(AnimationName.IDLE_SWORD_DRAWN);
                 break;
             default:
-                animator.setAnimation(AnimationState.IDLE_SWORD_NOT_DRAWN);
+                animator.setAnimation(AnimationName.IDLE_SWORD_NOT_DRAWN);
         }
     }
 }

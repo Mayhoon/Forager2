@@ -2,8 +2,10 @@ package player;
 
 import Enums.Buttons;
 import Enums.Direction;
+import Enums.Entity;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
 
@@ -12,6 +14,10 @@ public class GamePadInput implements ControllerListener {
 
     public GamePadInput(Player player) {
         this.player = player;
+
+        if (this.player.entity.equals(Entity.Player)) {
+            Controllers.addListener(this);
+        }
     }
 
     @Override
