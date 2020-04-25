@@ -23,10 +23,8 @@ public class HitBox {
     }
 
     public void drawHitboxes() {
-        for (int i = 0; i < 1; i++) {
-            System.out.println("-----------");
-            System.out.println(range[i][0]);
-            System.out.println(range[i][1]);
+        for (int i = 0; i < size; i++) {
+
         }
     }
 

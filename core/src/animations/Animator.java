@@ -14,8 +14,6 @@ import networking.ServerClientWrapper;
 import player.PlayerAnimations;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
-import java.util.List;
-
 public class Animator {
     private ServerClientWrapper wrapper;
     private Entity entity;
@@ -33,16 +31,16 @@ public class Animator {
         this.playerAnimations = new PlayerAnimations();
         this.xDirection = -1;
 
-        intitShapeRenderer();
+        shapeRenderer();
         setAnimation(AnimationName.IDLE_SWORD_NOT_DRAWN);
     }
 
-    private void intitShapeRenderer () {
+    private void shapeRenderer() {
         shapeRenderer = new ShapeRenderer();
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.BLACK);
         pixmap.drawPixel(0, 0);
-        Texture texture = new Texture(pixmap); //remember to dispose of later
+        Texture texture = new Texture(pixmap);
         pixmap.dispose();
         region = new TextureRegion(texture, 0, 0, 1, 1);
     }

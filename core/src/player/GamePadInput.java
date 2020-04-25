@@ -1,8 +1,8 @@
 package player;
 
 import Enums.Buttons;
-import Enums.Direction;
 import Enums.Entity;
+import animations.PlayerInputAnimationMapper;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
@@ -10,19 +10,20 @@ import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
 
 public class GamePadInput implements ControllerListener {
-    private Player player;
+    private PlayerInputAnimationMapper playerInputAnimationMapper;
+    private PlayerMotor playerMotor;
 
-    public GamePadInput(Player player) {
-        this.player = player;
-
-        if (this.player.entity.equals(Entity.Player)) {
+    public GamePadInput(Entity entity, PlayerMotor playerMotor, PlayerInputAnimationMapper playerInputAnimationMapper) {
+        this.playerInputAnimationMapper = playerInputAnimationMapper;
+        this.playerMotor = playerMotor;
+        if (entity.equals(Entity.Player)) {
             Controllers.addListener(this);
         }
     }
 
     @Override
     public boolean axisMoved(Controller controller, int axisCode, float value) {
-        player.moveX(controller.getAxis(1));
+        playerMotor.moveX(controller.getAxis(1));
         return false;
     }
 
@@ -85,7 +86,7 @@ public class GamePadInput implements ControllerListener {
             default:
                 button = Buttons.A;
         }
-        player.playerInputAnimationMapper.buttonPressed(button);
+        playerInputAnimationMapper.buttonPressed(button);
         return false;
     }
 

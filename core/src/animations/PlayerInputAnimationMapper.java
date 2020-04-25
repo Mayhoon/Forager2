@@ -9,12 +9,8 @@ import networking.ServerClientWrapper;
 public class PlayerInputAnimationMapper {
     private Animator animator;
 
-    public PlayerInputAnimationMapper(ServerClientWrapper wrapper, Entity entity) {
-        animator = new Animator(wrapper, entity);
-    }
-
-    public void update(SpriteBatch batch) {
-        animator.update(batch);
+    public PlayerInputAnimationMapper(ServerClientWrapper wrapper, Entity entity, Animator animator) {
+        this.animator = animator;
     }
 
     public void buttonPressed(Buttons button) {
