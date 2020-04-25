@@ -8,11 +8,14 @@ public class DesktopLauncher {
     public static void main(String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
-        config.title = "Pixelworld";
+        config.title = "Game";
+//        config.width = 1920;
+//        config.height = 1080;
+//        config.fullscreen = false;
         config.width = 800;
         config.height = 800;
-        config.resizable = false;
         config.fullscreen = false;
+        config.resizable = false;
         config.forceExit = true;
         new LwjglApplication(new Main(), config);
     }

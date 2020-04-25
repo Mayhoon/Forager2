@@ -11,18 +11,15 @@ public class CustomAnimation {
     private float timeBetweenFrames;
     private TextureRegion[] animationFrames;
     private Animation<TextureRegion> animation;
-    //private
 
-    public CustomAnimation(TextureRegion[] animationFrames) {
+    public CustomAnimation(TextureRegion[] frames) {
         timeBetweenFrames = 0.1f;
-        this.animationFrames = animationFrames;
-       // this.animationFrames = new Animation<TextureRegion>(timeBetweenFrames, animationFrames);
-        animation = new Animation<>(timeBetweenFrames, animationFrames);
+        animation = new Animation<>(timeBetweenFrames, frames);
+        animation.setPlayMode(Animation.PlayMode.LOOP);
     }
 
     public Animation<TextureRegion> getAnimation() {
         return animation;
     }
 
-   // public
 }

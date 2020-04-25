@@ -26,15 +26,15 @@ public class Game extends ScreenAdapter {
     private GameGui gameGui;
 
 
-    public Game(ServerClientWrapper serverClientWrapper, SpriteBatch batch) {
+    public Game(ServerClientWrapper wrapper, SpriteBatch batch) {
         this.batch = batch;
-        this.gameGui = new GameGui();
+        this.gameGui = new GameGui(wrapper);
         this.camera = new Camera();
         this.camera.zoom -= 0.7f;
         this.camera.update();
 
-        this.player = new Player(Entity.Player, serverClientWrapper, camera);
-        this.player2 = new Player(Entity.Opponent, serverClientWrapper, camera);
+        this.player = new Player(Entity.Player, wrapper, camera);
+        this.player2 = new Player(Entity.Opponent, wrapper, camera);
         this.groundTexture = new Texture(Paths.GROUND);
         this.groundSprite = new Sprite(groundTexture);
     }

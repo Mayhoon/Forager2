@@ -9,6 +9,8 @@ public class NetworkData {
     public Direction direction;
     public Boolean moving;
     public float movementSpeed;
+    public float elapsedTime;
+    public float health;
 
     //Animations
     public AnimationName animation;
@@ -19,5 +21,7 @@ public class NetworkData {
         animation = AnimationName.IDLE_SWORD_NOT_DRAWN;
         moving = false;
         movementSpeed = 0f;
+        elapsedTime = 0f;
+        health = 100f;
     }
 }

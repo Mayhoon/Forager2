@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import config.Paths;
+import sun.tools.jconsole.Tab;
 
 public class FpsDisplay {
     private GlyphLayout glyphLayout;

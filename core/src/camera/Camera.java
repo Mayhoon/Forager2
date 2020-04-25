@@ -1,7 +1,9 @@
 package camera;
 
+import Enums.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 
 public class Camera extends OrthographicCamera {
     private float cameraSpeed = 60f;
@@ -14,13 +16,8 @@ public class Camera extends OrthographicCamera {
         super.update();
     }
 
-    public void update() {
-        super.translate((x * Gdx.graphics.getDeltaTime() * cameraSpeed), (y * Gdx.graphics.getDeltaTime()) * cameraSpeed);
-        super.update();
-    }
-
-    public void setToPosition(float x, float y) {
-        this.x = x;
-        this.y = y;
+    public void move(Vector2 pos) {
+        this.position.x = pos.x;
+        this.position.y = pos.y;
     }
 }
