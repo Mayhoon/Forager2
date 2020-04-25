@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import networking.ServerClientWrapper;
 import player.PlayerAnimations;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -22,7 +21,6 @@ public class Animator {
     private TextureRegion keyFrame;
     private Direction currentDirection;
     private int xDirection;
-    private ShapeRenderer shapeRenderer;
     private PlayerAnimations playerAnimations;
 
     public Animator(ServerClientWrapper wrapper, Entity entity) {
@@ -31,12 +29,11 @@ public class Animator {
         this.playerAnimations = new PlayerAnimations();
         this.xDirection = -1;
 
-        shapeRenderer();
+        textureRegion();
         setAnimation(AnimationName.IDLE_SWORD_NOT_DRAWN);
     }
 
-    private void shapeRenderer() {
-        shapeRenderer = new ShapeRenderer();
+    private void textureRegion() {
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.BLACK);
         pixmap.drawPixel(0, 0);
@@ -52,7 +49,6 @@ public class Animator {
         if (entity.equals(Entity.Player)) {
             keyFrame = playerAnimations.get(wrapper.ownData().animation).getKeyFrame(elapsedTime);
             wrapper.ownData().elapsedTime = elapsedTime;
-            wrapper.sendTCP();
             if (wrapper.ownData().equals(Direction.LEFT)) {
                 xDirection = -1;
             } else if (wrapper.ownData().direction.equals(Direction.RIGHT)) {
@@ -62,13 +58,18 @@ public class Animator {
             shapedrawer.rectangle(wrapper.ownData().position.x, wrapper.ownData().position.y, keyFrame.getRegionWidth(), keyFrame.getRegionHeight());
 
         } else if (entity.equals(Entity.Opponent)) {
-            TextureRegion keyFrame = playerAnimations.get(wrapper.opponentData().animation).getKeyFrame(wrapper.opponentData().elapsedTime, true);
+            TextureRegion keyFrame = playerAnimations.get(wrapper.opponentData().animation).getKeyFrame(wrapper.opponentData().elapsedTime);
             batch.draw(keyFrame, wrapper.opponentData().position.x, wrapper.opponentData().position.y);
             shapedrawer.rectangle(wrapper.opponentData().position.x, wrapper.opponentData().position.y, keyFrame.getRegionWidth(), keyFrame.getRegionHeight());
         }
+        wrapper.sendTCP();
     }
 
     public void setAnimation(AnimationName animationName) {
         wrapper.ownData().animation = animationName;
+    }
+
+    public int getKeyFrameIndex(){
+        return playerAnimations.get(wrapper.ownData().animation).getKeyFrameIndex(elapsedTime);
     }
 }

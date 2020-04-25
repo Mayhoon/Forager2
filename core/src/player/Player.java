@@ -6,7 +6,6 @@ import animations.HitBox;
 import animations.PlayerInputAnimationMapper;
 import camera.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import networking.NetworkData;
 import networking.ServerClientWrapper;
 
 public class Player {
@@ -18,23 +17,26 @@ public class Player {
     private HitBox hitBox;
     private Animator animator;
     private PlayerInputAnimationMapper playerInputAnimationMapper;
+    private SpriteBatch batch;
 
-    public Player(Entity entity, ServerClientWrapper wrapper, Camera camera) {
+    public Player(Entity entity, ServerClientWrapper wrapper, Camera camera, SpriteBatch batch) {
         this.entity = entity;
         this.wrapper = wrapper;
         this.camera = camera;
+        this.batch = batch;
         animator = new Animator(wrapper, entity);
         playerMotor = new PlayerMotor(wrapper);
         playerInputAnimationMapper = new PlayerInputAnimationMapper(wrapper, entity, animator);
         gamePadInput = new GamePadInput(entity, playerMotor, playerInputAnimationMapper);
-        hitBox = new HitBox();
+        hitBox = new HitBox(batch);
     }
 
-    public void render(SpriteBatch batch) {
+    public void render() {
         playerMotor.render();
-        animator.update(batch);
         camera.move(wrapper.ownData().position);
-        hitBox.drawHitboxes();
+        animator.update(batch);
+        //  wrapper.ownData().animation = AnimationName.SWORD_SLASH_UP_DOWN_STANDING;
+        hitBox.drawHitboxes(wrapper.ownData().animation, animator.getKeyFrameIndex());
         wrapper.sendTCP();
     }
 }

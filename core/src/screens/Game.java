@@ -28,13 +28,13 @@ public class Game extends ScreenAdapter {
 
     public Game(ServerClientWrapper wrapper, SpriteBatch batch) {
         this.batch = batch;
-        this.gameGui = new GameGui(wrapper);
+        this.gameGui = new GameGui(wrapper, batch);
         this.camera = new Camera();
         this.camera.zoom -= 0.7f;
         this.camera.update();
 
-        this.player = new Player(Entity.Player, wrapper, camera);
-        this.player2 = new Player(Entity.Opponent, wrapper, camera);
+        this.player = new Player(Entity.Player, wrapper, camera, batch);
+        this.player2 = new Player(Entity.Opponent, wrapper, camera, batch);
         this.groundTexture = new Texture(Paths.GROUND);
         this.groundSprite = new Sprite(groundTexture);
     }
@@ -48,18 +48,18 @@ public class Game extends ScreenAdapter {
             System.exit(0);
         }
 
-        Gdx.gl.glClearColor(99/255, 155/255, 255/255, 1);
+        Gdx.gl.glClearColor(255/255, 255/255, 255/255, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         //Render world
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        player.render(batch);
-        player2.render(batch);
+        player.render();
+        player2.render();
         batch.draw(groundSprite, 0, -17);
 
         //Render Gui
-        gameGui.update(batch);
+        gameGui.update();
 
         batch.end();
         camera.update();

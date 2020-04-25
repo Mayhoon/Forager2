@@ -14,16 +14,16 @@ public class GameGui {
     private Camera ui_Camera;
     private FpsDisplay fpsDisplay;
     private HealthBar healtBar;
+    private SpriteBatch batch;
 
-    public GameGui(ServerClientWrapper wrapper) {
-        Table table = new Table();
-        table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    public GameGui(ServerClientWrapper wrapper, SpriteBatch batch) {
+        this.batch = batch;
         ui_Camera = new Camera();
         fpsDisplay = new FpsDisplay();
-        healtBar = new HealthBar(wrapper, table);
+        healtBar = new HealthBar(wrapper);
     }
 
-    public void update(SpriteBatch batch) {
+    public void update() {
         batch.setProjectionMatrix(ui_Camera.combined);
         fpsDisplay.update(batch);
         healtBar.update(batch);
