@@ -15,6 +15,7 @@ import networking.ServerClientWrapper;
 import player.Player;
 import stages.gui.GameGui;
 import tools.FpsDisplay;
+import tools.WorldDebugger;
 
 public class Game extends ScreenAdapter {
     private Camera camera;
@@ -24,6 +25,7 @@ public class Game extends ScreenAdapter {
     private Sprite groundSprite;
     private FpsDisplay fpsDisplay;
     private GameGui gameGui;
+    private WorldDebugger worldDebugger;
 
 
     public Game(ServerClientWrapper wrapper, SpriteBatch batch) {
@@ -37,6 +39,8 @@ public class Game extends ScreenAdapter {
         this.player2 = new Player(Entity.Opponent, wrapper, camera, batch);
         this.groundTexture = new Texture(Paths.GROUND);
         this.groundSprite = new Sprite(groundTexture);
+
+        worldDebugger = new WorldDebugger(batch);
     }
 
 
@@ -54,6 +58,7 @@ public class Game extends ScreenAdapter {
         //Render world
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+        worldDebugger.renderWorld();
         player.render();
         player2.render();
         batch.draw(groundSprite, 0, -17);
