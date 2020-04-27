@@ -38,7 +38,6 @@ public class PlayerMotor {
             }
         } else {
             amount = 0;
-            self.direction = Direction.NONE;
             self.moving = false;
         }
     }

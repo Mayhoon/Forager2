@@ -19,6 +19,7 @@ public class NetworkData {
         position = new Vector2(0, 0);
         direction = Direction.NONE;
         animation = AnimationName.IDLE_SWORD_NOT_DRAWN;
+
         moving = false;
         movementSpeed = 0f;
         elapsedTime = 0f;

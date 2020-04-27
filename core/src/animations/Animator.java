@@ -43,12 +43,13 @@ public class Animator {
     }
 
     public void update(SpriteBatch batch) {
-        elapsedTime += (Gdx.graphics.getDeltaTime());
+        //elapsedTime += (Gdx.graphics.getDeltaTime());
         ShapeDrawer shapedrawer = new ShapeDrawer(batch, region);
 
         if (entity.equals(Entity.Player)) {
-            keyFrame = playerAnimations.get(wrapper.ownData().animation).getKeyFrame(elapsedTime);
+            keyFrame = playerAnimations.get(wrapper.ownData().animation).getKeyFrames()[3];
             wrapper.ownData().elapsedTime = elapsedTime;
+
             if (wrapper.ownData().equals(Direction.LEFT)) {
                 xDirection = -1;
             } else if (wrapper.ownData().direction.equals(Direction.RIGHT)) {
@@ -71,5 +72,21 @@ public class Animator {
 
     public int getKeyFrameIndex(){
         return playerAnimations.get(wrapper.ownData().animation).getKeyFrameIndex(elapsedTime);
+    }
+
+    public int getAnimationWidth(){
+        return playerAnimations.get(wrapper.ownData().animation).getKeyFrame(elapsedTime).getRegionWidth();
+    }
+
+    public float getAnimationWidth(AnimationName animationName){
+        return playerAnimations.get(animationName).getKeyFrame(elapsedTime).getRegionWidth();
+    }
+
+    public int getAnimationHeight(){
+        return playerAnimations.get(wrapper.ownData().animation).getKeyFrame(elapsedTime).getRegionHeight();
+    }
+
+    public float getAnimationHeight(AnimationName animationName){
+        return playerAnimations.get(animationName).getKeyFrame(elapsedTime).getRegionHeight();
     }
 }

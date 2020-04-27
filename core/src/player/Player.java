@@ -2,7 +2,7 @@ package player;
 
 import Enums.Entity;
 import animations.Animator;
-import animations.HitBox;
+import animations.CollisionChecker;
 import animations.PlayerInputAnimationMapper;
 import camera.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,7 +14,7 @@ public class Player {
     private Camera camera;
     private GamePadInput gamePadInput;
     private PlayerMotor playerMotor;
-    private HitBox hitBox;
+    private CollisionChecker collisionChecker;
     private Animator animator;
     private PlayerInputAnimationMapper playerInputAnimationMapper;
     private SpriteBatch batch;
@@ -28,7 +28,7 @@ public class Player {
         playerMotor = new PlayerMotor(wrapper);
         playerInputAnimationMapper = new PlayerInputAnimationMapper(wrapper, entity, animator);
         gamePadInput = new GamePadInput(entity, playerMotor, playerInputAnimationMapper);
-        hitBox = new HitBox(batch);
+        collisionChecker = new CollisionChecker(batch, animator, wrapper);
     }
 
     public void render() {
@@ -36,7 +36,7 @@ public class Player {
         camera.move(wrapper.ownData().position);
         animator.update(batch);
         //  wrapper.ownData().animation = AnimationName.SWORD_SLASH_UP_DOWN_STANDING;
-        hitBox.drawHitboxes(wrapper.ownData().animation, animator.getKeyFrameIndex());
+        collisionChecker.drawHitboxes();
         wrapper.sendTCP();
     }
 }
