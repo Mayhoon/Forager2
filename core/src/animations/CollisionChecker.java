@@ -32,32 +32,13 @@ public class CollisionChecker {
     }
 
     public void drawHitboxes() {
-        int frameIndex = animator.getKeyFrameIndex();
+        Vector2 list[] = attackHitBox.getAttackHitboxes(wrapper.ownData().animation, wrapper.ownData().keyFrameIndex);
 
-        if (wrapper.ownData().animation.equals(AnimationName.SWORD_SLASH_UP_DOWN_STANDING)) {
-            Vector2 list[][] = attackHitBox.getAttackHitboxes(wrapper.ownData().animation, frameIndex);
+        float playerX = wrapper.ownData().position.x;
+        float playerY = wrapper.ownData().position.y;
 
-            float originX = wrapper.ownData().position.x + animator.getAnimationWidth() / 2;
-            float originY = wrapper.ownData().position.y + animator.getAnimationHeight() / 2;
-
-            for (int i = 0; i < list.length; i++) {
-                float width = list[i][1].x - list[i][0].x;
-                float height = 0;
-                shapeDrawer.rectangle(list[i][0].x + originX, list[i][0].y + originY, width, height);
-
-                float opponentXLeft = wrapper.opponentData().position.x;
-                float opponentXRight =  animator.getAnimationWidth(wrapper.opponentData().animation) + wrapper.opponentData().position.x;
-                float opponentYLeft = animator.getAnimationHeight(wrapper.opponentData().animation);
-                System.out.println(opponentXLeft + "--" + opponentYLeft);
-
-                float selfXLeft = list[i][0].x + originX;
-                float selfXRight = list[i][1].x + originX;
-                System.out.println(selfXLeft + "---" + selfXRight);
-                if(selfXRight > opponentXLeft && selfXLeft < opponentXRight) {
-                    System.out.println("COLLISION");
-                }
-
-            }
+        for (int i = 0; i < list.length; i+=2) {
+            shapeDrawer.line(list[i].x + playerX, list[i].y + playerY, list[i+1].x + playerX, list[i+1].y + playerY);
         }
     }
 

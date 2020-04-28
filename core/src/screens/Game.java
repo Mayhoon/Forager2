@@ -32,7 +32,7 @@ public class Game extends ScreenAdapter {
         this.batch = batch;
         this.gameGui = new GameGui(wrapper, batch);
         this.camera = new Camera();
-        this.camera.zoom -= 0.7f;
+        this.camera.zoom -= 0.8f;
         this.camera.update();
 
         this.player = new Player(Entity.Player, wrapper, camera, batch);

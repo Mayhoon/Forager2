@@ -35,7 +35,6 @@ public class Player {
         playerMotor.render();
         camera.move(wrapper.ownData().position);
         animator.update(batch);
-        //  wrapper.ownData().animation = AnimationName.SWORD_SLASH_UP_DOWN_STANDING;
         collisionChecker.drawHitboxes();
         wrapper.sendTCP();
     }

@@ -11,18 +11,21 @@ public class NetworkData {
     public float movementSpeed;
     public float elapsedTime;
     public float health;
+    public int keyFrameIndex;
 
     //Animations
     public AnimationName animation;
 
     public NetworkData() {
         position = new Vector2(0, 0);
-        direction = Direction.NONE;
-        animation = AnimationName.IDLE_SWORD_NOT_DRAWN;
+        direction = Direction.RIGHT;
+        animation = AnimationName.SWORD_SLASH_UP_DOWN_STANDING;
+        keyFrameIndex = 3;
 
         moving = false;
         movementSpeed = 0f;
         elapsedTime = 0f;
         health = 100f;
+
     }
 }

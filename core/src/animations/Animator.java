@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import networking.ServerClientWrapper;
 import player.PlayerAnimations;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -30,7 +31,6 @@ public class Animator {
         this.xDirection = -1;
 
         textureRegion();
-        setAnimation(AnimationName.IDLE_SWORD_NOT_DRAWN);
     }
 
     private void textureRegion() {
@@ -47,7 +47,7 @@ public class Animator {
         ShapeDrawer shapedrawer = new ShapeDrawer(batch, region);
 
         if (entity.equals(Entity.Player)) {
-            keyFrame = playerAnimations.get(wrapper.ownData().animation).getKeyFrames()[3];
+            keyFrame = playerAnimations.get(wrapper.ownData().animation).getKeyFrames()[wrapper.ownData().keyFrameIndex];
             wrapper.ownData().elapsedTime = elapsedTime;
 
             if (wrapper.ownData().equals(Direction.LEFT)) {
@@ -57,6 +57,7 @@ public class Animator {
             }
             batch.draw(keyFrame, wrapper.ownData().position.x, wrapper.ownData().position.y, keyFrame.getRegionWidth() / 2, keyFrame.getRegionHeight() / 2, keyFrame.getRegionWidth(), keyFrame.getRegionHeight(), xDirection, 1, 0);
             shapedrawer.rectangle(wrapper.ownData().position.x, wrapper.ownData().position.y, keyFrame.getRegionWidth(), keyFrame.getRegionHeight());
+            shapedrawer.line(new Vector2(wrapper.ownData().position.x + keyFrame.getRegionWidth() / 2, wrapper.ownData().position.y), new Vector2(wrapper.ownData().position.x + keyFrame.getRegionWidth() / 2, wrapper.ownData().position.y + keyFrame.getRegionHeight()));
 
         } else if (entity.equals(Entity.Opponent)) {
             TextureRegion keyFrame = playerAnimations.get(wrapper.opponentData().animation).getKeyFrame(wrapper.opponentData().elapsedTime);
@@ -70,23 +71,23 @@ public class Animator {
         wrapper.ownData().animation = animationName;
     }
 
-    public int getKeyFrameIndex(){
+    public int getKeyFrameIndex() {
         return playerAnimations.get(wrapper.ownData().animation).getKeyFrameIndex(elapsedTime);
     }
 
-    public int getAnimationWidth(){
+    public int getAnimationWidth() {
         return playerAnimations.get(wrapper.ownData().animation).getKeyFrame(elapsedTime).getRegionWidth();
     }
 
-    public float getAnimationWidth(AnimationName animationName){
+    public float getAnimationWidth(AnimationName animationName) {
         return playerAnimations.get(animationName).getKeyFrame(elapsedTime).getRegionWidth();
     }
 
-    public int getAnimationHeight(){
+    public int getAnimationHeight() {
         return playerAnimations.get(wrapper.ownData().animation).getKeyFrame(elapsedTime).getRegionHeight();
     }
 
-    public float getAnimationHeight(AnimationName animationName){
+    public float getAnimationHeight(AnimationName animationName) {
         return playerAnimations.get(animationName).getKeyFrame(elapsedTime).getRegionHeight();
     }
 }
