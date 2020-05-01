@@ -20,12 +20,11 @@ public class NetworkData {
         position = new Vector2(0, 0);
         direction = Direction.RIGHT;
         animation = AnimationName.SWORD_SLASH_UP_DOWN_STANDING;
-        keyFrameIndex = 3;
+        keyFrameIndex = 4;
 
         moving = false;
         movementSpeed = 0f;
         elapsedTime = 0f;
         health = 100f;
-
     }
 }

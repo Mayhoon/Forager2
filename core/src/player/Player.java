@@ -35,7 +35,7 @@ public class Player {
         playerMotor.render();
         camera.move(wrapper.ownData().position);
         animator.update(batch);
-        collisionChecker.drawHitboxes();
+        collisionChecker.checkAttack();
         wrapper.sendTCP();
     }
 }

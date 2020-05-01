@@ -16,7 +16,7 @@ public final class Paths {
     private final static String FONTS_SKINS_PATH = "fonts/";
     private final static String INVENTORY_PATH = "inventory/";
     private final static String ITEMS_PATH = "items/";
-    private  final static String MAPS_PATH = "maps/";
+    private final static String MAPS_PATH = "maps/";
 
     //Fonts, skins and ui
     public final static String ITEM_COUNT_FONT = FONTS_SKINS_PATH + "B8.ttf";
@@ -32,6 +32,8 @@ public final class Paths {
     public final static String Inventory_INGAME_SCROLLBAR = INVENTORY_PATH + "inv" + PNG;
 
     //Player related
+    public final static int PLAYER_KEYFRAME_HEIGHT = 40;
+    public final static int PLAYER_KEYFRAME_WIDTH = 64;
     public final static String PLAYER_ANIMATION = ANIMATIONS_PATH + "player/Adventurer.png";
     public final static String JSON_PLAYER_POSITION = CHARACTERS_PATH + "/player/player" + JSON;
 

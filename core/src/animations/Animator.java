@@ -57,10 +57,9 @@ public class Animator {
             }
             batch.draw(keyFrame, wrapper.ownData().position.x, wrapper.ownData().position.y, keyFrame.getRegionWidth() / 2, keyFrame.getRegionHeight() / 2, keyFrame.getRegionWidth(), keyFrame.getRegionHeight(), xDirection, 1, 0);
             shapedrawer.rectangle(wrapper.ownData().position.x, wrapper.ownData().position.y, keyFrame.getRegionWidth(), keyFrame.getRegionHeight());
-            shapedrawer.line(new Vector2(wrapper.ownData().position.x + keyFrame.getRegionWidth() / 2, wrapper.ownData().position.y), new Vector2(wrapper.ownData().position.x + keyFrame.getRegionWidth() / 2, wrapper.ownData().position.y + keyFrame.getRegionHeight()));
 
         } else if (entity.equals(Entity.Opponent)) {
-            TextureRegion keyFrame = playerAnimations.get(wrapper.opponentData().animation).getKeyFrame(wrapper.opponentData().elapsedTime);
+            TextureRegion keyFrame = playerAnimations.get(AnimationName.SWORD_SLASH_UP_DOWN_STANDING).getKeyFrames()[0];
             batch.draw(keyFrame, wrapper.opponentData().position.x, wrapper.opponentData().position.y);
             shapedrawer.rectangle(wrapper.opponentData().position.x, wrapper.opponentData().position.y, keyFrame.getRegionWidth(), keyFrame.getRegionHeight());
         }
