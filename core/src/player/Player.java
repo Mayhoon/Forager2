@@ -35,7 +35,7 @@ public class Player {
         playerMotor.render();
         camera.move(wrapper.ownData().position);
         animator.update(batch);
-        collisionChecker.checkAttack();
+        collisionChecker.update();
         wrapper.sendTCP();
     }
 }

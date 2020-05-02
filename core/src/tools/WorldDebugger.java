@@ -12,7 +12,7 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class WorldDebugger {
     private ShapeDrawer shapeDrawer;
-    private boolean render = true;
+    private boolean render = false;
 
     public WorldDebugger(SpriteBatch batch) {
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);

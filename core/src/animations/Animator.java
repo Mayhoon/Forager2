@@ -3,13 +3,11 @@ package animations;
 import Enums.AnimationName;
 import Enums.Direction;
 import Enums.Entity;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import networking.ServerClientWrapper;
 import player.PlayerAnimations;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -50,18 +48,50 @@ public class Animator {
             keyFrame = playerAnimations.get(wrapper.ownData().animation).getKeyFrames()[wrapper.ownData().keyFrameIndex];
             wrapper.ownData().elapsedTime = elapsedTime;
 
-            if (wrapper.ownData().equals(Direction.LEFT)) {
-                xDirection = -1;
+            if (wrapper.ownData().direction.equals(Direction.LEFT)) {
+                xDirection = (-1);
             } else if (wrapper.ownData().direction.equals(Direction.RIGHT)) {
                 xDirection = 1;
             }
-            batch.draw(keyFrame, wrapper.ownData().position.x, wrapper.ownData().position.y, keyFrame.getRegionWidth() / 2, keyFrame.getRegionHeight() / 2, keyFrame.getRegionWidth(), keyFrame.getRegionHeight(), xDirection, 1, 0);
-            shapedrawer.rectangle(wrapper.ownData().position.x, wrapper.ownData().position.y, keyFrame.getRegionWidth(), keyFrame.getRegionHeight());
+            batch.draw(
+                    keyFrame,
+                    wrapper.ownData().position.x,
+                    wrapper.ownData().position.y,
+                    keyFrame.getRegionWidth() / 2,
+                    keyFrame.getRegionHeight() / 2,
+                    keyFrame.getRegionWidth(), keyFrame.getRegionHeight(),
+                    xDirection,
+                    1,
+                    0);
+            shapedrawer.rectangle(
+                    wrapper.ownData().position.x,
+                    wrapper.ownData().position.y,
+                    keyFrame.getRegionWidth(),
+                    keyFrame.getRegionHeight());
 
         } else if (entity.equals(Entity.Opponent)) {
-            TextureRegion keyFrame = playerAnimations.get(AnimationName.SWORD_SLASH_UP_DOWN_STANDING).getKeyFrames()[0];
-            batch.draw(keyFrame, wrapper.opponentData().position.x, wrapper.opponentData().position.y);
-            shapedrawer.rectangle(wrapper.opponentData().position.x, wrapper.opponentData().position.y, keyFrame.getRegionWidth(), keyFrame.getRegionHeight());
+            TextureRegion keyFrame = playerAnimations.get(AnimationName.SWORD_SLASH_UP_DOWN_STANDING).getKeyFrames()[wrapper.opponentData().keyFrameIndex];
+
+            if (wrapper.opponentData().direction.equals(Direction.LEFT)) {
+                xDirection = (-1);
+            } else if (wrapper.opponentData().direction.equals(Direction.RIGHT)) {
+                xDirection = 1;
+            }
+
+            batch.draw(keyFrame,
+                    wrapper.opponentData().position.x,
+                    wrapper.opponentData().position.y,
+                    keyFrame.getRegionWidth() / 2,
+                    keyFrame.getRegionHeight() / 2,
+                    keyFrame.getRegionWidth(), keyFrame.getRegionHeight(),
+                    xDirection,
+                    1,
+                    0);
+            shapedrawer.rectangle(
+                    wrapper.opponentData().position.x,
+                    wrapper.opponentData().position.y,
+                    keyFrame.getRegionWidth(),
+                    keyFrame.getRegionHeight());
         }
         wrapper.sendTCP();
     }

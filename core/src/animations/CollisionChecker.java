@@ -1,6 +1,5 @@
 package animations;
 
-import Enums.AnimationName;
 import Enums.Direction;
 import collision.Collisions;
 import com.badlogic.gdx.graphics.Color;
@@ -21,66 +20,65 @@ public class CollisionChecker {
     private Collisions collisions;
     private Animator animator;
     private Map animations;
+    private Vector2 opponent_inner_attack, opponent_outer_attack, player_inner_attack, player_outer_attack;
 
     public CollisionChecker(SpriteBatch batch, Animator animator, ServerClientWrapper wrapper) {
         this.batch = batch;
         this.animator = animator;
         this.wrapper = wrapper;
         shapeDrawer();
-        collisions = new Collisions(wrapper);
+        collisions = new Collisions();
+    }
+
+    public void update() {
+        checkAttack();
     }
 
     public void checkAttack() {
-        Direction direction = wrapper.ownData().direction;
-        AnimationName animationName = wrapper.ownData().animation;
-        int keyFrameIndex = wrapper.ownData().keyFrameIndex;
+        int attackFrameLength = collisions.getAttackHitboxes(
+                wrapper.ownData().animation,
+                wrapper.ownData().keyFrameIndex).length;
 
-        try {
-            Vector2 attackFrame[] = collisions.getAttackHitboxes(wrapper.ownData().animation, wrapper.ownData().keyFrameIndex);
-            Vector2 player = wrapper.ownData().position;
+        for (int i = 0; i < attackFrameLength; i += 2) {
+            player_inner_attack = collisions.attackHitPoint(i, wrapper.ownData());
+            player_outer_attack = collisions.attackHitPoint(i + 1, wrapper.ownData());
+            bluePen.line(player_inner_attack, player_outer_attack);
 
-            for (int i = 0; i < attackFrame.length; i += 2) {
-                Vector2 leftHitPoint = collisions.hitPoint(
-                        player,
-                        i,
-                        animationName,
-                        direction,
-                        keyFrameIndex);
-                Vector2 rightHitPoint = collisions.hitPoint(
-                        player,
-                        i + 1,
-                        animationName,
-                        direction,
-                        keyFrameIndex);
+            opponent_inner_attack = collisions.attackHitPoint(i, wrapper.opponentData());
+            opponent_outer_attack = collisions.attackHitPoint(i + 1, wrapper.opponentData());
+            bluePen.line(opponent_inner_attack, opponent_outer_attack);
 
-                bluePen.line(leftHitPoint, rightHitPoint);
-            }
-        } catch (Exception e) {
-
+            checkBody();
         }
     }
 
-//    public void checkBody() {
-//        Vector2 bodyFrame[] = collisions.getBodyHitboxes(wrapper.ownData().animation, wrapper.ownData().keyFrameIndex);
-//
-//        for (int i = 0; i < bodyFrame.length; i += 2) {
-//            if (wrapper.ownData().direction.equals(Direction.LEFT)) {
-//
-//                float x = (player.x + 64) - bodyFrame[i].x;
-//                float y1 = bodyFrame[i].y + player.y;
-//                float x2 = (player.x + 64) - bodyFrame[i + 1].x;
-//                float y2 = bodyFrame[i + 1].y + player.y;
-//                greenPen.line(x, y1, x2, y2);
-//
-//            } else if (wrapper.ownData().direction.equals(Direction.RIGHT)) {
-//                greenPen.line(
-//                        player.x + bodyFrame[i].x,
-//                        bodyFrame[i].y + player.y,
-//                        player.x + bodyFrame[i + 1].x,
-//                        bodyFrame[i + 1].y + player.y);
-//            }
-//        }
-//    }
+    public void checkBody() {
+        int bodyFrameLength = collisions.getBodyHitboxes(
+                wrapper.ownData().animation,
+                wrapper.ownData().keyFrameIndex).length;
+
+        for (int i = 0; i < bodyFrameLength; i += 2) {
+            Vector2 player_inner_body = collisions.bodyHitPoint(i, wrapper.ownData());
+            Vector2 player_outer_body = collisions.bodyHitPoint(i + 1, wrapper.ownData());
+            greenPen.line(player_inner_body, player_outer_body);
+
+            Vector2 opponent_inner_body = collisions.bodyHitPoint(i, wrapper.opponentData());
+            Vector2 opponent_outer_body = collisions.bodyHitPoint(i + 1, wrapper.opponentData());
+            greenPen.line(opponent_inner_body, opponent_outer_body);
+
+            if (wrapper.ownData().direction.equals(Direction.RIGHT)
+                    && player_outer_attack.x >= opponent_inner_body.x) {
+                if (player_inner_attack.x <= opponent_outer_body.x) {
+                    System.out.println("Collision");
+                }
+            } else if (wrapper.ownData().direction.equals(Direction.LEFT)
+                    && player_outer_attack.x <= opponent_outer_body.x) {
+                if (player_inner_attack.x >= opponent_inner_body.x) {
+                    System.out.println("Collision");
+                }
+            }
+        }
+    }
 
     private void shapeDrawer() {
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);

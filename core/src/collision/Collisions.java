@@ -4,22 +4,19 @@ import Enums.AnimationName;
 import Enums.Direction;
 import com.badlogic.gdx.math.Vector2;
 import config.Paths;
-import networking.ServerClientWrapper;
+import networking.NetworkData;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.zip.DeflaterInputStream;
 
 public class Collisions {
-    private ServerClientWrapper wrapper;
     private Map<AnimationName, Map<Integer, Vector2[]>> attackHitBoxes;
     private Map<Integer, Vector2[]> attackFrames;
 
     private Map<AnimationName, Map<Integer, Vector2[]>> bodyHitBoxes;
     private Map<Integer, Vector2[]> bodyFrames;
 
-    public Collisions(ServerClientWrapper wrapper) {
-        this.wrapper = wrapper;
+    public Collisions() {
         attackHitBoxes = new HashMap<AnimationName, Map<Integer, Vector2[]>>();
         attackFrames = new HashMap<Integer, Vector2[]>();
 
@@ -38,14 +35,33 @@ public class Collisions {
         return bodyHitBoxes.get(animationName).get(index);
     }
 
-    //Return the world coordinate
-    public Vector2 hitPoint(Vector2 player, int index, AnimationName animationName, Direction direction, int keyFrameIndex) {
-        Vector2 hitPoint = getAttackHitboxes(animationName, keyFrameIndex)[index];
+    //Return the world coordinate for either the player or the opponent
+    public Vector2 attackHitPoint(int index, NetworkData data) {
+        Vector2 attackHitPoint = getAttackHitboxes(data.animation, data.keyFrameIndex)[index];
 
-        if (direction.equals(Direction.LEFT)) {
-            return new Vector2((player.x + 64) - hitPoint.x, hitPoint.y + player.y);
-        } else if (direction.equals(Direction.RIGHT)) {
-            return new Vector2(player.x + hitPoint.x, player.y + hitPoint.y);
+        if (data.direction.equals(Direction.LEFT)) {
+            return new Vector2((
+                    data.position.x + 64) - attackHitPoint.x,
+                    attackHitPoint.y + data.position.y);
+        } else if (data.direction.equals(Direction.RIGHT)) {
+            return new Vector2(
+                    data.position.x + attackHitPoint.x,
+                    data.position.y + attackHitPoint.y);
+        }
+        return null;
+    }
+
+    public Vector2 bodyHitPoint(int index, NetworkData data) {
+        Vector2 bodyHitPoint = getBodyHitboxes(data.animation, data.keyFrameIndex)[index];
+
+        if (data.direction.equals(Direction.LEFT)) {
+            return new Vector2((
+                    data.position.x + 64) - bodyHitPoint.x,
+                    bodyHitPoint.y + data.position.y);
+        } else if (data.direction.equals(Direction.RIGHT)) {
+            return new Vector2(
+                    data.position.x + bodyHitPoint.x,
+                    data.position.y + bodyHitPoint.y);
         }
         return null;
     }
@@ -86,10 +102,17 @@ public class Collisions {
                 v(44, 28), v(54, 28),
                 v(45, 24), v(54, 24),
                 v(44, 17), v(52, 17),
-                v(36, 11), v(44, 11)
+                v(36, 11), v(44, 11),
+                v(21, 33), v(50, 33)
         };
         attackFrames.put(3, attack);
         body = new Vector2[]{
+                v(23, 30), v(40, 30),
+                v(24, 28), v(40, 28),
+                v(26, 26), v(38, 26),
+                v(28, 25), v(39, 25),
+                v(32, 22), v(39, 22),
+                v(33, 20), v(36, 20)
         };
         bodyFrames.put(3, body);
 

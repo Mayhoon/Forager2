@@ -8,8 +8,10 @@ import networking.ServerClientWrapper;
 public class PlayerMotor {
     private NetworkData self;
     private float currentControllerInput;
+    private ServerClientWrapper wrapper;
 
     public PlayerMotor(ServerClientWrapper wrapper) {
+        this.wrapper = wrapper;
         self = wrapper.ownData();
         currentControllerInput = 0f;
     }
