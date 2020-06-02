@@ -15,31 +15,27 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import config.Paths;
 import game.Main;
-import networking.KryoServer;
-import networking.ServerClientWrapper;
+import networking.Network;
+import networking.NetworkType;
 import screens.Game;
 import stages.customStage;
 import tools.FontLoader;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 public class ServerGui extends customStage {
     private Main game;
-    private KryoServer kryoServer;
     public String serverIp;
     public String connectionStatus;
     private GlyphLayout glyphLayout;
     private BitmapFont font;
     private ImageButton hostButton;
-    private ServerClientWrapper serverClientWrapper;
 
     public ServerGui(Main game) {
         super(game.batch);
         this.game = game;
         Gdx.input.setInputProcessor(this);
-        kryoServer = new KryoServer();
 
         try {
             serverIp = InetAddress.getLocalHost().getHostAddress();
@@ -67,20 +63,15 @@ public class ServerGui extends customStage {
         hostButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int a, int b) {
-                try {
-                    kryoServer.start();
-                    serverClientWrapper = new ServerClientWrapper(kryoServer);
-                    startGame();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                startGame();
                 return true;
             }
         });
     }
 
     public void startGame() {
-        game.setScreen(new Game(serverClientWrapper, game.batch));
+        hostButton.getListeners().clear();
+        game.setScreen(new Game(new Network(NetworkType.HOST), game.batch));
     }
 
     @Override
@@ -88,11 +79,6 @@ public class ServerGui extends customStage {
         super.render(batch);
         renderIp(batch);
         renderInput(batch);
-
-        if (kryoServer.running) {
-            serverClientWrapper = new ServerClientWrapper(kryoServer);
-            startGame();
-        }
     }
 
     private void renderIp(SpriteBatch batch) {

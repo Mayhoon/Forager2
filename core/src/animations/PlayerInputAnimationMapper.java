@@ -2,14 +2,11 @@ package animations;
 
 import Enums.AnimationName;
 import Enums.Buttons;
-import Enums.Entity;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import networking.ServerClientWrapper;
 
 public class PlayerInputAnimationMapper {
     private Animator animator;
 
-    public PlayerInputAnimationMapper(ServerClientWrapper wrapper, Entity entity, Animator animator) {
+    public PlayerInputAnimationMapper(Animator animator) {
         this.animator = animator;
     }
 
@@ -22,7 +19,7 @@ public class PlayerInputAnimationMapper {
                 animator.setAnimation(AnimationName.SWORD_SLASH_SPIN);
                 break;
             case A:
-                animator.setAnimation(AnimationName.SWORD_SLASH_UP_DOWN_STANDING);
+                animator.setAnimation(AnimationName.SWORD_SLASH_UP_DOWN);
                 break;
             case Y:
                 animator.setAnimation(AnimationName.IDLE_SWORD_NOT_DRAWN);

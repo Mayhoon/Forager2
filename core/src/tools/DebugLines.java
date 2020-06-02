@@ -10,11 +10,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
-public class WorldDebugger {
+public class DebugLines {
     private ShapeDrawer shapeDrawer;
     private boolean render = false;
 
-    public WorldDebugger(SpriteBatch batch) {
+    public DebugLines(SpriteBatch batch) {
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.RED);
         pixmap.drawPixel(0, 0);
@@ -24,7 +24,7 @@ public class WorldDebugger {
         shapeDrawer = new ShapeDrawer(batch, region);
     }
 
-    public void renderWorld() {
+    public void render() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.D)){
            if( render == true) {
                render = false;

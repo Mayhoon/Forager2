@@ -9,40 +9,39 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.World;
 import config.Paths;
-import networking.ServerClientWrapper;
+import networking.Network;
 import player.Player;
 import stages.gui.GameGui;
+import tools.DebugLines;
 import tools.FpsDisplay;
-import tools.WorldDebugger;
 
 public class Game extends ScreenAdapter {
     private Camera camera;
     private SpriteBatch batch;
-    private Player player, player2;
+    private Player player1, player2;
     private Texture groundTexture;
     private Sprite groundSprite;
     private FpsDisplay fpsDisplay;
     private GameGui gameGui;
-    private WorldDebugger worldDebugger;
+    private DebugLines debugLines;
+    private Network network;
 
-
-    public Game(ServerClientWrapper wrapper, SpriteBatch batch) {
+    public Game(Network network, SpriteBatch batch) {
         this.batch = batch;
-        this.gameGui = new GameGui(wrapper, batch);
-        this.camera = new Camera();
-        this.camera.zoom -= 0.8f;
-        this.camera.update();
+        this.network = network;
 
-        this.player = new Player(Entity.Player, wrapper, camera, batch);
-        this.player2 = new Player(Entity.Opponent, wrapper, camera, batch);
-        this.groundTexture = new Texture(Paths.GROUND);
-        this.groundSprite = new Sprite(groundTexture);
+        gameGui = new GameGui(batch, network);
+        camera = new Camera();
+        camera.zoom -= 0.6f;
+        camera.update();
 
-        worldDebugger = new WorldDebugger(batch);
+        player1 = new Player(batch, camera, network, Entity.Player);
+        player2 = new Player(batch, camera, network, Entity.Opponent);
+        groundTexture = new Texture(Paths.GROUND);
+        groundSprite = new Sprite(groundTexture);
+        debugLines = new DebugLines(batch);
     }
-
 
 
     @Override
@@ -52,22 +51,24 @@ public class Game extends ScreenAdapter {
             System.exit(0);
         }
 
-        Gdx.gl.glClearColor(255/255, 255/255, 255/255, 1);
+        Gdx.gl.glClearColor(255 / 255, 255 / 255, 255 / 255, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         //Render world
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        worldDebugger.renderWorld();
-        player.render();
-        player2.render();
+        debugLines.render();
+        player1.render(delta);
+        player2.render(delta);
         batch.draw(groundSprite, 0, -17);
 
-        //Render Gui
-        gameGui.update();
+        //Render gui
+        gameGui.update(delta);
 
         batch.end();
         camera.update();
+
+        network.sendData();
     }
 
     @Override

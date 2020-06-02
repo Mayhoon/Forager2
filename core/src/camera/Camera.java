@@ -15,9 +15,9 @@ public class Camera extends OrthographicCamera {
         super.position.y = 0;
         super.update();
     }
-
-    public void move(Vector2 pos) {
-        this.position.x = pos.x + 20;
-        this.position.y = pos.y;
-    }
+//
+//    public void move(Vector2 pos) {
+//        this.position.x = pos.x + 20;
+//        this.position.y = pos.y + 65;
+//    }
 }

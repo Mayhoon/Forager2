@@ -7,16 +7,18 @@ import com.esotericsoftware.kryonet.Listener;
 
 import java.io.IOException;
 
-public class KryoClient {
+public class KryoClient extends NetworkEntity {
     private Client client;
-    private NetworkData ownData;
-    private NetworkData opponentData;
-    public boolean running;
+    private State player;
+    private State opponent;
+
+    private String ip = "localhost";
+    public boolean connected;
 
     public KryoClient() {
         client = new Client();
-        ownData = new NetworkData();
-        opponentData = new NetworkData();
+        player = new State();
+        opponent = new State();
 
         //Register classes
         Kryo kryo = client.getKryo();
@@ -24,29 +26,36 @@ public class KryoClient {
         kryo = classRegistry.addClassesTo(kryo);
     }
 
-    public void start(String ip) throws IOException {
-        client.start();
-        client.connect(5000, ip, 54555, 54777);
-        running = true;
+    public void start() {
+        try {
+            client.start();
+            client.connect(5000, ip, 54555, 54777);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        connected = true;
 
         client.addListener(new Listener() {
             public void received(Connection connection, Object object) {
-                if (object instanceof NetworkData) {
-                    opponentData = (NetworkData) object;
+                if (object instanceof State) {
+                    opponent = (State) object;
                 }
             }
         });
     }
 
-    public void sendTCP() {
-        client.sendTCP(ownData);
+    @Override
+    public void stop() {
+
     }
 
-    public NetworkData getOwnData() {
-        return ownData;
+    @Override
+    public State opponent() {
+        return opponent;
     }
 
-    public NetworkData getOpponentData() {
-        return opponentData;
+    @Override
+    public void sendTCP(State data) {
+        client.sendTCP(data);
     }
 }

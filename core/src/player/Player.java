@@ -5,12 +5,12 @@ import animations.Animator;
 import animations.CollisionChecker;
 import animations.PlayerInputAnimationMapper;
 import camera.Camera;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import networking.ServerClientWrapper;
+import networking.Network;
 
 public class Player {
-    public Entity entity;
-    private ServerClientWrapper wrapper;
+    private Entity entity;
     private Camera camera;
     private GamePadInput gamePadInput;
     private PlayerMotor playerMotor;
@@ -18,24 +18,37 @@ public class Player {
     private Animator animator;
     private PlayerInputAnimationMapper playerInputAnimationMapper;
     private SpriteBatch batch;
+    private Network network;
 
-    public Player(Entity entity, ServerClientWrapper wrapper, Camera camera, SpriteBatch batch) {
-        this.entity = entity;
-        this.wrapper = wrapper;
+    public Player(SpriteBatch batch, Camera camera, Network network, Entity entity) {
         this.camera = camera;
         this.batch = batch;
-        animator = new Animator(wrapper, entity);
-        playerMotor = new PlayerMotor(wrapper);
-        playerInputAnimationMapper = new PlayerInputAnimationMapper(wrapper, entity, animator);
-        gamePadInput = new GamePadInput(entity, playerMotor, playerInputAnimationMapper);
-        collisionChecker = new CollisionChecker(batch, animator, wrapper);
+        this.network = network;
+        this.entity = entity;
+
+        if (entity.equals(Entity.Player)) {
+            playerMotor = new PlayerMotor(network.player());
+            animator = new Animator(network.player());
+            playerInputAnimationMapper = new PlayerInputAnimationMapper(animator);
+            gamePadInput = new GamePadInput(playerMotor, playerInputAnimationMapper);
+        } else {
+            playerMotor = new PlayerMotor(network.opponent());
+            animator = new Animator(network.opponent());
+        }
+        collisionChecker = new CollisionChecker(batch, animator, network.player(), network.opponent());
     }
 
-    public void render() {
-        playerMotor.render();
-        camera.move(wrapper.ownData().position);
-        animator.update(batch);
-        collisionChecker.update();
-        wrapper.sendTCP();
+    public void render(float delta) {
+        if (playerMotor != null) {
+            playerMotor.calculatePosition(delta);
+        }
+        //camera.move(wrapper.ownData().position);
+        animator.update(batch, delta);
+
+        try {
+            collisionChecker.attackCollisionPoints();
+        } catch (Exception e) {
+            //System.out.println("Animation " + wrapper.ownData().animation + " missing colliders");
+        }
     }
 }

@@ -1,7 +1,6 @@
 package player;
 
 import Enums.Buttons;
-import Enums.Entity;
 import animations.PlayerInputAnimationMapper;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
@@ -13,17 +12,15 @@ public class GamePadInput implements ControllerListener {
     private PlayerInputAnimationMapper playerInputAnimationMapper;
     private PlayerMotor playerMotor;
 
-    public GamePadInput(Entity entity, PlayerMotor playerMotor, PlayerInputAnimationMapper playerInputAnimationMapper) {
+    public GamePadInput(PlayerMotor playerMotor, PlayerInputAnimationMapper playerInputAnimationMapper) {
         this.playerInputAnimationMapper = playerInputAnimationMapper;
         this.playerMotor = playerMotor;
-        if (entity.equals(Entity.Player)) {
-            Controllers.addListener(this);
-        }
+        Controllers.addListener(this);
     }
 
     @Override
     public boolean axisMoved(Controller controller, int axisCode, float value) {
-        playerMotor.moveX(controller.getAxis(1));
+        playerMotor.changeMoveState(controller.getAxis(1));
         return false;
     }
 

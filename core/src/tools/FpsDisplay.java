@@ -18,12 +18,12 @@ public class FpsDisplay {
         glyphLayout = new GlyphLayout();
     }
 
-    public void update(SpriteBatch batch) {
+    public void update(SpriteBatch batch, float delta) {
         float fps = Gdx.graphics.getFramesPerSecond();
         glyphLayout.setText(bitmapFont, "Fps: " + fps);
 
         bitmapFont.draw(batch, glyphLayout, Gdx.graphics.getWidth() / 2  - glyphLayout.width, Gdx.graphics.getHeight() / 2 - glyphLayout.height);
-        glyphLayout.setText(bitmapFont, "Dt: " + Gdx.graphics.getDeltaTime());
+        glyphLayout.setText(bitmapFont, "Dt: " + delta);
         bitmapFont.draw(batch, glyphLayout, - Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() / 2 - glyphLayout.height);
     }
 }

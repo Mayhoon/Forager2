@@ -2,45 +2,43 @@ package player;
 
 import Enums.Direction;
 import com.badlogic.gdx.Gdx;
-import networking.NetworkData;
-import networking.ServerClientWrapper;
+import networking.State;
 
 public class PlayerMotor {
-    private NetworkData self;
     private float currentControllerInput;
-    private ServerClientWrapper wrapper;
+    private State state;
 
-    public PlayerMotor(ServerClientWrapper wrapper) {
-        this.wrapper = wrapper;
-        self = wrapper.ownData();
+    public PlayerMotor(State data) {
+        this.state = data;
         currentControllerInput = 0f;
     }
 
-    public void render() {
-        if (self.moving == true && self.direction.equals(Direction.LEFT)) {
-            self.position.x += self.movementSpeed * Gdx.graphics.getDeltaTime();
-        } else if (self.moving == true && self.direction.equals(Direction.RIGHT)) {
-            self.position.x += self.movementSpeed * Gdx.graphics.getDeltaTime();
+    public void calculatePosition(float delta) {
+        if (state.moving == true && state.direction.equals(Direction.LEFT)) {
+            state.position.x += delta * state.movementSpeed;
+
+        } else if (state.moving == true && state.direction.equals(Direction.RIGHT)) {
+            state.position.x += delta * state.movementSpeed;
         }
     }
 
-    public void moveX(float amount) {
+    public void changeMoveState(float amount) {
         //Find out to which direction the player faces
         if (amount < -0.045f) {
-            self.direction = Direction.LEFT;
+            state.direction = Direction.LEFT;
             if (currentControllerInput + (Math.abs(amount)) >= 0) {
-                self.moving = true;
-                self.movementSpeed = 50.5f * amount;
+                state.moving = true;
+                state.movementSpeed = 50.5f * amount;
             }
         } else if (amount > 0.045f) {
-            self.direction = Direction.RIGHT;
+            state.direction = Direction.RIGHT;
             if ((amount - currentControllerInput) >= 0) {
-                self.moving = true;
-                self.movementSpeed = 50.5f * amount;
+                state.moving = true;
+                state.movementSpeed = 50.5f * amount;
             }
         } else {
             amount = 0;
-            self.moving = false;
+            state.moving = false;
         }
     }
 }
