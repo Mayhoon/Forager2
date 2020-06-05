@@ -43,7 +43,6 @@ public class KryoServer extends NetworkEntity {
             public void received(Connection connection, Object object) {
                 if (object instanceof State) {
                     opponent = (State) object;
-                    System.out.println(connection.getReturnTripTime());
                 }
             }
         });

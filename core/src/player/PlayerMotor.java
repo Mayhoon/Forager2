@@ -28,13 +28,13 @@ public class PlayerMotor {
             state.direction = Direction.LEFT;
             if (currentControllerInput + (Math.abs(amount)) >= 0) {
                 state.moving = true;
-                state.movementSpeed = 50.5f * amount;
+                state.movementSpeed = 60.5f * amount;
             }
         } else if (amount > 0.045f) {
             state.direction = Direction.RIGHT;
             if ((amount - currentControllerInput) >= 0) {
                 state.moving = true;
-                state.movementSpeed = 50.5f * amount;
+                state.movementSpeed = 60.5f * amount;
             }
         } else {
             amount = 0;

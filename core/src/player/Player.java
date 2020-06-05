@@ -4,14 +4,11 @@ import Enums.Entity;
 import animations.Animator;
 import animations.CollisionChecker;
 import animations.PlayerInputAnimationMapper;
-import camera.Camera;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import networking.Network;
 
 public class Player {
     private Entity entity;
-    private Camera camera;
     private GamePadInput gamePadInput;
     private PlayerMotor playerMotor;
     private CollisionChecker collisionChecker;
@@ -20,8 +17,7 @@ public class Player {
     private SpriteBatch batch;
     private Network network;
 
-    public Player(SpriteBatch batch, Camera camera, Network network, Entity entity) {
-        this.camera = camera;
+    public Player(SpriteBatch batch, Network network, Entity entity) {
         this.batch = batch;
         this.network = network;
         this.entity = entity;
@@ -38,17 +34,12 @@ public class Player {
         collisionChecker = new CollisionChecker(batch, animator, network.player(), network.opponent());
     }
 
-    public void render(float delta) {
-        if (playerMotor != null) {
-            playerMotor.calculatePosition(delta);
-        }
-        //camera.move(wrapper.ownData().position);
-        animator.update(batch, delta);
+    public void update(float delta) {
+        playerMotor.calculatePosition(delta);
+    }
 
-        try {
-            collisionChecker.attackCollisionPoints();
-        } catch (Exception e) {
-            //System.out.println("Animation " + wrapper.ownData().animation + " missing colliders");
-        }
+    public void render(float delta) {
+        animator.update(batch, delta);
+        //collisionChecker.attackCollisionPoints();
     }
 }

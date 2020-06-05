@@ -12,8 +12,6 @@ public class State {
     public float elapsedTime;
     public float health;
     public int keyFrameIndex;
-
-    //Animations
     public AnimationName animation;
 
     public State() {

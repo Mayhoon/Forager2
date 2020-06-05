@@ -19,7 +19,7 @@ import tools.FpsDisplay;
 public class Game extends ScreenAdapter {
     private Camera camera;
     private SpriteBatch batch;
-    private Player player1, player2;
+    private Player player, opponent;
     private Texture groundTexture;
     private Sprite groundSprite;
     private FpsDisplay fpsDisplay;
@@ -36,8 +36,8 @@ public class Game extends ScreenAdapter {
         camera.zoom -= 0.6f;
         camera.update();
 
-        player1 = new Player(batch, camera, network, Entity.Player);
-        player2 = new Player(batch, camera, network, Entity.Opponent);
+        player = new Player(batch, network, Entity.Player);
+        opponent = new Player(batch, network, Entity.Opponent);
         groundTexture = new Texture(Paths.GROUND);
         groundSprite = new Sprite(groundTexture);
         debugLines = new DebugLines(batch);
@@ -58,9 +58,13 @@ public class Game extends ScreenAdapter {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         debugLines.render();
-        player1.render(delta);
-        player2.render(delta);
         batch.draw(groundSprite, 0, -17);
+
+        player.update(delta);
+        player.render(delta);
+
+        opponent.render(delta);
+
 
         //Render gui
         gameGui.update(delta);
