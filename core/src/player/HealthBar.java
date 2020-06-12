@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import config.Paths;
-import networking.Network;
 import tools.FontLoader;
 
 public class HealthBar {
@@ -17,13 +16,13 @@ public class HealthBar {
         glyphLayout = new GlyphLayout();
     }
 
-    public void update(SpriteBatch batch, Network network) {
-        glyphLayout.setText(bitmapFont, "OWN HEALTH: " + network.player().health);
+    public void updatePlayerHealth(SpriteBatch batch, float health) {
+        glyphLayout.setText(bitmapFont, "OWN HEALTH: " + health);
         bitmapFont.draw(batch, glyphLayout, glyphLayout.width, -100 - glyphLayout.height);
-
-        glyphLayout.setText(bitmapFont, "OPPONENT HEALTH: " + network.opponent().health);
-        bitmapFont.draw(batch, glyphLayout, -glyphLayout.width, -100 - glyphLayout.height);
     }
 
-
+    public void updateOpponentHealth(SpriteBatch batch, float health) {
+        glyphLayout.setText(bitmapFont, "OPPONENT HEALTH: " + health);
+        bitmapFont.draw(batch, glyphLayout, -glyphLayout.width, -100 - glyphLayout.height);
+    }
 }

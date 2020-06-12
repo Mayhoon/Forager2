@@ -9,15 +9,15 @@ import java.io.IOException;
 
 public class KryoServer extends NetworkEntity {
     private Server server;
-    private State player;
-    private State opponent;
+    private CharacterData player;
+    private CharacterData opponent;
 
     public boolean running;
 
     public KryoServer() {
         server = new Server();
-        player = new State();
-        opponent = new State();
+        player = new CharacterData();
+        opponent = new CharacterData();
 
         //Register classes
         Kryo kryo = server.getKryo();
@@ -41,8 +41,8 @@ public class KryoServer extends NetworkEntity {
             }
 
             public void received(Connection connection, Object object) {
-                if (object instanceof State) {
-                    opponent = (State) object;
+                if (object instanceof CharacterData) {
+                    opponent = (CharacterData) object;
                 }
             }
         });
@@ -54,12 +54,12 @@ public class KryoServer extends NetworkEntity {
     }
 
     @Override
-    public State opponent() {
+    public CharacterData opponent() {
         return opponent;
     }
 
     @Override
-    public void sendTCP(State data) {
+    public void sendTCP(CharacterData data) {
         server.sendToAllTCP(data);
     }
 }

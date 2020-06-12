@@ -1,20 +1,21 @@
 package player;
 
+import Enums.AnimationName;
 import Enums.Buttons;
-import animations.PlayerInputAnimationMapper;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
+import networking.CharacterData;
 
 public class GamePadInput implements ControllerListener {
-    private PlayerInputAnimationMapper playerInputAnimationMapper;
     private PlayerMotor playerMotor;
+    private CharacterData character;
 
-    public GamePadInput(PlayerMotor playerMotor, PlayerInputAnimationMapper playerInputAnimationMapper) {
-        this.playerInputAnimationMapper = playerInputAnimationMapper;
+    public GamePadInput(PlayerMotor playerMotor, CharacterData character) {
         this.playerMotor = playerMotor;
+        this.character = character;
         Controllers.addListener(this);
     }
 
@@ -40,7 +41,7 @@ public class GamePadInput implements ControllerListener {
     }
 
     @Override
-    public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
+    public boolean accelerometerMoved(Controller controller, int i, Vector3 vector3) {
         return false;
     }
 
@@ -58,21 +59,26 @@ public class GamePadInput implements ControllerListener {
         switch (buttonCode) {
             case 0:
                 button = Buttons.A;
+                character.animation = AnimationName.SWORD_SLASH_UP_DOWN;
                 break;
             case 1:
                 button = Buttons.B;
                 break;
             case 2:
                 button = Buttons.X;
+                character.animation = AnimationName.DRAW_SWORD;
                 break;
             case 3:
                 button = Buttons.Y;
+                character.animation = AnimationName.IDLE_SWORD_NOT_DRAWN;
                 break;
             case 4:
                 button = Buttons.LB;
+                character.animation = AnimationName.IDLE_SWORD_DRAWN;
                 break;
             case 5:
                 button = Buttons.RB;
+                character.animation = AnimationName.SWORD_SLASH_SPIN;
                 break;
             case 6:
                 button = Buttons.TAB;
@@ -82,8 +88,8 @@ public class GamePadInput implements ControllerListener {
                 break;
             default:
                 button = Buttons.A;
+                character.animation = AnimationName.IDLE_SWORD_NOT_DRAWN;
         }
-        playerInputAnimationMapper.buttonPressed(button);
         return false;
     }
 

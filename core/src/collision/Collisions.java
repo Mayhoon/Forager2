@@ -3,7 +3,7 @@ package collision;
 import Enums.AnimationName;
 import Enums.Direction;
 import com.badlogic.gdx.math.Vector2;
-import networking.State;
+import networking.CharacterData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +24,8 @@ public class Collisions {
     }
 
     public Vector2[] getAttackHitboxes(AnimationName animationName, int index) {
+        System.out.println(animationName + " " + index);
+        System.out.println(attackHitBoxes);
         return attackHitBoxes.get(animationName).get(index);
     }
 
@@ -32,7 +34,7 @@ public class Collisions {
     }
 
     //Return the world coordinate for either the player or the opponent
-    public Vector2 attackHitPoint(int index, State playerData) {
+    public Vector2 attackHitPoint(int index, CharacterData playerData) {
         Vector2 attackHitPoint = getAttackHitboxes(playerData.animation, playerData.keyFrameIndex)[index];
 
         if (playerData.direction.equals(Direction.LEFT)) {
@@ -47,7 +49,7 @@ public class Collisions {
         return null;
     }
 
-    public Vector2 bodyHitPoint(int index, State data) {
+    public Vector2 bodyHitPoint(int index, CharacterData data) {
         Vector2 bodyHitPoint = getBodyHitboxes(data.animation, data.keyFrameIndex)[index];
 
         if (data.direction.equals(Direction.LEFT)) {

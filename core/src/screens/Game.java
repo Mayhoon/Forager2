@@ -1,6 +1,6 @@
 package screens;
 
-import Enums.Entity;
+import animations.CollisionChecker;
 import camera.Camera;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -26,18 +26,22 @@ public class Game extends ScreenAdapter {
     private GameGui gameGui;
     private DebugLines debugLines;
     private Network network;
+    private CollisionChecker collisionChecker;
 
     public Game(Network network, SpriteBatch batch) {
         this.batch = batch;
         this.network = network;
 
-        gameGui = new GameGui(batch, network);
+        collisionChecker = new CollisionChecker(batch, network.player(), network.opponent());
+
+        gameGui = new GameGui(network);
         camera = new Camera();
         camera.zoom -= 0.6f;
         camera.update();
 
-        player = new Player(batch, network, Entity.Player);
-        opponent = new Player(batch, network, Entity.Opponent);
+        player = new Player(batch, network.player(), true);
+        opponent = new Player(batch, network.opponent(), false);
+
         groundTexture = new Texture(Paths.GROUND);
         groundSprite = new Sprite(groundTexture);
         debugLines = new DebugLines(batch);
@@ -58,20 +62,21 @@ public class Game extends ScreenAdapter {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         debugLines.render();
-        batch.draw(groundSprite, 0, -17);
+        batch.draw(groundSprite, 0, -117);
 
+        //Character
         player.update(delta);
-        player.render(delta);
+        player.render(delta, network.player());
+        opponent.render(delta, network.opponent());
 
-        opponent.render(delta);
-
+        //Collision detection
+        collisionChecker.attackCollisionPoints();
 
         //Render gui
-        gameGui.update(delta);
+        gameGui.update(batch, delta);
 
         batch.end();
         camera.update();
-
         network.sendData();
     }
 

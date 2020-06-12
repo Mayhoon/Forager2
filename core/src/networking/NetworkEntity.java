@@ -6,7 +6,7 @@ public abstract class NetworkEntity {
 
     public abstract void stop();
 
-    public abstract State opponent();
+    public abstract CharacterData opponent();
 
-    public abstract void sendTCP(State data);
+    public abstract void sendTCP(CharacterData data);
 }

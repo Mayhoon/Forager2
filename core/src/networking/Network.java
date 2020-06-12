@@ -2,10 +2,10 @@ package networking;
 
 public class Network {
     private NetworkEntity networkEntity;
-    private State playerData;
+    private CharacterData playerData;
 
     public Network(NetworkType type) {
-        playerData = new State();
+        playerData = new CharacterData();
 
         if (type.equals(NetworkType.CLIENT)) {
             networkEntity = new KryoClient();
@@ -20,11 +20,11 @@ public class Network {
         networkEntity.sendTCP(playerData);
     }
 
-    public State opponent() {
+    public CharacterData opponent() {
         return networkEntity.opponent();
     }
 
-    public State player() {
+    public CharacterData player() {
         return playerData;
     }
 }

@@ -9,16 +9,16 @@ import java.io.IOException;
 
 public class KryoClient extends NetworkEntity {
     private Client client;
-    private State player;
-    private State opponent;
+    private CharacterData player;
+    private CharacterData opponent;
 
     private String ip = "localhost";
     public boolean connected;
 
     public KryoClient() {
         client = new Client();
-        player = new State();
-        opponent = new State();
+        player = new CharacterData();
+        opponent = new CharacterData();
 
         //Register classes
         Kryo kryo = client.getKryo();
@@ -37,8 +37,8 @@ public class KryoClient extends NetworkEntity {
 
         client.addListener(new Listener() {
             public void received(Connection connection, Object object) {
-                if (object instanceof State) {
-                    opponent = (State) object;
+                if (object instanceof CharacterData) {
+                    opponent = (CharacterData) object;
                 }
             }
         });
@@ -50,12 +50,12 @@ public class KryoClient extends NetworkEntity {
     }
 
     @Override
-    public State opponent() {
+    public CharacterData opponent() {
         return opponent;
     }
 
     @Override
-    public void sendTCP(State data) {
+    public void sendTCP(CharacterData data) {
         client.sendTCP(data);
     }
 }

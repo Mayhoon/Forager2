@@ -9,7 +9,9 @@ public class Sword_Slash_Up_Down extends AnimationHitBox {
 
     public Sword_Slash_Up_Down(
             Map<Integer, Vector2[]> bodyFrames,
-            Map<Integer, Vector2[]> attackFrames, Map<AnimationName, Map<Integer, Vector2[]>> attackHitBoxes, Map<AnimationName, Map<Integer, Vector2[]>> bodyHitBoxes) {
+            Map<Integer, Vector2[]> attackFrames,
+            Map<AnimationName, Map<Integer, Vector2[]>> attackHitBoxes,
+            Map<AnimationName, Map<Integer, Vector2[]>> bodyHitBoxes) {
 
         //Frame 0
         Vector2[] body = {

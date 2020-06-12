@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import networking.State;
+import networking.CharacterData;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.Map;
@@ -17,7 +17,6 @@ public class CollisionChecker {
     private SpriteBatch batch;
     private ShapeDrawer bluePen, greenPen;
     private Collisions collisions;
-    private Animator animator;
     private Map animations;
     private Vector2 opponent_inner_attack;
     private Vector2 opponent_outer_attack;
@@ -27,14 +26,13 @@ public class CollisionChecker {
     private Vector2 player_outer_body;
     private Vector2 opponent_inner_body;
     private Vector2 opponent_outer_body;
-    private State player;
-    private State opponent;
+    private CharacterData player;
+    private CharacterData opponent;
 
-    public CollisionChecker(SpriteBatch batch, Animator animator, State player, State opponent) {
+    public CollisionChecker(SpriteBatch batch, CharacterData player, CharacterData opponent) {
         this.player = player;
         this.opponent = opponent;
         this.batch = batch;
-        this.animator = animator;
         collisions = new Collisions();
         shapeDrawer();
     }
@@ -53,7 +51,7 @@ public class CollisionChecker {
         }
     }
 
-    public void bodyCollisionsPoints() {
+    private void bodyCollisionsPoints() {
         int bodyHitpoints = collisions.getBodyHitboxes(player.animation, player.keyFrameIndex).length;
 
         for (int i = 0; i < bodyHitpoints; i += 2) {

@@ -1,9 +1,7 @@
 package camera;
 
-import Enums.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector2;
 
 public class Camera extends OrthographicCamera {
     private float cameraSpeed = 60f;

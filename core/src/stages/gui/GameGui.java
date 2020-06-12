@@ -10,21 +10,19 @@ public class GameGui {
     private Camera ui_Camera;
     private FpsDisplay fpsDisplay;
     private HealthBar healtBar;
-    private SpriteBatch batch;
     private Network network;
 
-    public GameGui(SpriteBatch batch, Network network) {
-        this.batch = batch;
+    public GameGui(Network network) {
         this.network = network;
-
         ui_Camera = new Camera();
         fpsDisplay = new FpsDisplay();
         healtBar = new HealthBar();
     }
 
-    public void update(float delta) {
+    public void update(SpriteBatch batch, float delta) {
         batch.setProjectionMatrix(ui_Camera.combined);
         fpsDisplay.update(batch, delta);
-        healtBar.update(batch, network);
+        healtBar.updateOpponentHealth(batch, network.opponent().health);
+        healtBar.updatePlayerHealth(batch, network.player().health);
     }
 }

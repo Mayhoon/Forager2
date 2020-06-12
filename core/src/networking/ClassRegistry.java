@@ -8,7 +8,7 @@ import com.esotericsoftware.kryo.Kryo;
 public class ClassRegistry {
 
     public Kryo addClassesTo(Kryo kryo) {
-        kryo.register(State.class);
+        kryo.register(CharacterData.class);
 
         //Animations
         kryo.register(Vector2.class);

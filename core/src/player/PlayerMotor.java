@@ -1,44 +1,44 @@
 package player;
 
 import Enums.Direction;
-import com.badlogic.gdx.Gdx;
-import networking.State;
+import networking.CharacterData;
 
 public class PlayerMotor {
     private float currentControllerInput;
-    private State state;
+    private CharacterData character;
 
-    public PlayerMotor(State data) {
-        this.state = data;
+    public PlayerMotor(CharacterData character) {
+        this.character = character;
         currentControllerInput = 0f;
     }
 
+    //Update position based on
     public void calculatePosition(float delta) {
-        if (state.moving == true && state.direction.equals(Direction.LEFT)) {
-            state.position.x += delta * state.movementSpeed;
+        if (character.moving == true && character.direction.equals(Direction.LEFT)) {
+            character.position.x += delta * character.movementSpeed;
 
-        } else if (state.moving == true && state.direction.equals(Direction.RIGHT)) {
-            state.position.x += delta * state.movementSpeed;
+        } else if (character.moving == true && character.direction.equals(Direction.RIGHT)) {
+            character.position.x += delta * character.movementSpeed;
         }
     }
 
     public void changeMoveState(float amount) {
         //Find out to which direction the player faces
         if (amount < -0.045f) {
-            state.direction = Direction.LEFT;
+            character.direction = Direction.LEFT;
             if (currentControllerInput + (Math.abs(amount)) >= 0) {
-                state.moving = true;
-                state.movementSpeed = 60.5f * amount;
+                character.moving = true;
+                character.movementSpeed = 60.5f * amount; //Acceleration
             }
         } else if (amount > 0.045f) {
-            state.direction = Direction.RIGHT;
+            character.direction = Direction.RIGHT;
             if ((amount - currentControllerInput) >= 0) {
-                state.moving = true;
-                state.movementSpeed = 60.5f * amount;
+                character.moving = true;
+                character.movementSpeed = 60.5f * amount;//Acceleration
             }
         } else {
             amount = 0;
-            state.moving = false;
+            character.moving = false;
         }
     }
 }
