@@ -1,0 +1,231 @@
+
+{
+	"allowSleep" : true,
+	"autoClearForces" : true,
+	"body" : 
+	[
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture0",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								123.7644195556641,
+								-116.3764572143555,
+								-145.0965118408203,
+								-140.9458160400391,
+								-108.1114883422852,
+								-44.77915191650391,
+								1.820048332214356
+							],
+							"y" : 
+							[
+								89.70890045166016,
+								297.1593933105469,
+								271.5208740234375,
+								178.9609222412109,
+								142.5043792724609,
+								74.16203308105469,
+								66.13810729980469
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture0",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								149.2570343017578,
+								117.0178604125977,
+								47.09558868408203,
+								-116.3764572143555,
+								123.7644195556641,
+								148.0084991455078
+							],
+							"y" : 
+							[
+								268.0707702636719,
+								317.2688293457031,
+								323.7550964355469,
+								297.1593933105469,
+								89.70890045166016,
+								125.7639160156250
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture0",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								123.7644195556641,
+								1.820048332214356,
+								13.72357368469238,
+								87.34562683105469
+							],
+							"y" : 
+							[
+								89.70890045166016,
+								66.13810729980469,
+								27.12627601623535,
+								26.04892539978027
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture0",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : [ -44.77915191650391, -108.1114883422852, -92.98445892333984 ],
+							"y" : [ 74.16203308105469, 142.5043792724609, 100.0080032348633 ]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture0",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								47.09558868408203,
+								37.82679367065430,
+								-118.5031738281250,
+								-116.3764572143555
+							],
+							"y" : 
+							[
+								323.7550964355469,
+								352.8730163574219,
+								350.8029174804688,
+								297.1593933105469
+							]
+						}
+					}
+				}
+			],
+			"linearVelocity" : 0,
+			"massData-I" : 3952105728.0,
+			"massData-center" : 
+			{
+				"x" : 8.622358322143555,
+				"y" : 201.6131439208984
+			},
+			"massData-mass" : 74470.3593750,
+			"name" : "body0",
+			"position" : 
+			{
+				"x" : -1.650647282600403,
+				"y" : -0.5026971101760864
+			},
+			"type" : 2
+		}
+	],
+	"collisionbitplanes" : 
+	{
+		"names" : 
+		[
+			"bitplane1",
+			"bitplane2",
+			"bitplane3",
+			"bitplane4",
+			"bitplane5",
+			"bitplane6",
+			"bitplane7",
+			"bitplane8",
+			"bitplane9",
+			"bitplane10",
+			"bitplane11",
+			"bitplane12",
+			"bitplane13",
+			"bitplane14",
+			"bitplane15",
+			"bitplane16",
+			"bitplane17",
+			"bitplane18",
+			"bitplane19",
+			"bitplane20",
+			"bitplane21",
+			"bitplane22",
+			"bitplane23",
+			"bitplane24",
+			"bitplane25",
+			"bitplane26",
+			"bitplane27",
+			"bitplane28",
+			"bitplane29",
+			"bitplane30",
+			"bitplane31",
+			"bitplane32"
+		]
+	},
+	"continuousPhysics" : true,
+	"gravity" : 
+	{
+		"x" : 0,
+		"y" : -10
+	},
+	"image" : 
+	[
+		
+		{
+			"aspectScale" : 1,
+			"body" : -1,
+			"center" : 0,
+			"corners" : 
+			{
+				"x" : [ -0.8, 0.8, 0.8, -0.8 ],
+				"y" : [ -0.5, -0.5, 0.5, 0.5 ]
+			},
+			"file" : "CODE/Java/Pixelworld/android/assets/animations/player/PlayerCollisionShapeBox2D.png",
+			"filter" : 1,
+			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
+			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],
+			"glVertexPointer" : [ -0.8, -0.5, 0.8, -0.5, 0.8, 0.5, -0.8, 0.5 ],
+			"name" : "image0",
+			"opacity" : 0.5,
+			"scale" : 1
+		}
+	],
+	"positionIterations" : 3,
+	"stepsPerSecond" : 60.0,
+	"subStepping" : false,
+	"velocityIterations" : 8,
+	"warmStarting" : true
+}

@@ -21,7 +21,7 @@ public class ShapeContactListener implements ContactListener {
             TutorialBox entity1 = (TutorialBox) fa.getUserData();
             TutorialBox entity2 = (TutorialBox) fb.getUserData();
 
-            entity1.id;
+            //entity1.id;
             entity2.hit();
 
             //For every other collision between

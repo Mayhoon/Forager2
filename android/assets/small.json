@@ -1,0 +1,231 @@
+
+{
+	"allowSleep" : true,
+	"autoClearForces" : true,
+	"body" : 
+	[
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture0",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								1.728160023689270,
+								1.575729966163635,
+								1.557500004768372,
+								1.560130000114441,
+								1.580979943275452,
+								1.621180057525635,
+								1.650750041007996
+							],
+							"y" : 
+							[
+								0.5593199729919434,
+								0.6909989714622498,
+								0.6747249960899353,
+								0.6159729957580566,
+								0.5928320288658142,
+								0.5494520068168640,
+								0.5443590283393860
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture0",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								1.744339942932129,
+								1.723880052566528,
+								1.679489970207214,
+								1.575729966163635,
+								1.728160023689270,
+								1.743549942970276
+							],
+							"y" : 
+							[
+								0.6725350022315979,
+								0.7037630081176758,
+								0.7078800201416016,
+								0.6909989714622498,
+								0.5593199729919434,
+								0.5822060108184815
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture0",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								1.728160023689270,
+								1.650750041007996,
+								1.658310055732727,
+								1.705039978027344
+							],
+							"y" : 
+							[
+								0.5593199729919434,
+								0.5443590283393860,
+								0.5195959806442261,
+								0.5189120173454285
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture0",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : [ 1.621180057525635, 1.580979943275452, 1.590579986572266 ],
+							"y" : [ 0.5494520068168640, 0.5928320288658142, 0.5658580064773560 ]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture0",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								1.679489970207214,
+								1.673609972000122,
+								1.574380040168762,
+								1.575729966163635
+							],
+							"y" : 
+							[
+								0.7078800201416016,
+								0.7263630032539368,
+								0.7250490188598633,
+								0.6909989714622498
+							]
+						}
+					}
+				}
+			],
+			"linearVelocity" : 0,
+			"massData-I" : 0.09426207840442658,
+			"massData-center" : 
+			{
+				"x" : 1.655073046684265,
+				"y" : 0.6303510665893555
+			},
+			"massData-mass" : 0.03000463359057903,
+			"name" : "body0",
+			"position" : 
+			{
+				"x" : -1.650647282600403,
+				"y" : -0.5026971101760864
+			},
+			"type" : 2
+		}
+	],
+	"collisionbitplanes" : 
+	{
+		"names" : 
+		[
+			"bitplane1",
+			"bitplane2",
+			"bitplane3",
+			"bitplane4",
+			"bitplane5",
+			"bitplane6",
+			"bitplane7",
+			"bitplane8",
+			"bitplane9",
+			"bitplane10",
+			"bitplane11",
+			"bitplane12",
+			"bitplane13",
+			"bitplane14",
+			"bitplane15",
+			"bitplane16",
+			"bitplane17",
+			"bitplane18",
+			"bitplane19",
+			"bitplane20",
+			"bitplane21",
+			"bitplane22",
+			"bitplane23",
+			"bitplane24",
+			"bitplane25",
+			"bitplane26",
+			"bitplane27",
+			"bitplane28",
+			"bitplane29",
+			"bitplane30",
+			"bitplane31",
+			"bitplane32"
+		]
+	},
+	"continuousPhysics" : true,
+	"gravity" : 
+	{
+		"x" : 0,
+		"y" : -10
+	},
+	"image" : 
+	[
+		
+		{
+			"aspectScale" : 1,
+			"body" : -1,
+			"center" : 0,
+			"corners" : 
+			{
+				"x" : [ -0.8, 0.8, 0.8, -0.8 ],
+				"y" : [ -0.5, -0.5, 0.5, 0.5 ]
+			},
+			"file" : "CODE/Java/Pixelworld/android/assets/animations/player/PlayerCollisionShapeBox2D.png",
+			"filter" : 1,
+			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
+			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],
+			"glVertexPointer" : [ -0.8, -0.5, 0.8, -0.5, 0.8, 0.5, -0.8, 0.5 ],
+			"name" : "image0",
+			"opacity" : 0.5,
+			"scale" : 1
+		}
+	],
+	"positionIterations" : 3,
+	"stepsPerSecond" : 60.0,
+	"subStepping" : false,
+	"velocityIterations" : 8,
+	"warmStarting" : true
+}

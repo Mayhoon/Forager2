@@ -12,14 +12,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.gushikustudios.rube.RubeScene;
 import com.gushikustudios.rube.loader.RubeSceneLoader;
 import config.Paths;
 import networking.Network;
 import player.Player;
 import stages.gui.GameGui;
-import sun.security.provider.SHA;
 import tools.DebugLines;
 
 public class Game extends ScreenAdapter {
@@ -45,11 +46,8 @@ public class Game extends ScreenAdapter {
         this.batch = batch;
         this.network = network;
 
-        collisionChecker = new CollisionChecker(batch, network.player(), network.opponent());
-
         gameGui = new GameGui(network);
         camera = new Camera();
-        camera.zoom -= 0.6f;
         camera.update();
 
         player = new Player(batch, network.player(), true);
@@ -59,84 +57,22 @@ public class Game extends ScreenAdapter {
         groundSprite = new Sprite(groundTexture);
         debugLines = new DebugLines(batch);
 
-        initWorld();
-
-        playerBox = new TutorialBox(world, "Player", 0, 0);
-        obj1 = new TutorialBox(world, "Obj1", 15, 15);
-        obj2 = new TutorialBox(world, "Obj2", 30, 15);
-
-//        RubeSceneLoader loader = new RubeSceneLoader();
-//        RubeScene scene = loader.loadScene(Gdx.files.internal("player.json"));
-    }
-
-    private void initWorld() {
-//                Box2D.init();
-//        world = new World(new Vector2(0, -9.8f), true);
+        //Box2D world
         world = new World(new Vector2(0, 0f), true);
         world.setContactListener(new ShapeContactListener());
         debugRenderer = new Box2DDebugRenderer();
 
-        //Player1 shape
-        BodyDef playerBodyDef = new BodyDef();
-        // We set our body to dynamic, for something like ground which doesn't move we would set it to StaticBody
-        playerBodyDef.type = BodyDef.BodyType.DynamicBody;
-        // Set our body's starting position in the world
-        playerBodyDef.position.set(100, 300);
-        // Create our body in the world using our body definition
-        body = world.createBody(playerBodyDef);
-        // Create a circle shape and set its radius to 6
-        CircleShape circle = new CircleShape();
-        circle.setRadius(6f);
-        // Create a fixture definition to apply our shape to
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = circle;
-        fixtureDef.density = 0.5f;
-        fixtureDef.friction = 0.4f;
-        fixtureDef.restitution = 0.6f; // Make it bounce a little bit
-        // Create our fixture and attach it to the body
-        Fixture fixture = body.createFixture(fixtureDef);
-        // Remember to dispose of any shapes after you're done with them!
-        // BodyDef and FixtureDef don't need disposing, but shapes do.
-        circle.dispose();
+//        initTestBoxes();
+//        playerBox = new TutorialBox(world, "Player", 0, 0);
+//        obj1 = new TutorialBox(world, "Obj1", 15, 15);
+//        obj2 = new TutorialBox(world, "Obj2", 30, 15);
 
-
-        //Opponent shape
-        BodyDef opponentBodyDef = new BodyDef();
-        // We set our body to dynamic, for something like ground which doesn't move we would set it to StaticBody
-        opponentBodyDef.type = BodyDef.BodyType.DynamicBody;
-        // Set our body's starting position in the world
-        opponentBodyDef.position.set(50, 300);
-        // Create our body in the world using our body definition
-        body = world.createBody(opponentBodyDef);
-        // Create a circle shape and set its radius to 6
-        CircleShape circle2 = new CircleShape();
-        circle2.setRadius(6f);
-        // Create a fixture definition to apply our shape to
-        FixtureDef fixtureDef2 = new FixtureDef();
-        fixtureDef.shape = circle;
-        fixtureDef.density = 0.5f;
-        fixtureDef.friction = 0.4f;
-        fixtureDef.restitution = 0.6f; // Make it bounce a little bit
-        // Create our fixture and attach it to the body
-        Fixture fixture2 = body.createFixture(fixtureDef);
-        // Remember to dispose of any shapes after you're done with them!
-        // BodyDef and FixtureDef don't need disposing, but shapes do.
-        circle.dispose();
-
-
-//        //GROUND
-//        BodyDef groundBodyDef = new BodyDef();
-//        groundBodyDef.position.set(new Vector2(0, 10));
-//        // Create a body from the definition and add it to the world
-//        groundBody = world.createBody(groundBodyDef);
-//        // Create a polygon shape
-//        PolygonShape groundBox = new PolygonShape();
-//        // Set the polygon shape as a box which is twice the size of our view port and 20 high
-//        // (setAsBox takes half-width and half-height as arguments)
-//        groundBox.setAsBox(200, 10.0f);
-//        // Create a fixture from our polygon shape and add it to our ground body
-//        groundBody.createFixture(groundBox, 0.0f);
-//        groundBox.dispose();
+        RubeSceneLoader loader = new RubeSceneLoader();
+        RubeScene scene = loader.loadScene(Gdx.files.internal("medium.json"));
+        scene.getWorld().setGravity(new Vector2(0, 0));
+        world = scene.getWorld();
+//        Array<Body> bodies= new Array<Body>();
+//        world.getBodies(bodies);
     }
 
     @Override
@@ -146,9 +82,11 @@ public class Game extends ScreenAdapter {
             System.exit(0);
         }
 
-        //  if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-        body.setTransform(network.player().position.x, network.player().position.y, 0);
-        //    }
+        System.out.println(world.getBodyCount());
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+            body.setTransform(network.player().position.x, network.player().position.y, 0);
+        }
 
         Gdx.gl.glClearColor(100 / 255f, 20 / 255f, 100 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -164,14 +102,11 @@ public class Game extends ScreenAdapter {
         player.render(delta, network.player());
         opponent.render(delta, network.opponent());
 
-        //Collision detection
-        // collisionChecker.attackCollisionPoints();
-
         //Render gui
         gameGui.update(batch, delta);
         batch.end();
 
-        movePlayerBox(delta);
+//        movePlayerBox(delta);
 
         //Render
         debugRenderer.render(world, camera.combined);
