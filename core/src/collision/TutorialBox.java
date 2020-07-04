@@ -30,8 +30,28 @@ public class TutorialBox {
         this.body.createFixture(fixtureDef).setUserData(this); //Enabling to access attributes speicifc to this object
     }
 
+    //Test
+    private void createBoxBody(float x, float y) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.fixedRotation = true;
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(20, 20);
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(10, 10);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = 1.0f;
+
+        this.body.createFixture(fixtureDef).setUserData(this); //Enabling to access attributes speicifc to this object
+    }
+
     public void hit() {
         System.out.println("[" + id + "] got hit.");
     }
 
+    public Body getBody() {
+        return body;
+    }
 }

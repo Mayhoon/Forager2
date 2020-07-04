@@ -2,7 +2,8 @@ package screens;
 
 import animations.CollisionChecker;
 import camera.Camera;
-import collision.ShapeContactListener;
+import collision.HeadContactListener;
+import collision.PlayerHead;
 import collision.TutorialBox;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.gushikustudios.rube.RubeScene;
 import com.gushikustudios.rube.loader.RubeSceneLoader;
 import config.Paths;
@@ -34,13 +36,13 @@ public class Game extends ScreenAdapter {
     private Network network;
     private CollisionChecker collisionChecker;
     private Body groundBody;
-    private Body body;
     private RubeSceneLoader rubeSceneLoader;
     private RubeScene rubeScene;
     private TutorialBox playerBox, obj1, obj2;
 
     private Box2DDebugRenderer debugRenderer;
     private World world;
+    private Array<Body> bodies;
 
     public Game(Network network, SpriteBatch batch) {
         this.batch = batch;
@@ -58,21 +60,35 @@ public class Game extends ScreenAdapter {
         debugLines = new DebugLines(batch);
 
         //Box2D world
-        world = new World(new Vector2(0, 0f), true);
-        world.setContactListener(new ShapeContactListener());
+//        world = new World(new Vector2(0, 0f), true);
+//        world.setContactListener(new ShapeContactListener());
         debugRenderer = new Box2DDebugRenderer();
 
-//        initTestBoxes();
 //        playerBox = new TutorialBox(world, "Player", 0, 0);
 //        obj1 = new TutorialBox(world, "Obj1", 15, 15);
 //        obj2 = new TutorialBox(world, "Obj2", 30, 15);
 
+
+        //Loading world created in rube
         RubeSceneLoader loader = new RubeSceneLoader();
-        RubeScene scene = loader.loadScene(Gdx.files.internal("medium.json"));
+        RubeScene scene = loader.loadScene(Gdx.files.internal("double.json"));
         scene.getWorld().setGravity(new Vector2(0, 0));
+
+//        scene.addBodies();
         world = scene.getWorld();
-//        Array<Body> bodies= new Array<Body>();
-//        world.getBodies(bodies);
+        world.setContactListener(new HeadContactListener());
+
+        bodies = new Array<Body>();
+        world.getBodies(bodies);
+        System.out.println("Amount of bodies in the scene: " + bodies.size);
+
+
+        PlayerHead head2 = new PlayerHead(bodies.get(1), "Head2");
+        PlayerHead head1 = new PlayerHead(bodies.get(0), "Head1");
+        bodies.get(0).setUserData(new PlayerHead(bodies.get(0),"123"));
+
+        PlayerHead obj =  (PlayerHead) bodies.get(0).getUserData();
+        obj.hit();
     }
 
     @Override
@@ -80,12 +96,6 @@ public class Game extends ScreenAdapter {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
             System.exit(0);
-        }
-
-        System.out.println(world.getBodyCount());
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-            body.setTransform(network.player().position.x, network.player().position.y, 0);
         }
 
         Gdx.gl.glClearColor(100 / 255f, 20 / 255f, 100 / 255f, 1);
@@ -106,10 +116,10 @@ public class Game extends ScreenAdapter {
         gameGui.update(batch, delta);
         batch.end();
 
-//        movePlayerBox(delta);
+        movePlayerBox(delta);
 
         //Render
-        debugRenderer.render(world, camera.combined);
+        debugRenderer.render(world, camera.combined.scl(10));
         camera.update();
         world.step(1 / 60f, 6, 2);
 
@@ -133,11 +143,13 @@ public class Game extends ScreenAdapter {
         }
 
         if (x != 0) {
-            playerBox.body.setLinearVelocity(x * 350 * delta, playerBox.body.getLinearVelocity().y);
+             bodies.get(0).setLinearVelocity(x * 350 * delta, bodies.get(0).getLinearVelocity().y);
+//            bodies.get(0).setTransform(20, 0, 0);
+//            System.out.println(bodies.get(0).getPosition().x);
         }
 
         if (y != 0) {
-            playerBox.body.setLinearVelocity(playerBox.body.getLinearVelocity().x, y * 350 * delta);
+            //playerBox.body.setLinearVelocity(playerBox.body.getLinearVelocity().x, y * 350 * delta);
         }
     }
 

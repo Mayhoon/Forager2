@@ -26,6 +26,7 @@ public class ShapeContactListener implements ContactListener {
 
             //For every other collision between
         } else {
+            System.out.println("COLLISION");
             TutorialBox tutorialBox = (TutorialBox) fa.getUserData();
             tutorialBox.hit();
         }
