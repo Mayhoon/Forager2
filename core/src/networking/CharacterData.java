@@ -13,12 +13,15 @@ public class CharacterData {
     public float health;
     public int keyFrameIndex;
     public AnimationName animation;
+    public Boolean repeatAnimation;
 
     public CharacterData() {
         position = new Vector2(0, 0);
         direction = Direction.RIGHT;
-        animation = AnimationName.SWORD_SLASH_UP_DOWN;
-        keyFrameIndex = 1;
+        animation = AnimationName.IDLE_SWORD_NOT_DRAWN;
+        keyFrameIndex = 0;
+
+        repeatAnimation = false;
 
         moving = false;
         movementSpeed = 0f;

@@ -1,9 +1,7 @@
 package screens;
 
-import animations.CollisionChecker;
 import camera.Camera;
 import collision.HeadContactListener;
-import collision.PlayerHead;
 import collision.TutorialBox;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -34,7 +32,6 @@ public class Game extends ScreenAdapter {
     private GameGui gameGui;
     private DebugLines debugLines;
     private Network network;
-    private CollisionChecker collisionChecker;
     private Body groundBody;
     private RubeSceneLoader rubeSceneLoader;
     private RubeScene rubeScene;
@@ -52,43 +49,29 @@ public class Game extends ScreenAdapter {
         camera = new Camera();
         camera.update();
 
-        player = new Player(batch, network.player(), true);
-        opponent = new Player(batch, network.opponent(), false);
-
-        groundTexture = new Texture(Paths.GROUND);
-        groundSprite = new Sprite(groundTexture);
         debugLines = new DebugLines(batch);
-
-        //Box2D world
-//        world = new World(new Vector2(0, 0f), true);
-//        world.setContactListener(new ShapeContactListener());
         debugRenderer = new Box2DDebugRenderer();
-
-//        playerBox = new TutorialBox(world, "Player", 0, 0);
-//        obj1 = new TutorialBox(world, "Obj1", 15, 15);
-//        obj2 = new TutorialBox(world, "Obj2", 30, 15);
-
 
         //Loading world created in rube
         RubeSceneLoader loader = new RubeSceneLoader();
-        RubeScene scene = loader.loadScene(Gdx.files.internal("double.json"));
+        RubeScene scene = loader.addScene(Gdx.files.internal("collisions/body.json"));
+//        loader.addScene(Gdx.files.internal("collisions/body.json"));
+
         scene.getWorld().setGravity(new Vector2(0, 0));
 
-//        scene.addBodies();
+        //Adding the other players collisions
+        scene.addBodies(scene.getBodies());
         world = scene.getWorld();
         world.setContactListener(new HeadContactListener());
 
+        player = new Player(batch, network.player(), true, world);
+        opponent = new Player(batch, network.opponent(), false, world);
+        groundTexture = new Texture(Paths.GROUND);
+        groundSprite = new Sprite(groundTexture);
+
         bodies = new Array<Body>();
         world.getBodies(bodies);
-        System.out.println("Amount of bodies in the scene: " + bodies.size);
 
-
-        PlayerHead head2 = new PlayerHead(bodies.get(1), "Head2");
-        PlayerHead head1 = new PlayerHead(bodies.get(0), "Head1");
-        bodies.get(0).setUserData(new PlayerHead(bodies.get(0),"123"));
-
-        PlayerHead obj =  (PlayerHead) bodies.get(0).getUserData();
-        obj.hit();
     }
 
     @Override
@@ -109,14 +92,23 @@ public class Game extends ScreenAdapter {
 
         //Character
         player.update(delta);
-        player.render(delta, network.player());
-        opponent.render(delta, network.opponent());
+        player.render(delta, network.player(), world);
+        System.out.println("Before changing x: " + bodies.get(0).getPosition().x);
+//        opponent.render(delta, network.opponent(), world);
+
+//        //Collisions
+//        float x = network.player().position.x;
+//        float y = network.player().position.y;
+//        bodies.get(0).setTransform(network.player().position.x / 10 + 3.1f, network.player().position.y + 2.08f, 0);
+//        bodies.get(0).setTransform(x / 10 + 3.1f, y + 1.42f, 0);
+//        bodies.get(1).setTransform(x / 10 + 3.2f, y + 0.35f, 0);
+
+//        List listA = new ArrayList();
+//        listA.get(0);
 
         //Render gui
         gameGui.update(batch, delta);
         batch.end();
-
-        movePlayerBox(delta);
 
         //Render
         debugRenderer.render(world, camera.combined.scl(10));
@@ -125,32 +117,6 @@ public class Game extends ScreenAdapter {
 
         camera.update();
         network.sendData();
-    }
-
-    private void movePlayerBox(float delta) {
-        float x = 0, y = 0;
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            x += 1;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            x -= 1;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            y += 1;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            y -= 1;
-        }
-
-        if (x != 0) {
-             bodies.get(0).setLinearVelocity(x * 350 * delta, bodies.get(0).getLinearVelocity().y);
-//            bodies.get(0).setTransform(20, 0, 0);
-//            System.out.println(bodies.get(0).getPosition().x);
-        }
-
-        if (y != 0) {
-            //playerBox.body.setLinearVelocity(playerBox.body.getLinearVelocity().x, y * 350 * delta);
-        }
     }
 
     @Override

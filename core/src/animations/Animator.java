@@ -19,7 +19,9 @@ public class Animator {
     public void update(SpriteBatch batch, float delta, CharacterData character) {
         elapsedTime += delta;
 
-        character.keyFrameIndex = playerAnimations.get(character.animation).getKeyFrameIndex(elapsedTime);
+        if (character.repeatAnimation) {
+            character.keyFrameIndex = playerAnimations.get(character.animation).getKeyFrameIndex(elapsedTime);
+        }
         keyFrame = playerAnimations.get(character.animation).getKeyFrames()[character.keyFrameIndex];
 
         batch.draw(
