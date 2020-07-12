@@ -28,8 +28,8 @@ public class Player {
         playerMotor.calculatePosition(delta);
     }
 
-    public void render(float delta, CharacterData data, World world) {
-        bodyCollider.updatePositions(data.position, world);
+    public void render(float delta, CharacterData data) {
+        bodyCollider.updatePositions(data.position);
         animator.update(batch, delta, data);
     }
 }

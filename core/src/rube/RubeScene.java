@@ -43,9 +43,9 @@ public class RubeScene
 	
 	public RubeScene()
 	{
-		stepsPerSecond 		= RubeDefaults.World.stepsPerSecond;
-		positionIterations 	= RubeDefaults.World.positionIterations;
-		velocityIterations 	= RubeDefaults.World.velocityIterations;
+		stepsPerSecond 		= com.gushikustudios.rube.RubeDefaults.World.stepsPerSecond;
+		positionIterations 	= com.gushikustudios.rube.RubeDefaults.World.positionIterations;
+		velocityIterations 	= com.gushikustudios.rube.RubeDefaults.World.velocityIterations;
 		
 		mCustomPropertiesMap = new HashMap<Object, Map<String, Object>>();
 		mBodyImageMap = new HashMap<Body,Array<RubeImage>>();

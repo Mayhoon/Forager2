@@ -12,12 +12,12 @@ public class Legs extends BodyPart{
 
     @Override
     public void hit() {
-
+        System.out.println("Legs hit");
     }
 
     @Override
-    public void updatePosition(Vector2 position, World world) {
-
+    public void updatePosition(Vector2 position) {
+        body.setTransform(position.x / 10 + 3.2f, position.y + 0.38f, 0);
     }
 
 }

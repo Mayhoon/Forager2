@@ -1,7 +1,7 @@
 package screens;
 
 import camera.Camera;
-import collision.HeadContactListener;
+import collision.CollisionListener;
 import collision.TutorialBox;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -33,7 +33,6 @@ public class Game extends ScreenAdapter {
     private DebugLines debugLines;
     private Network network;
     private Body groundBody;
-    private RubeSceneLoader rubeSceneLoader;
     private RubeScene rubeScene;
     private TutorialBox playerBox, obj1, obj2;
 
@@ -55,22 +54,20 @@ public class Game extends ScreenAdapter {
         //Loading world created in rube
         RubeSceneLoader loader = new RubeSceneLoader();
         RubeScene scene = loader.addScene(Gdx.files.internal("collisions/body.json"));
-//        loader.addScene(Gdx.files.internal("collisions/body.json"));
+//        loader.addScene(Gdx.files.internal("collisions/testSphere.json")).getBodies();
+
 
         scene.getWorld().setGravity(new Vector2(0, 0));
 
         //Adding the other players collisions
         scene.addBodies(scene.getBodies());
         world = scene.getWorld();
-        world.setContactListener(new HeadContactListener());
+        world.setContactListener(new CollisionListener());
 
         player = new Player(batch, network.player(), true, world);
         opponent = new Player(batch, network.opponent(), false, world);
         groundTexture = new Texture(Paths.GROUND);
         groundSprite = new Sprite(groundTexture);
-
-        bodies = new Array<Body>();
-        world.getBodies(bodies);
 
     }
 
@@ -92,19 +89,8 @@ public class Game extends ScreenAdapter {
 
         //Character
         player.update(delta);
-        player.render(delta, network.player(), world);
-        System.out.println("Before changing x: " + bodies.get(0).getPosition().x);
-//        opponent.render(delta, network.opponent(), world);
-
-//        //Collisions
-//        float x = network.player().position.x;
-//        float y = network.player().position.y;
-//        bodies.get(0).setTransform(network.player().position.x / 10 + 3.1f, network.player().position.y + 2.08f, 0);
-//        bodies.get(0).setTransform(x / 10 + 3.1f, y + 1.42f, 0);
-//        bodies.get(1).setTransform(x / 10 + 3.2f, y + 0.35f, 0);
-
-//        List listA = new ArrayList();
-//        listA.get(0);
+        player.render(delta, network.player());
+//        opponent.render(delta, network.opponent());
 
         //Render gui
         gameGui.update(batch, delta);

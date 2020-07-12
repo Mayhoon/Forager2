@@ -13,15 +13,11 @@ public abstract class BodyPart {
         this.id = id;
     }
 
-    public void addUserData(Body body) {
-        body.setUserData(this);
-    }
-
     public Body getBody() {
         return body;
     }
 
     public abstract void hit();
-    public abstract void updatePosition(Vector2 position, World world);
+    public abstract void updatePosition(Vector2 position);
 
 }
