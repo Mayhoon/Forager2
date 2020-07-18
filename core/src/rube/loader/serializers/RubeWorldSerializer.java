@@ -9,14 +9,14 @@ import com.gushikustudios.rube.RubeScene;
 
 public class RubeWorldSerializer extends ReadOnlySerializer<RubeScene>
 {
-	private WorldSerializer mWorldSerializer;
+	private com.gushikustudios.rube.loader.serializers.WorldSerializer mWorldSerializer;
 	private RubeScene scene;
 	private boolean mScenePopulated;
    
 	public RubeWorldSerializer(Json json)
 	{
 		scene = new RubeScene();
-		mWorldSerializer = new WorldSerializer(scene,json);
+		mWorldSerializer = new com.gushikustudios.rube.loader.serializers.WorldSerializer(scene,json);
 		json.setSerializer(World.class, mWorldSerializer);
 		json.setIgnoreUnknownFields(true);
 	}

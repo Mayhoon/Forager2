@@ -1,8 +1,7 @@
 package screens;
 
 import camera.Camera;
-import collision.CollisionListener;
-import collision.TutorialBox;
+import collision.Box2DWorld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
@@ -10,13 +9,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
-import com.gushikustudios.rube.RubeScene;
-import com.gushikustudios.rube.loader.RubeSceneLoader;
 import config.Paths;
 import networking.Network;
 import player.Player;
@@ -27,18 +21,14 @@ public class Game extends ScreenAdapter {
     private Camera camera;
     private SpriteBatch batch;
     private Player player, opponent;
+    private Network network;
+    private Body groundBody;
     private Texture groundTexture;
     private Sprite groundSprite;
     private GameGui gameGui;
     private DebugLines debugLines;
-    private Network network;
-    private Body groundBody;
-    private RubeScene rubeScene;
-    private TutorialBox playerBox, obj1, obj2;
-
     private Box2DDebugRenderer debugRenderer;
-    private World world;
-    private Array<Body> bodies;
+    private Box2DWorld box2DWorld;
 
     public Game(Network network, SpriteBatch batch) {
         this.batch = batch;
@@ -51,24 +41,12 @@ public class Game extends ScreenAdapter {
         debugLines = new DebugLines(batch);
         debugRenderer = new Box2DDebugRenderer();
 
-        //Loading world created in rube
-        RubeSceneLoader loader = new RubeSceneLoader();
-        RubeScene scene = loader.addScene(Gdx.files.internal("collisions/body.json"));
-//        loader.addScene(Gdx.files.internal("collisions/testSphere.json")).getBodies();
+        box2DWorld = new Box2DWorld();
 
-
-        scene.getWorld().setGravity(new Vector2(0, 0));
-
-        //Adding the other players collisions
-        scene.addBodies(scene.getBodies());
-        world = scene.getWorld();
-        world.setContactListener(new CollisionListener());
-
-        player = new Player(batch, network.player(), true, world);
-        opponent = new Player(batch, network.opponent(), false, world);
+        player = new Player(batch, network.player(), true, box2DWorld.getWorld());
+//        opponent = new Player(batch, network.opponent(), false, box2DWorld.getWorld());
         groundTexture = new Texture(Paths.GROUND);
         groundSprite = new Sprite(groundTexture);
-
     }
 
     @Override
@@ -97,9 +75,9 @@ public class Game extends ScreenAdapter {
         batch.end();
 
         //Render
-        debugRenderer.render(world, camera.combined.scl(10));
+        debugRenderer.render(box2DWorld.getWorld(), camera.combined.scl(10));
         camera.update();
-        world.step(1 / 60f, 6, 2);
+        box2DWorld.step();
 
         camera.update();
         network.sendData();

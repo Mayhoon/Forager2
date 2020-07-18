@@ -1,13 +1,14 @@
 package collision.bodyparts;
 
+import Enums.AnimationName;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
 
-public class Legs extends BodyPart{
+public class Legs extends BodyPart {
 
-    public Legs(Body body) {
-        super(body, "Legs");
+    public Legs(Body body, AnimationName animation, float offsetX, float offsetY) {
+        super(body, "Legs", animation, offsetX, offsetY );
+        body.setUserData(this);
     }
 
     @Override
@@ -15,9 +16,5 @@ public class Legs extends BodyPart{
         System.out.println("Legs hit");
     }
 
-    @Override
-    public void updatePosition(Vector2 position) {
-        body.setTransform(position.x / 10 + 3.2f, position.y + 0.38f, 0);
-    }
 
 }

@@ -1,7 +1,10 @@
 package player;
 
+import Enums.AnimationName;
 import animations.Animator;
 import collision.BodyCollider;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import networking.CharacterData;
@@ -29,7 +32,7 @@ public class Player {
     }
 
     public void render(float delta, CharacterData data) {
-        bodyCollider.updatePositions(data.position);
+        bodyCollider.updatePositions(data.position, AnimationName.IDLE_SWORD_NOT_DRAWN);
         animator.update(batch, delta, data);
     }
 }

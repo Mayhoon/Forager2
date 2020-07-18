@@ -10,7 +10,7 @@ public class Camera extends OrthographicCamera {
     public Camera() {
         float width = 300*Gdx.graphics.getHeight()/Gdx.graphics.getWidth();
         float height = 300*Gdx.graphics.getHeight()/Gdx.graphics.getWidth();
-        super.setToOrtho(false, width/3, height/3);
+        super.setToOrtho(false, width, height);
 //        super.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         super.position.x = 80;
         super.position.y = 0;

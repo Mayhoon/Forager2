@@ -39,6 +39,7 @@ public class CollisionListener implements ContactListener {
         if(isHeadLegCollision(fixtureA, fixtureB)) {
             System.out.println("Head and leg collsion");
         }
+        System.out.println("Other collision");
     }
 
     //Tests if both objects are of the same type (swords clashing detection)
