@@ -1,9 +1,8 @@
 package collision.bodyparts;
 
-import Enums.AnimationName;
+import enums.AnimationName;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
 
 public abstract class BodyPart {
     public String id;
@@ -25,17 +24,13 @@ public abstract class BodyPart {
     }
 
     public abstract void hit();
-    public void updatePosition(Vector2 position, AnimationName currentAnimation){
-        if(currentAnimation.equals(animation)) {
+
+    public void updatePosition(Vector2 position, AnimationName currentAnimation) {
+        if (currentAnimation.equals(animation)) {
+            body.setActive(true);
             body.setTransform((position.x / 10) + offsetX, position.y + offsetY, 0);
+        } else {
+            body.setActive(false);
         }
-    };
-
-    public void setActive() {
-        body.setActive(true);
-    }
-
-    public void setInactive() {
-        body.setActive(false);
     }
 }

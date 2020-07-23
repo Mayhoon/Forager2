@@ -1,6 +1,6 @@
 package animations;
 
-import Enums.Direction;
+import enums.Direction;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import networking.CharacterData;

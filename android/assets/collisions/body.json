@@ -240,7 +240,7 @@
 				"y" : 0.2069342136383057
 			},
 			"massData-mass" : 0.6165162920951843,
-			"name" : "6_legs_m",
+			"name" : "IDLE_SWORD_NOT_DRAWN_LEFT",
 			"position" : 
 			{
 				"x" : 8.509330749511719,
@@ -440,10 +440,10 @@
 				"y" : 0.4478445351123810
 			},
 			"massData-mass" : 0.5290374159812927,
-			"name" : "4_head_m",
+			"name" : "IDLE_SWORD_NOT_DRAWN_LEFT",
 			"position" : 
 			{
-				"x" : 8.619264602661133,
+				"x" : 8.619259834289551,
 				"y" : 2.070849895477295
 			},
 			"type" : 2
@@ -726,7 +726,7 @@
 				"y" : 0.02932745218276978
 			},
 			"massData-mass" : 1.491381049156189,
-			"name" : "5_body_m",
+			"name" : "IDLE_SWORD_NOT_DRAWN_LEFT",
 			"position" : 
 			{
 				"x" : 8.599834442138672,
@@ -862,7 +862,7 @@
 				"y" : -1.822452783584595
 			},
 			"massData-mass" : 4.214256763458252,
-			"name" : "body0",
+			"name" : "SWORD_SLASH_SPIN_RIGHT",
 			"position" : 
 			{
 				"x" : 5.455729961395264,
@@ -1106,7 +1106,7 @@
 				"y" : 0.2069340795278549
 			},
 			"massData-mass" : 0.5676535367965698,
-			"name" : "3_legs",
+			"name" : "IDLE_SWORD_NOT_DRAWN_RIGHT",
 			"position" : 
 			{
 				"x" : 3.190540075302124,
@@ -1402,7 +1402,7 @@
 				"y" : 0.02932749688625336
 			},
 			"massData-mass" : 1.373178958892822,
-			"name" : "2_body",
+			"name" : "IDLE_SWORD_NOT_DRAWN_RIGHT",
 			"position" : 
 			{
 				"x" : 3.107209920883179,
@@ -1604,7 +1604,7 @@
 				"y" : 0.4478445053100586
 			},
 			"massData-mass" : 0.4871074855327606,
-			"name" : "1_head",
+			"name" : "IDLE_SWORD_NOT_DRAWN_RIGHT",
 			"position" : 
 			{
 				"x" : 3.089319944381714,
@@ -2480,7 +2480,7 @@
 				"y" : -0.2866036295890808
 			},
 			"massData-mass" : 3.149228096008301,
-			"name" : "7_swing",
+			"name" : "SWORD_SLASH_SPIN_LEFT",
 			"position" : 
 			{
 				"x" : 14.41827487945557,

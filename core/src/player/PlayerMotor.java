@@ -1,6 +1,6 @@
 package player;
 
-import Enums.Direction;
+import enums.Direction;
 import networking.CharacterData;
 
 public class PlayerMotor {

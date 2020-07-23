@@ -1,7 +1,7 @@
 package player;
 
-import Enums.AnimationName;
-import Enums.Buttons;
+import enums.AnimationName;
+import enums.Buttons;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;

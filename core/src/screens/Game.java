@@ -40,10 +40,9 @@ public class Game extends ScreenAdapter {
 
         debugLines = new DebugLines(batch);
         debugRenderer = new Box2DDebugRenderer();
-
         box2DWorld = new Box2DWorld();
 
-        player = new Player(batch, network.player(), true, box2DWorld.getWorld());
+        player = new Player(batch, network.player(), true, box2DWorld.getScene());
 //        opponent = new Player(batch, network.opponent(), false, box2DWorld.getWorld());
         groundTexture = new Texture(Paths.GROUND);
         groundSprite = new Sprite(groundTexture);

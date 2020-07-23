@@ -1,6 +1,6 @@
 package player;
 
-import Enums.AnimationName;
+import enums.AnimationName;
 import animations.AnimationLoader;
 import animations.CustomAnimation;
 import com.badlogic.gdx.graphics.g2d.Animation;

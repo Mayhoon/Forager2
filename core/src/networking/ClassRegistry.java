@@ -1,7 +1,7 @@
 package networking;
 
-import Enums.AnimationName;
-import Enums.Direction;
+import enums.AnimationName;
+import enums.Direction;
 import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryo.Kryo;
 
