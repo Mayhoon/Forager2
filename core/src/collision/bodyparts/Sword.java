@@ -1,12 +1,13 @@
 package collision.bodyparts;
 
-import enums.AnimationName;
 import com.badlogic.gdx.physics.box2d.Body;
+import enums.AnimationName;
+import enums.Direction;
 
 public class Sword extends BodyPart {
 
-    public Sword(Body body, String id, AnimationName animation, float offsetX, float offsetY) {
-        super(body, id, animation, offsetX, offsetY);
+    public Sword(AnimationName animationName, Body body, String id, int animationFrame, Direction direction, float offsetX, float offsetY) {
+        super(animationName, body, id, animationFrame, direction, offsetX, offsetY);
         body.setUserData(this);
     }
 

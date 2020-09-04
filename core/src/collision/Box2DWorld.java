@@ -14,7 +14,7 @@ public class Box2DWorld {
 
         //Loading world created in rube
         com.gushikustudios.rube.loader.RubeSceneLoader loader = new com.gushikustudios.rube.loader.RubeSceneLoader();
-        scene = loader.addScene(Gdx.files.internal("collisions/body.json"));
+        scene = loader.addScene(Gdx.files.internal("collisions/player.json"));
         scene.getWorld().setGravity(new Vector2(0, 0));
         scene.printStats();
 

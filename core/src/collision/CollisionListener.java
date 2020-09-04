@@ -24,10 +24,10 @@ public class CollisionListener implements ContactListener {
 
         //When the same type of objects hit each other
         if (areBothHeads(fixtureA, fixtureB)) {
-            System.out.println("Hier kommt er rein");
-            Head entity1 = (Head) fixtureA.getUserData();
-            Head entity2 = (Head) fixtureB.getUserData();
-            entity2.hit();
+//            System.out.println("Hier kommt er rein");
+//            Head entity1 = (Head) fixtureA.getUserData();
+//            Head entity2 = (Head) fixtureB.getUserData();
+//            entity2.hit();
         }
 
         //For every other collision between

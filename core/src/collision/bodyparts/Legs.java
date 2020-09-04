@@ -2,11 +2,12 @@ package collision.bodyparts;
 
 import enums.AnimationName;
 import com.badlogic.gdx.physics.box2d.Body;
+import enums.Direction;
 
 public class Legs extends BodyPart {
 
-    public Legs(Body body, AnimationName animation, float offsetX, float offsetY) {
-        super(body, "Legs", animation, offsetX, offsetY );
+    public Legs(AnimationName animationName, Body body, int animationFrame, Direction direction, float offsetX, float offsetY) {
+        super(animationName, body, "Legs", animationFrame, direction, offsetX, offsetY );
         body.setUserData(this);
     }
 

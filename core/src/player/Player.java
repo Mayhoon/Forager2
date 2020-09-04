@@ -2,20 +2,22 @@ package player;
 
 import enums.AnimationName;
 import animations.Animator;
-import collision.BodyColliders;
+import collision.Collider;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import networking.CharacterData;
+import com.gushikustudios.rube.RubeScene;
 
 public class Player {
     private GamePadInput gamePadInput;
     private PlayerMotor playerMotor;
     private Animator animator;
     private SpriteBatch batch;
-    private BodyColliders bodyColliders;
+    private Collider collider;
 
-    public Player(SpriteBatch batch, CharacterData state, boolean enableControls, com.gushikustudios.rube.RubeScene scene) {
+
+    public Player(SpriteBatch batch, CharacterData state, boolean enableControls, RubeScene scene) {
         this.batch = batch;
-        bodyColliders = new BodyColliders(scene);
+        collider = new Collider(scene);
         animator = new Animator();
 
         if (enableControls) {
@@ -29,7 +31,8 @@ public class Player {
     }
 
     public void render(float delta, CharacterData data) {
-        bodyColliders.updatePositions(data.position, AnimationName.IDLE_SWORD_NOT_DRAWN);
+        collider.deactivate();
+        collider.updatePositions(data.position, AnimationName.IDLE_SWORD_NOT_DRAWN, data.direction, data.keyFrameIndex);
         animator.update(batch, delta, data);
     }
 }
